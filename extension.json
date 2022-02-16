@@ -1,0 +1,49 @@
+{
+	"manifest_version": 2,
+	"name": "ImageSuggestions",
+	"namemsg": "imagesuggestions-extensionname",
+	"type": "other",
+	"author": [
+		"Cormac Parle",
+		"Joseph Seddon",
+		"Marco Fossati",
+		"Matthias Mullie"
+	],
+	"version": "0.0.1",
+	"url": "https://www.mediawiki.org/wiki/Extension:ImageSuggestions",
+	"descriptionmsg": "imagesuggestions-desc",
+	"license-name": "GPL-2.0-or-later",
+	"requires": {
+		"MediaWiki": ">= 1.37.0",
+		"extensions": {
+			"Echo": "*"
+		}
+	},
+
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\ImageSuggestions\\": "src/"
+	},
+	"TestAutoloadNamespaces": {
+		"MediaWiki\\Extension\\ImageSuggestions\\Tests\\MediaWiki\\": "tests/phpunit/"
+	},
+	"config": {},
+	"HookHandlers": {},
+	"Hooks": {},
+	"MessagesDirs": {
+		"ImageSuggestions": [
+			"i18n"
+		]
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "resources",
+		"remoteExtPath": "ImageSuggestions/resources"
+	},
+	"ResourceModules": {
+		"ext.imageSuggestions": {
+			"dependencies": [],
+			"messages": [],
+			"styles": [],
+			"scripts": []
+		}
+	}
+}
