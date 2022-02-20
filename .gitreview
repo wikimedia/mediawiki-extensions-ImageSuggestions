@@ -4,3 +4,4 @@ port=29418
 project=mediawiki/extensions/ImageSuggestions.git
 track=1
 defaultrebase=0
+defaultbranch=main
