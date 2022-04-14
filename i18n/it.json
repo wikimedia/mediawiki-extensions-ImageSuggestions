@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
+			"Beta16",
 			"GpieroMW"
 		]
 	},
-	"imagesuggestions-desc": "Avvisa gli utenti su immagini potenzialmente utili per articoli"
+	"imagesuggestions-desc": "Avvisa gli utenti su immagini potenzialmente utili per le voci"
 }
