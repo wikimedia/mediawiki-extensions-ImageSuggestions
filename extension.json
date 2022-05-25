@@ -22,9 +22,18 @@
 		"MediaWiki\\Extension\\ImageSuggestions\\": "includes/"
 	},
 	"TestAutoloadNamespaces": {
-		"MediaWiki\\Extension\\ImageSuggestions\\Tests\\MediaWiki\\": "tests/phpunit/"
+		"MediaWiki\\Extension\\ImageSuggestions\\Tests\\MediaWiki\\": "tests/phpunit/",
+		"MediaWiki\\Extension\\ImageSuggestions\\Maintenance\\": "maintenance/"
 	},
 	"config": {
+		"ImageSuggestionsSuggestionsApi": {
+			"description": "API endpoint for image suggestions; 2 params will be sprintf'ed into the url: 1/ the wiki id & 2/ the page id. See https://www.mediawiki.org/wiki/Platform_Engineering_Team/Data_Value_Stream/Data_Gateway#Suggestions",
+			"value": "https://image-suggestion.discovery.wmnet:30443/public/image_suggestions/suggestions/%1$s/%2$d"
+		},
+		"ImageSuggestionsInstanceOfApi": {
+			"description": "API endpoint for instance of cache; 2 params will be sprintf'ed into the url: 1/ the wiki id & 2/ the page id. See https://www.mediawiki.org/wiki/Platform_Engineering_Team/Data_Value_Stream/Data_Gateway#Instanceof_(cache)",
+			"value": "https://image-suggestion.discovery.wmnet:30443/private/image_suggestions/instanceof_cache/%1$s/%2$d"
+		},
 		"ImageSuggestionsHelpLink": {
 			"description": "URL to per-wiki description pages",
 			"value": ""

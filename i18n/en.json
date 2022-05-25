@@ -6,7 +6,7 @@
 	},
 	"imagesuggestions-desc": "Alerts users of potentially useful images for articles",
 	"imagesuggestions-extensionname": "Image suggestions",
-	"imagesuggestions-notification-message": "We found media that might be a good fit for the article, \"'''$2'''\", on {{GENDER:$1|your}} watchlist.",
+	"imagesuggestions-notification-message": "We found media that might be a good fit for the article, \"'''$1'''\", on {{GENDER:$2|your}} watchlist.",
 	"imagesuggestions-notification-link-text-article": "View article",
 	"imagesuggestions-notification-link-text-media": "Review media",
 	"imagesuggestions-notification-link-text-help": "Help",
