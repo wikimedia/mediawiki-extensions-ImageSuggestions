@@ -2,5 +2,11 @@
 	"@metadata": {
 		"authors": []
 	},
-	"imagesuggestions-desc": "Weist die Benutzer auf potenziell nützliche Bilder für Artikel hin"
+	"imagesuggestions-desc": "Weist die Benutzer auf potenziell nützliche Bilder für Artikel hin",
+	"imagesuggestions-notification-message": "Wir haben Medien gefunden, die zu dem Artikel „'''$2'''“ auf {{GENDER:$1|deiner}} Beobachtungsliste passen könnten.",
+	"imagesuggestions-notification-link-text-article": "Artikel anzeigen",
+	"imagesuggestions-notification-link-text-media": "Medien überprüfen",
+	"imagesuggestions-notification-link-text-help": "Hilfe",
+	"echo-category-title-image-suggestions": "Bildvorschläge",
+	"echo-pref-tooltip-image-suggestions": "Benachrichtige mich, wenn es einen Bildvorschlag für einen Artikel auf meiner Beobachtungsliste gibt."
 }
