@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Gomoko",
 			"Verdy p"
 		]
 	},
 	"imagesuggestions-desc": "Avertit les utilisateurs de la présence d’images potentiellement utiles pour illustrer les articles",
-	"imagesuggestions-notification-message": "Nous avons trouvé un média qui pourrait convenir pour l’article « '''$2''' » présent dans {{GENDER:$1|}}votre liste de suivi.",
+	"imagesuggestions-notification-message": "Nous avons trouvé un média qui pourrait convenir pour l’article « '''$1''' » présent dans {{GENDER:$2|}}votre liste de suivi.",
 	"imagesuggestions-notification-link-text-article": "Afficher l’article",
 	"imagesuggestions-notification-link-text-media": "Passer en revue le média",
 	"imagesuggestions-notification-link-text-help": "Aide",
