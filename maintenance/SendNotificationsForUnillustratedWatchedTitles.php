@@ -314,21 +314,27 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 
 		$excludeUserIds = array_merge( $previouslyNotifiedUserIds, $maxNotifiedUserIds );
 
-		$notificationOptionWeb = 'echo-subscriptions-web-' . Hooks::EVENT_NAME;
-		$notificationOptionEmail = 'echo-subscriptions-email-' . Hooks::EVENT_NAME;
-		$notificationDefaultValueWeb = $this->userOptionsLookup->getDefaultOption( $notificationOptionWeb );
-		$notificationDefaultValueEmail = $this->userOptionsLookup->getDefaultOption( $notificationOptionEmail );
+		$types = [ 'web', 'email', 'push' ];
+		$notificationOptions = array_map( static function ( $type ) {
+			return "echo-subscriptions-$type-" . Hooks::EVENT_NAME;
+		}, $types );
+		$notificationDefaultValues = array_map( function ( $option ) {
+			return $this->userOptionsLookup->getDefaultOption( $option );
+		}, $notificationOptions );
+		$notificationOptionsTableAliases = array_map( static function ( $type ) {
+			return "up{$type}";
+		}, $types );
 
 		$userId = $dbr->selectField(
-			[
+			array_merge( [
 				'watchlist',
 				'user',
 				'actor',
 				'page',
 				'revision',
-				'up1' => 'user_properties',
-				'up2' => 'user_properties',
 			],
+			// below builds an array like [ 'upweb' => 'user_properties', ... ]
+			array_fill_keys( $notificationOptionsTableAliases, 'user_properties' ) ),
 			'DISTINCT wl_user',
 			array_merge(
 				$excludeUserIds ? [ 'wl_user NOT IN (' . $dbr->makeList( $excludeUserIds ) . ')' ] : [],
@@ -336,11 +342,14 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 					'wl_namespace' => $title->getNamespace(),
 					'wl_title' => $title->getDBkey(),
 					"user_editcount >= {$this->minEditCount}",
-					$dbr->makeList( [
-						// if notification is enabled by default, we may have no up_property row
-						'up1.up_value = 1' . ( $notificationDefaultValueWeb ? ' OR up1.up_value IS NULL' : '' ),
-						'up2.up_value = 1' . ( $notificationDefaultValueEmail ? ' OR up2.up_value IS NULL' : '' ),
-					], $dbr::LIST_OR ),
+					$dbr->makeList(
+						// below builds an array like [ 'upweb.up_value = 1 OR up_value IS NULL', ... ]
+						array_map( static function ( $option, $alias ) {
+							// if notification is enabled by default, we may have no up_property row
+							return "{$alias}.up_value = 1" . ( $option ? " OR {$alias}.up_value IS NULL" : '' );
+						}, $notificationDefaultValues, $notificationOptionsTableAliases ),
+						$dbr::LIST_OR
+					),
 				]
 			),
 			__METHOD__,
@@ -348,14 +357,21 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 				'ORDER BY rev_timestamp DESC',
 				'LIMIT' => 1,
 			],
-			[
-				'user' => [ 'INNER JOIN', 'user_id = wl_user' ],
-				'actor' => [ 'INNER JOIN', 'actor_user = wl_user' ],
-				'page' => [ 'INNER JOIN', [ 'page_namespace = wl_namespace', 'page_title = wl_title' ] ],
-				'revision' => [ 'LEFT JOIN', [ 'rev_page = page_id', 'rev_actor' => 'actor_id' ] ],
-				'up1' => [ 'LEFT JOIN', [ 'up1.up_user = user_id', 'up1.up_property' => $notificationOptionWeb ] ],
-				'up2' => [ 'LEFT JOIN', [ 'up2.up_user = user_id', 'up2.up_property' => $notificationOptionEmail ] ],
-			]
+			array_merge(
+				[
+					'user' => [ 'INNER JOIN', 'user_id = wl_user' ],
+					'actor' => [ 'INNER JOIN', 'actor_user = wl_user' ],
+					'page' => [ 'INNER JOIN', [ 'page_namespace = wl_namespace', 'page_title = wl_title' ] ],
+					'revision' => [ 'LEFT JOIN', [ 'rev_page = page_id', 'rev_actor' => 'actor_id' ] ],
+				],
+				// below builds an array like [ 'upweb' => [ 'LEFT JOIN', [ ... ] ], ... ]
+				array_combine(
+					$notificationOptionsTableAliases,
+					array_map( static function ( $option, $alias ) {
+						return [ 'LEFT JOIN', [ "{$alias}.up_user = user_id", "{$alias}.up_property" => $option ] ];
+					}, $notificationOptions, $notificationOptionsTableAliases )
+				)
+			)
 		);
 
 		if ( $userId === false ) {
