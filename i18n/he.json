@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80"
+		]
+	},
+	"imagesuggestions-desc": "הודעה למשתמשים על תמונות שיכולות להיות שימושיות בערכים",
+	"imagesuggestions-notification-message": "מצאנו מדיה שיכולה להתאים טוב לערך \"'''$1'''\", שנמצא ברשימת המעקב {{GENDER:$2|שלך}}.",
+	"imagesuggestions-notification-link-text-article": "הצגת הערך",
+	"imagesuggestions-notification-link-text-media": "סקירת המדיה",
+	"imagesuggestions-notification-link-text-help": "עזרה",
+	"echo-category-title-image-suggestions": "הצעות תמונה",
+	"echo-pref-tooltip-image-suggestions": "להודיע לי כשיש הצעת תמונה לערך ברשימת המעקב שלי."
+}
