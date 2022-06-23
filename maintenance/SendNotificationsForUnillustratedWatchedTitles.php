@@ -293,12 +293,13 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 	 */
 	private function getUserForTitle( Title $title ): ?UserIdentity {
 		$dbr = $this->getDB( DB_REPLICA );
-		if ( !$dbr ) {
+		$dbrEcho = \MWEchoDbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
+		if ( !$dbr || !$dbrEcho ) {
 			return null;
 		}
 
 		// list of users who have already received an image suggestion notification for this page
-		$previouslyNotifiedUserIds = $dbr->selectFieldValues(
+		$previouslyNotifiedUserIds = $dbrEcho->selectFieldValues(
 			[ 'echo_notification', 'echo_event' ],
 			'notification_user',
 			[ 'event_type' => Hooks::EVENT_NAME, 'event_page_id' => $title->getId() ],
