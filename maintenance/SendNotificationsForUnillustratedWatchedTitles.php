@@ -2,17 +2,22 @@
 
 namespace MediaWiki\Extension\ImageSuggestions\Maintenance;
 
-use ApiMain;
-use DerivativeContext;
-use FauxRequest;
+use CirrusSearch\Connection;
+use CirrusSearch\SearchConfig;
+use CirrusSearch\Wikimedia\WeightedTagsHooks;
+use Elastica\Query;
+use Elastica\Query\MatchQuery;
+use Elastica\Scroll;
+use Elastica\Search;
+use Generator;
 use MediaWiki\Extension\ImageSuggestions\Hooks;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
+use MWEchoDbFactory;
 use MWException;
 use NamespaceInfo;
-use RequestContext;
 use Title;
 use WikiMap;
 use Wikimedia\Rdbms\LBFactory;
@@ -52,6 +57,9 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 
 	/** @var bool */
 	private $dryRun = false;
+
+	/** @var bool */
+	private $verbose = false;
 
 	/** @var int[] Map of [userId => number-of-notifications] */
 	private $notifiedUserIds = [];
@@ -98,7 +106,11 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 		);
 		$this->addOption(
 			'dry-run',
-			'Output results instead of actually sending the notifications'
+			'Prevent notifications from being sent'
+		);
+		$this->addOption(
+			'verbose',
+			'Output details of each notification being sent'
 		);
 
 		$this->setBatchSize( 100 );
@@ -133,63 +145,66 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 			'dry-run',
 			$this->dryRun
 		);
+		$this->verbose = (bool)$this->getOption(
+			'verbose',
+			$this->verbose
+		);
 	}
 
 	public function execute() {
 		$this->init();
 
-		$offset = 0;
-		do {
-			$this->outputChanneled(
-				'Batch #' . ( floor( $offset / $this->mBatchSize ) + 1 ),
-				'progress'
-			);
+		$pageIds = $this->getPageIdsWithSuggestions();
+		$numPages = 0;
+		foreach ( $pageIds as $i => $pageId ) {
+			$numPages++;
+			$isNewBatch = $i % $this->mBatchSize === 0;
 
-			list( $pages, $newOffset ) = $this->getPagesWithSuggestions( $offset, $this->mBatchSize );
-			$this->outputChanneled(
-				": titles {$offset}-{$newOffset}. ",
-				'progress'
-			);
-			$offset = $newOffset;
-
-			foreach ( $pages as $page ) {
-				$title = Title::newFromText( $page['title'], $page['ns'] );
-				if ( !$title ) {
-					continue;
-				}
-
-				$user = $this->getUserForTitle( $title );
-				if ( !$user ) {
-					continue;
-				}
-
-				$suggestions = $this->getSuggestions( $page['pageid'] );
-				$suggestion = array_shift( $suggestions );
-				if ( !$suggestion ) {
-					continue;
-				}
-
-				$this->notifiedUserIds[$user->getId()] = ( $this->notifiedUserIds[$user->getId()] ?? 0 ) + 1;
-				$this->createNotification(
-					$user,
-					$title,
-					WikiMap::getForeignURL(
-						$suggestion['origin_wiki'],
-						$this->namespaceInfo->getCanonicalName( 6 ) . ':' . $suggestion['image']
-					)
+			if ( $isNewBatch ) {
+				$this->outputChanneled(
+					'Batch #' . ( $i / $this->mBatchSize + 1 ) . '(' . $i . '-' . ( $i + $this->mBatchSize ) . '). ',
+					'progress'
 				);
 			}
 
-			$this->outputChanneled(
-				"Complete.\n",
-				'progress'
+			$title = Title::newFromID( $pageId );
+			if ( !$title ) {
+				continue;
+			}
+
+			$user = $this->getUserForTitle( $title );
+			if ( !$user ) {
+				continue;
+			}
+
+			$suggestions = $this->getSuggestions( $pageId );
+			$suggestion = array_shift( $suggestions );
+			if ( !$suggestion ) {
+				continue;
+			}
+
+			$this->notifiedUserIds[$user->getId()] = ( $this->notifiedUserIds[$user->getId()] ?? 0 ) + 1;
+			$this->createNotification(
+				$user,
+				$title,
+				WikiMap::getForeignURL(
+					$suggestion['origin_wiki'],
+					$this->namespaceInfo->getCanonicalName( NS_FILE ) . ':' . $suggestion['image']
+				)
 			);
-			$this->loadBalancerFactory->waitForReplication();
-		} while ( count( $pages ) >= $this->mBatchSize );
+
+			if ( $isNewBatch ) {
+				$this->outputChanneled(
+					"Complete.\n",
+					'progress'
+				);
+				$this->loadBalancerFactory->waitForReplication();
+			}
+		}
 
 		$numUsers = count( $this->notifiedUserIds );
 		$numNotifications = array_sum( $this->notifiedUserIds );
-		$numMissing = $offset - $numNotifications;
+		$numMissing = $numPages - $numNotifications;
 		$this->outputChanneled(
 			"Done. " .
 			"Notified {$numUsers} users about {$numNotifications} pages. " .
@@ -199,47 +214,41 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 	}
 
 	/**
-	 * @param int $offset
-	 * @param int $limit
-	 * @return array where 1st element is an array of ['ns' => x, 'title' => y, 'pageid' => z] and 2nd the next offset
+	 * @return Generator where every yield is a page id
 	 * @throws MWException
 	 */
-	private function getPagesWithSuggestions( int $offset, int $limit ): array {
-		$request = new FauxRequest( [
-			'format' => 'json',
-			'action' => 'query',
-			'list' => 'search',
-			'srsearch' => 'hasrecommendation:image',
-			'srnamespace' => 0,
-			'srlimit' => $limit,
-			'sroffset' => $offset,
-			'srinfo' => '',
-			'srprop' => '',
-			'srinterwiki' => false,
-		] );
+	private function getPageIdsWithSuggestions(): Generator {
+		/** @var SearchConfig $searchConfig */
+		$searchConfig = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'CirrusSearch' );
+		$connection = Connection::getPool( $searchConfig );
+		$client = $connection->getClient();
+		$index = $connection->getIndex(
+			$searchConfig->get( SearchConfig::INDEX_BASE_NAME ),
+			$connection->pickIndexSuffixForNamespaces( $searchConfig->get( 'ContentNamespaces' ) )
+		);
 
-		$searchUri = getenv( 'MW_API' ) ?: '';
-		if ( $searchUri ) {
-			// pull data from external API (for use in testing)
-			$url = $searchUri . '?' . http_build_query( $request->getQueryValues() );
-			$request = MediaWikiServices::getInstance()->getHttpRequestFactory()
-				->create( $url, [], __METHOD__ );
-			$request->execute();
-			$data = $request->getContent();
-			$response = json_decode( $data, true ) ?: [];
-		} else {
-			$context = new DerivativeContext( RequestContext::getMain() );
-			$context->setRequest( $request );
-			$api = new ApiMain( $context );
-			$api->execute();
-			$response = $api->getResult()->getResultData( [], [ 'Strip' => 'all' ] );
+		$match = new MatchQuery();
+		$match->setFieldQuery(
+			WeightedTagsHooks::FIELD_NAME,
+			'recommendation.image/exists'
+		);
+
+		$query = new Query();
+		$query->setQuery( $match );
+		$query->setSize( $this->mBatchSize );
+		$query->setSource( false );
+		$query->setSort( [ '_doc' ] );
+
+		$search = new Search( $client );
+		$search->setQuery( $query );
+		$search->addIndex( $index );
+
+		$scroll = new Scroll( $search, '3h' );
+		foreach ( $scroll as $results ) {
+			foreach ( $results as $result ) {
+				yield $searchConfig->makePageId( $result->getId() );
+			}
 		}
-		$pages = $response['query']['search'] ?? [];
-
-		return [
-			$pages,
-			$response['continue']['sroffset'] ?? $offset + count( $pages )
-		];
 	}
 
 	/**
@@ -293,7 +302,7 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 	 */
 	private function getUserForTitle( Title $title ): ?UserIdentity {
 		$dbr = $this->getDB( DB_REPLICA );
-		$dbrEcho = \MWEchoDbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
+		$dbrEcho = MWEchoDbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
 		if ( !$dbr || !$dbrEcho ) {
 			return null;
 		}
@@ -366,14 +375,17 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 	}
 
 	protected function createNotification( UserIdentity $user, Title $title, string $mediaUrl ) {
-		if ( $this->dryRun ) {
+		if ( $this->verbose && !$this->isQuiet() ) {
 			$this->outputChanneled(
 				"Notification: " .
 				"user: {$user->getName()} (id: {$user->getId()}), " .
 				"title: {$title->getFullText()} (id: {$title->getId()}), " .
 				"media: {$mediaUrl}\n",
-				'dry-run'
+				'verbose'
 			);
+		}
+
+		if ( $this->dryRun ) {
 			return false;
 		}
 
