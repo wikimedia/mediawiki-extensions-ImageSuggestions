@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kaganer"
+		]
+	},
+	"imagesuggestions-desc": "Предупреждает участников о потенциально полезных изображениях для статей",
+	"imagesuggestions-notification-message": "Мы нашли медиафайлы, которые могут подойти для статьи «'''$1'''» в {{GENDER:$2|вашем}} списке наблюдения.",
+	"imagesuggestions-notification-link-text-article": "Посмотреть статью",
+	"imagesuggestions-notification-link-text-media": "Посмотреть медиафайл",
+	"imagesuggestions-notification-link-text-help": "Помощь",
+	"echo-category-title-image-suggestions": "Предложения изображений",
+	"echo-pref-tooltip-image-suggestions": "Сообщать мне, когда появится предложение по изображению для статьи в моем списке наблюдения."
+}
