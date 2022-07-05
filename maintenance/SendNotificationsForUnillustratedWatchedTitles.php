@@ -162,9 +162,10 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 
 			if ( $isNewBatch ) {
 				$this->outputChanneled(
-					'Batch #' . ( $i / $this->mBatchSize + 1 ) . '(' . $i . '-' . ( $i + $this->mBatchSize ) . '). ',
+					'Batch #' . ( $i / $this->mBatchSize + 1 ) . '(' . $i . '-' . ( $i + $this->mBatchSize ) . ").\n",
 					'progress'
 				);
+				$this->loadBalancerFactory->waitForReplication();
 			}
 
 			$title = Title::newFromID( $pageId );
@@ -192,14 +193,6 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 					$this->namespaceInfo->getCanonicalName( NS_FILE ) . ':' . $suggestion['image']
 				)
 			);
-
-			if ( $isNewBatch ) {
-				$this->outputChanneled(
-					"Complete.\n",
-					'progress'
-				);
-				$this->loadBalancerFactory->waitForReplication();
-			}
 		}
 
 		$numUsers = count( $this->notifiedUserIds );

@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"BAPerdana-WMF"
+		]
+	},
+	"imagesuggestions-desc": "Beri tahu pengguna akan gambar yang tersedia untuk artikel Wikipedia",
+	"imagesuggestions-notification-message": "Kami menemukan gambar yang mungkin sesuai untuk artikel \"'''$1'''\" dalam daftar pantauan {{GENDER:$2|Anda}}.",
+	"imagesuggestions-notification-link-text-article": "Lihat artikel",
+	"imagesuggestions-notification-link-text-media": "Tinjau media",
+	"imagesuggestions-notification-link-text-help": "Halaman bantuan",
+	"echo-category-title-image-suggestions": "Saran untuk gambar",
+	"echo-pref-tooltip-image-suggestions": "Beri tahu saya apabila ada saran gambar untuk artikel yang masuk dalam daftar pantauan saya."
+}
