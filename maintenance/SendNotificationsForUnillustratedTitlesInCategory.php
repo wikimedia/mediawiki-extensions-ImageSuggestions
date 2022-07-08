@@ -3,16 +3,21 @@
 namespace MediaWiki\Extension\ImageSuggestions\Maintenance;
 
 use CirrusSearch\Connection;
+use CirrusSearch\Query\QueryHelper;
 use CirrusSearch\SearchConfig;
 use CirrusSearch\Wikimedia\WeightedTagsHooks;
 use ConfigFactory;
 use Elastica\Query;
+use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchQuery;
 use Elastica\Scroll;
 use Elastica\Search;
 use Generator;
+use InvalidArgumentException;
 use MediaWiki\Extension\ImageSuggestions\Hooks;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Sparql\SparqlClient;
+use MediaWiki\Sparql\SparqlException;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
@@ -25,7 +30,7 @@ use WikiMap;
 
 require_once __DIR__ . '/AbstractNotifications.php';
 
-class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotifications {
+class SendNotificationsForUnillustratedTitlesInCategory extends AbstractNotifications {
 	/** @var MultiHttpClient */
 	private $multiHttpClient;
 
@@ -41,14 +46,20 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 	/** @var NamespaceInfo */
 	private $namespaceInfo;
 
+	/** @var SparqlClient */
+	private $cirrusCategoriesClient;
+
 	/** @var string */
 	private $suggestionsUri;
 
 	/** @var string */
 	private $instanceOfUri;
 
-	/** @var int */
-	private $minEditCount = 500;
+	/** @var int[] */
+	private $userIds = [];
+
+	/** @var Title[] */
+	private $categories = [];
 
 	/** @var int */
 	private $minConfidence = 0;
@@ -79,8 +90,22 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 		$this->addDescription( 'Generate notifications for unillustrated watchlisted pages' );
 
 		$this->addOption(
-			'min-edit-count',
-			"Minimum edit count for users to receive notification, default: $this->minEditCount",
+			'user',
+			// @codingStandardsIgnoreStart
+			"Name of user to notify",
+			// @codingStandardsIgnoreEnd
+			true,
+			true,
+			false,
+			true
+		);
+		$this->addOption(
+			'category',
+			// @codingStandardsIgnoreStart
+			"Name of category to find unillustrated articles in",
+			// @codingStandardsIgnoreEnd
+			true,
+			true,
 			false,
 			true
 		);
@@ -130,13 +155,20 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 		$this->userOptionsLookup = $services->getUserOptionsLookup();
 		$this->configFactory = $services->getConfigFactory();
 		$this->namespaceInfo = $services->getNamespaceInfo();
+		$this->cirrusCategoriesClient = $services->getService( 'CirrusCategoriesClient' );
 		$this->suggestionsUri = $this->getConfig()->get( 'ImageSuggestionsSuggestionsApi' );
 		$this->instanceOfUri = $this->getConfig()->get( 'ImageSuggestionsInstanceOfApi' );
 
-		$this->minEditCount = (float)$this->getOption(
-			'min-edit-count',
-			$this->minEditCount
-		);
+		$this->userIds = array_map( function ( string $userName ) {
+			$user = $this->userFactory->newFromName( $userName );
+			if ( !$user || $user->getId() === 0 ) {
+				throw new InvalidArgumentException( "Invalid user name: {$userName}" );
+			}
+			return $user->getId();
+		}, (array)$this->getOption( 'user' ) );
+		$this->categories = array_map( static function ( string $categoryName ) {
+			return Title::newFromText( $categoryName, NS_CATEGORY );
+		}, (array)$this->getOption( 'category' ) );
 		$this->minConfidence = (float)$this->getOption(
 			'min-confidence',
 			$this->minConfidence
@@ -183,7 +215,9 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 
 			$user = $this->getUserForTitle( $title );
 			if ( !$user ) {
-				continue;
+				// list of users has been exhausted (due to all of them having received more
+				// than $maxNotificationsPerUser notifications) - no point continuing
+				break;
 			}
 
 			$suggestions = $this->getSuggestions( $pageId );
@@ -215,6 +249,55 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 	}
 
 	/**
+	 * This is an adaptation of DeepcatFeature::fetchCategories
+	 *
+	 * @param Title[] $rootCategories
+	 * @return Title[]
+	 * @throws SparqlException
+	 */
+	private function fetchCategories( array $rootCategories ): array {
+		$endpoint = $this->getConfig()->get( 'CirrusSearchCategoryEndpoint' );
+		if ( empty( $endpoint ) ) {
+			return $rootCategories;
+		}
+
+		$categoriesDepth = (int)$this->getConfig()->get( 'CirrusSearchCategoryDepth' );
+		$categoriesLimit = (int)$this->getConfig()->get( 'CirrusSearchCategoryMax' );
+
+		$fullCategoryUrls = array_map( static function ( Title $rootCategory ) {
+			return $rootCategory->getFullURL( '', false, PROTO_CANONICAL );
+		}, $rootCategories );
+
+		$bogusTitle = Title::makeTitle( NS_CATEGORY, 'ZZ' );
+		$bogusFullName = $bogusTitle->getFullURL( '', false, PROTO_CANONICAL );
+		$prefix = substr( $bogusFullName, 0, -2 );
+
+		$results = [];
+		foreach ( $fullCategoryUrls as $fullCategoryUrl ) {
+			$query = <<<SPARQL
+SELECT ?out WHERE {
+	SERVICE mediawiki:categoryTree {
+		bd:serviceParam mediawiki:start <{$fullCategoryUrl}> .
+		bd:serviceParam mediawiki:direction "Reverse" .
+		bd:serviceParam mediawiki:depth {$categoriesDepth} .
+	}
+} ORDER BY ASC(?depth)
+LIMIT {$categoriesLimit}
+SPARQL;
+			$result = $this->cirrusCategoriesClient->query( $query );
+
+			$categories = array_map( static function ( $row ) use ( $prefix ) {
+				return rawurldecode( substr( $row['out'], strlen( $prefix ) ) );
+			}, $result );
+			$results = array_merge( $results, $categories );
+		}
+
+		return array_map( static function ( $categoryName ) {
+			return Title::newFromText( $categoryName, NS_CATEGORY );
+		}, array_unique( $results ) );
+	}
+
+	/**
 	 * @return Generator where every yield is a page id
 	 * @throws MWException
 	 */
@@ -234,8 +317,30 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 			'recommendation.image/exists'
 		);
 
+		try {
+			$categories = $this->fetchCategories( $this->categories );
+		} catch ( SparqlException $e ) {
+			$this->outputChanneled(
+				"Failed to expand with subcategories, moving forward with only the categories provided.\n",
+				'progress'
+			);
+			$categories = $this->categories;
+		}
+
+		$categoriesFilter = new BoolQuery();
+		$categoriesFilter->setMinimumShouldMatch( 1 );
+		foreach ( $categories as $category ) {
+			$categoriesFilter->addShould(
+				QueryHelper::matchPage( 'category.lowercase_keyword', $category->getDBkey() )
+			);
+		}
+
+		$bool = new BoolQuery();
+		$bool->addFilter( $match );
+		$bool->addFilter( $categoriesFilter );
+
 		$query = new Query();
-		$query->setQuery( $match );
+		$query->setQuery( $bool );
 		$query->setSize( $this->mBatchSize );
 		$query->setSource( false );
 		$query->setSort( [ '_doc' ] );
@@ -301,6 +406,10 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 	 * @return UserIdentity|null
 	 */
 	private function getUserForTitle( Title $title ): ?UserIdentity {
+		if ( !$this->userIds ) {
+			return null;
+		}
+
 		$dbr = $this->getDB( DB_REPLICA );
 		$dbrEcho = MWEchoDbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
 		if ( !$dbr || !$dbrEcho ) {
@@ -311,7 +420,11 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 		$previouslyNotifiedUserIds = $dbrEcho->selectFieldValues(
 			[ 'echo_notification', 'echo_event' ],
 			'notification_user',
-			[ 'event_type' => Hooks::EVENT_NAME, 'event_page_id' => $title->getId() ],
+			[
+				'notification_user' => $this->userIds,
+				'event_type' => Hooks::EVENT_NAME,
+				'event_page_id' => $title->getId()
+			],
 			__METHOD__,
 			[ 'DISTINCT' ],
 			[ 'echo_event' => [ 'INNER JOIN', 'notification_event = event_id' ] ]
@@ -327,35 +440,34 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 			return $value !== true;
 		} ) );
 
-		$excludeUserIds = array_merge( $previouslyNotifiedUserIds, $maxNotifiedUserIds, $optedOutUserIds );
+		$availableUserIds = array_diff(
+			$this->userIds,
+			$previouslyNotifiedUserIds,
+			$maxNotifiedUserIds,
+			$optedOutUserIds
+		);
+		if ( !$availableUserIds ) {
+			return null;
+		}
 
+		// get user that has not opted out of image suggestions notifications or
+		// otherwise already excluded, preferring those with most recent edits to page
 		$userIds = $dbr->selectFieldValues(
 			[
-				'watchlist',
 				'user',
 				'actor',
-				'page',
 				'revision',
 			],
-			'DISTINCT wl_user',
-			array_merge(
-				$excludeUserIds ? [ 'wl_user NOT IN (' . $dbr->makeList( $excludeUserIds ) . ')' ] : [],
-				[
-					'wl_namespace' => $title->getNamespace(),
-					'wl_title' => $title->getDBkey(),
-					"user_editcount >= {$this->minEditCount}",
-				]
-			),
+			'DISTINCT user_id',
+			[ 'user_id' => $availableUserIds ],
 			__METHOD__,
 			[
 				'ORDER BY rev_timestamp DESC',
 				'LIMIT' => 1000,
 			],
 			[
-				'user' => [ 'INNER JOIN', 'user_id = wl_user' ],
-				'actor' => [ 'INNER JOIN', 'actor_user = wl_user' ],
-				'page' => [ 'INNER JOIN', [ 'page_namespace = wl_namespace', 'page_title = wl_title' ] ],
-				'revision' => [ 'LEFT JOIN', [ 'rev_page = page_id', 'rev_actor' => 'actor_id' ] ],
+				'actor' => [ 'INNER JOIN', 'actor_user = user_id' ],
+				'revision' => [ 'LEFT JOIN', [ 'rev_page' => $title->getId(), 'rev_actor' => 'actor_id' ] ],
 			]
 		);
 
@@ -404,5 +516,5 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 	}
 }
 
-$maintClass = SendNotificationsForUnillustratedWatchedTitles::class;
+$maintClass = SendNotificationsForUnillustratedTitlesInCategory::class;
 require_once RUN_MAINTENANCE_IF_MAIN;
