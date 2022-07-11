@@ -1,8 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hamilton Abreu"
+			"Hamilton Abreu",
+			"Sannita"
 		]
 	},
-	"imagesuggestions-desc": "Alerta os utilizadores sobre imagens possivelmente úteis para ilustrar artigos"
+	"imagesuggestions-desc": "Alerta os utilizadores sobre imagens possivelmente úteis para ilustrar artigos",
+	"imagesuggestions-notification-message": "Encontramos meios de comunicação que podem ser um bom ajuste para o artigo, \"'''$1''', na vossa lista de observação.",
+	"imagesuggestions-notification-link-text-article": "Ver artigo",
+	"imagesuggestions-notification-link-text-media": "Revisar mídia",
+	"imagesuggestions-notification-link-text-help": "Ajuda",
+	"echo-category-title-image-suggestions": "Sugestão de imagens",
+	"echo-pref-tooltip-image-suggestions": "Avise-me quando houver uma sugestão de imagem para um artigo na minha lista de artigos vigiados."
 }
