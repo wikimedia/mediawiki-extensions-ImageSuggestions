@@ -64,6 +64,9 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 	/** @var int[] Map of [userId => number-of-notifications] */
 	private $notifiedUserIds = [];
 
+	/** @var bool[] Map of [userId => opted-in-to-notifications] */
+	private $optedInUserIds = [];
+
 	public function __construct() {
 		parent::__construct();
 
@@ -315,29 +318,21 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 			return $amount >= $this->maxNotificationsPerUser;
 		} ) );
 
-		$excludeUserIds = array_merge( $previouslyNotifiedUserIds, $maxNotifiedUserIds );
+		// list of users who have opted out of receiving any kind of image suggestions notification
+		$optedOutUserIds = array_keys( array_filter( $this->optedInUserIds, static function ( $value ) {
+			return $value !== true;
+		} ) );
 
-		$types = [ 'web', 'email', 'push' ];
-		$notificationOptions = array_map( static function ( $type ) {
-			return "echo-subscriptions-$type-" . Hooks::EVENT_NAME;
-		}, $types );
-		$notificationDefaultValues = array_map( function ( $option ) {
-			return $this->userOptionsLookup->getDefaultOption( $option );
-		}, $notificationOptions );
-		$notificationOptionsTableAliases = array_map( static function ( $type ) {
-			return "up{$type}";
-		}, $types );
+		$excludeUserIds = array_merge( $previouslyNotifiedUserIds, $maxNotifiedUserIds, $optedOutUserIds );
 
-		$userId = $dbr->selectField(
-			array_merge( [
+		$userIds = $dbr->selectFieldValues(
+			[
 				'watchlist',
 				'user',
 				'actor',
 				'page',
 				'revision',
 			],
-			// below builds an array like [ 'upweb' => 'user_properties', ... ]
-			array_fill_keys( $notificationOptionsTableAliases, 'user_properties' ) ),
 			'DISTINCT wl_user',
 			array_merge(
 				$excludeUserIds ? [ 'wl_user NOT IN (' . $dbr->makeList( $excludeUserIds ) . ')' ] : [],
@@ -345,42 +340,45 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 					'wl_namespace' => $title->getNamespace(),
 					'wl_title' => $title->getDBkey(),
 					"user_editcount >= {$this->minEditCount}",
-					$dbr->makeList(
-						// below builds an array like [ 'upweb.up_value = 1 OR up_value IS NULL', ... ]
-						array_map( static function ( $option, $alias ) {
-							// if notification is enabled by default, we may have no up_property row
-							return "{$alias}.up_value = 1" . ( $option ? " OR {$alias}.up_value IS NULL" : '' );
-						}, $notificationDefaultValues, $notificationOptionsTableAliases ),
-						$dbr::LIST_OR
-					),
 				]
 			),
 			__METHOD__,
 			[
 				'ORDER BY rev_timestamp DESC',
-				'LIMIT' => 1,
+				'LIMIT' => 1000,
 			],
-			array_merge(
-				[
-					'user' => [ 'INNER JOIN', 'user_id = wl_user' ],
-					'actor' => [ 'INNER JOIN', 'actor_user = wl_user' ],
-					'page' => [ 'INNER JOIN', [ 'page_namespace = wl_namespace', 'page_title = wl_title' ] ],
-					'revision' => [ 'LEFT JOIN', [ 'rev_page = page_id', 'rev_actor' => 'actor_id' ] ],
-				],
-				// below builds an array like [ 'upweb' => [ 'LEFT JOIN', [ ... ] ], ... ]
-				array_combine(
-					$notificationOptionsTableAliases,
-					array_map( static function ( $option, $alias ) {
-						return [ 'LEFT JOIN', [ "{$alias}.up_user = user_id", "{$alias}.up_property" => $option ] ];
-					}, $notificationOptions, $notificationOptionsTableAliases )
-				)
-			)
+			[
+				'user' => [ 'INNER JOIN', 'user_id = wl_user' ],
+				'actor' => [ 'INNER JOIN', 'actor_user = wl_user' ],
+				'page' => [ 'INNER JOIN', [ 'page_namespace = wl_namespace', 'page_title = wl_title' ] ],
+				'revision' => [ 'LEFT JOIN', [ 'rev_page = page_id', 'rev_actor' => 'actor_id' ] ],
+			]
 		);
 
-		if ( $userId === false ) {
-			return null;
+		// iterate users to figure out whether they've opted in to any type of notifications
+		// for this event, and store the known results in $this->optedInUserIds so we can
+		// easily exclude these for the next result right away.
+		// we can't do this in the query because not all these options are available in the
+		// same database: GlobalPreferences may live elsewhere
+		foreach ( $userIds as $userId ) {
+			$user = $this->userFactory->newFromId( $userId );
+
+			// check whether user is already known to have opted in
+			if ( $this->optedInUserIds[$userId] ?? false ) {
+				return $user;
+			}
+
+			foreach ( [ 'web', 'email', 'push' ] as $type ) {
+				$optionName = "echo-subscriptions-$type-" . Hooks::EVENT_NAME;
+				if ( $this->userOptionsLookup->getOption( $user, $optionName ) ) {
+					$this->optedInUserIds[$userId] = true;
+					return $user;
+				}
+			}
+			$this->optedInUserIds[$userId] = false;
 		}
-		return $this->userFactory->newFromId( $userId );
+
+		return null;
 	}
 
 	protected function createNotification( UserIdentity $user, Title $title, string $mediaUrl ) {
