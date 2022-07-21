@@ -1,14 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kaganer"
+			"Kaganer",
+			"Pacha Tchernof"
 		]
 	},
-	"imagesuggestions-desc": "Предупреждает участников о потенциально полезных изображениях для статей",
-	"imagesuggestions-notification-message": "Мы нашли медиафайлы, которые могут подойти для статьи «'''$1'''» в {{GENDER:$2|вашем}} списке наблюдения.",
+	"imagesuggestions-desc": "Оповещает пользователей о потенциально полезных изображениях для статей",
+	"imagesuggestions-notification-message": "Мы нашли медиафайл, который мог бы стать хорошей иллюстрацией в статье «'''$1'''» из {{GENDER:$2|вашего}} списка наблюдения.",
 	"imagesuggestions-notification-link-text-article": "Посмотреть статью",
 	"imagesuggestions-notification-link-text-media": "Посмотреть медиафайл",
 	"imagesuggestions-notification-link-text-help": "Помощь",
 	"echo-category-title-image-suggestions": "Предложения изображений",
-	"echo-pref-tooltip-image-suggestions": "Сообщать мне, когда появится предложение по изображению для статьи в моем списке наблюдения."
+	"echo-pref-tooltip-image-suggestions": "Присылать уведомления с подобранными изображениями для статей из моего списка наблюдения."
 }
