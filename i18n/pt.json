@@ -2,12 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Albertoleoncio",
+			"FDoria-WMF",
 			"Hamilton Abreu",
 			"Sannita"
 		]
 	},
 	"imagesuggestions-desc": "Alerta os utilizadores sobre imagens possivelmente úteis para ilustrar artigos",
-	"imagesuggestions-notification-message": "Encontramos multimédia que poderá melhorar o artigo, \"'''$1'''\", presente na sua lista de páginas vigiadas.",
+	"imagesuggestions-notification-message": "Encontramos uma mídia que pode ser adequada para o artigo \"''' $1 '''\", em {{GENDER:$2| sua}} lista de observação.",
 	"imagesuggestions-notification-link-text-article": "Ver artigo",
 	"imagesuggestions-notification-link-text-media": "Revisar mídia",
 	"imagesuggestions-notification-link-text-help": "Ajuda",
