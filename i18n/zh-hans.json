@@ -1,8 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
+			"Lakejason0",
 			"StarrySky"
 		]
 	},
-	"imagesuggestions-desc": "提醒用户可能对文章有用的图像"
+	"imagesuggestions-desc": "提醒用户可能对文章有用的图像",
+	"imagesuggestions-notification-message": "我们找到了可能对条目“'''$1'''”（在{{GENDER:$2|您的}}监视列表中）有帮助的多媒体资源。",
+	"imagesuggestions-notification-link-text-article": "查看条目",
+	"imagesuggestions-notification-link-text-media": "查看多媒体",
+	"imagesuggestions-notification-link-text-help": "帮助",
+	"echo-category-title-image-suggestions": "图片建议",
+	"echo-pref-tooltip-image-suggestions": "当我的监视列表中的文章有图片建议时通知我。"
 }
