@@ -8,10 +8,10 @@
 		]
 	},
 	"imagesuggestions-desc": "Alerta os utilizadores sobre imagens possivelmente úteis para ilustrar artigos",
-	"imagesuggestions-notification-message": "Encontramos uma mídia que pode ser adequada para o artigo \"''' $1 '''\", em {{GENDER:$2| sua}} lista de observação.",
+	"imagesuggestions-notification-message": "Encontramos conteúdo multimédia que pode ser adequado para o artigo \"''' $1 '''\", das suas páginas vigiadas.{{GENDER:$2|}}",
 	"imagesuggestions-notification-link-text-article": "Ver artigo",
-	"imagesuggestions-notification-link-text-media": "Revisar mídia",
+	"imagesuggestions-notification-link-text-media": "Rever multimédia",
 	"imagesuggestions-notification-link-text-help": "Ajuda",
-	"echo-category-title-image-suggestions": "Sugestão de imagens",
-	"echo-pref-tooltip-image-suggestions": "Avise-me quando houver uma sugestão de imagem para um artigo na minha lista de artigos vigiados."
+	"echo-category-title-image-suggestions": "Sugestões de imagens",
+	"echo-pref-tooltip-image-suggestions": "Avisar-me quando houver uma sugestão de imagem para um artigo na minha lista de páginas vigiadas."
 }
