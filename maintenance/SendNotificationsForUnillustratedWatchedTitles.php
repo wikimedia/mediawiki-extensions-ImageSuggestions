@@ -20,14 +20,10 @@ use MWException;
 use NamespaceInfo;
 use Title;
 use WikiMap;
-use Wikimedia\Rdbms\LBFactory;
 
 require_once __DIR__ . '/AbstractNotifications.php';
 
 class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotifications {
-	/** @var LBFactory */
-	private $loadBalancerFactory;
-
 	/** @var UserFactory */
 	private $userFactory;
 
@@ -121,7 +117,6 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 
 	public function init() {
 		$services = MediaWikiServices::getInstance();
-		$this->loadBalancerFactory = $services->getDBLoadBalancerFactory();
 		$this->userFactory = $services->getUserFactory();
 		$this->userOptionsLookup = $services->getUserOptionsLookup();
 		$this->namespaceInfo = $services->getNamespaceInfo();
@@ -168,7 +163,7 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 					'Batch #' . ( $i / $this->mBatchSize + 1 ) . '(' . $i . '-' . ( $i + $this->mBatchSize ) . ").\n",
 					'progress'
 				);
-				$this->loadBalancerFactory->waitForReplication();
+				$this->waitForReplication();
 			}
 
 			$title = Title::newFromID( $pageId );
