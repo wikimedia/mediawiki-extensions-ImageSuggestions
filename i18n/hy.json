@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beko",
+			"Kareyac"
+		]
+	},
+	"imagesuggestions-desc": "Մասնակիցներին զգուշացնում է հոդվածների համար հնարավոր օգտակար պատկերների մասին",
+	"imagesuggestions-extensionname": "Պատկերի առաջարկներ",
+	"imagesuggestions-notification-message": "{{GENDER:$2|Ձեր}} դիտացանկում գտանք մեդիա ֆայլեր, որոնք կարող են հարմար լինել «'''$1''' հոդվածին:",
+	"imagesuggestions-notification-link-text-article": "Դիտել հոդվածը",
+	"imagesuggestions-notification-link-text-media": "Վերանայեք մեդիա ֆայլերը",
+	"imagesuggestions-notification-link-text-help": "Օգնություն",
+	"echo-category-title-image-suggestions": "Պատկերի առաջարկ",
+	"echo-pref-tooltip-image-suggestions": "Տեղեկացրեք ինձ, երբ պատկերի առաջարկ կա իմ դիտացանկում եղած հոդվածի համար։"
+}
