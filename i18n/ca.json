@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robertgarrigos"
+		]
+	},
+	"imagesuggestions-desc": "Alerta els usuaris d'imatges potencialment útils per als articles",
+	"imagesuggestions-notification-message": "Hem trobat mèdia que pot ser adequat per a l'article, \"''' $1 '''\", a {{GENDER:$2| la vostra}} llista de seguiment.",
+	"imagesuggestions-notification-link-text-article": "Mostra l'article",
+	"imagesuggestions-notification-link-text-media": "Revisió dels mèdia.",
+	"imagesuggestions-notification-link-text-help": "Ajuda",
+	"echo-category-title-image-suggestions": "Suggeriments d'imatge",
+	"echo-pref-tooltip-image-suggestions": "Aviseu-me quan hi hagi un suggeriment d'imatge per a un article a la meva llista de seguiment."
+}
