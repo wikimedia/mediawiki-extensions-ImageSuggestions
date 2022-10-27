@@ -14,6 +14,7 @@
 	"descriptionmsg": "imagesuggestions-desc",
 	"license-name": "GPL-2.0-or-later",
 	"requires": {
+		"MediaWiki": ">= 1.31.0",
 		"extensions": {
 			"Echo": "*"
 		}
@@ -39,7 +40,6 @@
 			"value": ""
 		}
 	},
-	"HookHandlers": {},
 	"Hooks": {
 		"BeforePageDisplay": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onBeforePageDisplay",
 		"BeforeCreateEchoEvent": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onBeforeCreateEchoEvent"
