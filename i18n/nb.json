@@ -4,9 +4,10 @@
 			"Jon Harald Søby"
 		]
 	},
-	"imagesuggestions-desc": "Varsle brukere om potensielt nyttige bilder for artikler",
+	"imagesuggestions-desc": "Varsler brukere om potensielt nyttige bilder for artikler",
 	"imagesuggestions-notification-message": "Vi fant medieinnhold som kan passe bra til artikkelen «'''$1'''» på overvåkningslista {{GENDER:$2|di}}.",
 	"imagesuggestions-notification-link-text-article": "Vis artikkelen",
+	"imagesuggestions-notification-link-text-media": "Gå gjennom medieinnhold",
 	"imagesuggestions-notification-link-text-help": "Hjelp",
 	"echo-category-title-image-suggestions": "Bildeforslag",
 	"echo-pref-tooltip-image-suggestions": "Varsle meg når det er et bildeforslag for en artikkel på overvåkningslista mi."

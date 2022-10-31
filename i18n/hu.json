@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tgr"
+		]
+	},
+	"imagesuggestions-desc": "Értesíti a felhasználókat a szócikkekben potenciálisan felhasználható képekről",
+	"imagesuggestions-notification-message": "Találtunk egy médiafájlt, ami beleillhet a {{GENDER:$2|figyelőlistádon}} lévő „'''$1'''” szócikkbe.",
+	"imagesuggestions-notification-link-text-article": "Szócikk megtekintése",
+	"imagesuggestions-notification-link-text-media": "Médiafájl ellenőrzése",
+	"imagesuggestions-notification-link-text-help": "Segítség",
+	"echo-category-title-image-suggestions": "Képjavaslatok",
+	"echo-pref-tooltip-image-suggestions": "Értesítést kérek, ha képjavaslat érhető el a figyelőlistámon lévő szócikkhez."
+}
