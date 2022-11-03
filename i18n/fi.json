@@ -1,9 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"MITO"
+			"MITO",
+			"Stryn"
 		]
 	},
+	"imagesuggestions-desc": "Ilmoittaa käyttäjille artikkeliin mahdollisesti lisättävistä hyödyllisistä kuvista",
+	"imagesuggestions-notification-message": "Löysimme mediatiedoston, joka saattaa sopia {{GENDER:$2|tarkkailulistallasi}} olevaan artikkeliin \"'''$1'''\".",
 	"imagesuggestions-notification-link-text-article": "Näytä artikkeli",
-	"imagesuggestions-notification-link-text-help": "Apua"
+	"imagesuggestions-notification-link-text-media": "Tarkista tiedosto",
+	"imagesuggestions-notification-link-text-help": "Apua",
+	"echo-category-title-image-suggestions": "Kuvaehdotukset",
+	"echo-pref-tooltip-image-suggestions": "Ilmoita minulle, kun tarkkailulistallani olevaan artikkeliin on kuvaehdotuksia."
 }
