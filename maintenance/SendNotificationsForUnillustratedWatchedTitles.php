@@ -133,15 +133,15 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 		$this->suggestionsUri = $this->getConfig()->get( 'ImageSuggestionsSuggestionsApi' );
 		$this->instanceOfUri = $this->getConfig()->get( 'ImageSuggestionsInstanceOfApi' );
 
-		$this->minEditCount = (float)$this->getOption(
+		$this->minEditCount = (int)$this->getOption(
 			'min-edit-count',
 			$this->minEditCount
 		);
-		$this->minConfidence = (float)$this->getOption(
+		$this->minConfidence = (int)$this->getOption(
 			'min-confidence',
 			$this->minConfidence
 		);
-		$this->maxNotificationsPerUser = (float)$this->getOption(
+		$this->maxNotificationsPerUser = (int)$this->getOption(
 			'max-notifications-per-user',
 			$this->maxNotificationsPerUser
 		);
@@ -221,6 +221,7 @@ class SendNotificationsForUnillustratedWatchedTitles extends AbstractNotificatio
 	private function getPageIdsWithSuggestions(): Generator {
 		/** @var SearchConfig $searchConfig */
 		$searchConfig = $this->configFactory->makeConfig( 'CirrusSearch' );
+		'@phan-var SearchConfig $searchConfig';
 		$connection = Connection::getPool( $searchConfig );
 		$client = $connection->getClient();
 		$index = $connection->getIndex(

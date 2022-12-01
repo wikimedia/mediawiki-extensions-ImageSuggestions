@@ -38,6 +38,7 @@ class SendTestNotification extends AbstractNotifications {
 		$services = MediaWikiServices::getInstance();
 
 		$success = $this->createNotification(
+			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			$services->getUserFactory()->newFromName( $this->getOption( 'agent' ) ),
 			Title::newFromText( $this->getOption( 'title' ) ),
 			$this->getOption( 'media-url' )

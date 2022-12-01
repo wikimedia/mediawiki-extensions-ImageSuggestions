@@ -169,11 +169,11 @@ class SendNotificationsForUnillustratedTitlesInCategory extends AbstractNotifica
 		$this->categories = array_map( static function ( string $categoryName ) {
 			return Title::newFromText( $categoryName, NS_CATEGORY );
 		}, (array)$this->getOption( 'category' ) );
-		$this->minConfidence = (float)$this->getOption(
+		$this->minConfidence = (int)$this->getOption(
 			'min-confidence',
 			$this->minConfidence
 		);
-		$this->maxNotificationsPerUser = (float)$this->getOption(
+		$this->maxNotificationsPerUser = (int)$this->getOption(
 			'max-notifications-per-user',
 			$this->maxNotificationsPerUser
 		);
@@ -304,6 +304,7 @@ SPARQL;
 	private function getPageIdsWithSuggestions(): Generator {
 		/** @var SearchConfig $searchConfig */
 		$searchConfig = $this->configFactory->makeConfig( 'CirrusSearch' );
+		'@phan-var SearchConfig $searchConfig';
 		$connection = Connection::getPool( $searchConfig );
 		$client = $connection->getClient();
 		$index = $connection->getIndex(

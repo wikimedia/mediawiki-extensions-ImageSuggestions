@@ -21,7 +21,6 @@ class ImageSuggestionsEchoTestHelper {
 	 * @param UserIdentity $user
 	 * @param Title $title
 	 * @param string $imageurl
-	 * @return bool
 	 */
 	public static function send( UserIdentity $user, Title $title, $imageurl ) {
 		$type = 'image-suggestions';
