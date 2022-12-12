@@ -55,6 +55,8 @@
 	},
 	"ResourceModules": {
 		"ext.imagesuggestions.notifications.styles": {
+			"deprecated": "For cached HTML only",
+			"targets": [ "desktop", "mobile" ],
 			"dependencies": [
 				"oojs-ui.styles.icons-media",
 				"oojs-ui-core.icons"

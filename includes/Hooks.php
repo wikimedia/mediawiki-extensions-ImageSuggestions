@@ -27,7 +27,10 @@ class Hooks {
 	 * @param \ParserOutput $parserOutput
 	 */
 	public static function onBeforePageDisplay( $parserOutput ) {
-		$parserOutput->addModules( [ 'ext.imagesuggestions.notifications.styles' ] );
+		$parserOutput->addModules( [
+			'oojs-ui.styles.icons-media',
+			'oojs-ui-core.icons'
+		] );
 	}
 
 	/**
