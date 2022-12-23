@@ -4,6 +4,12 @@
 			"Eleassar"
 		]
 	},
+	"imagesuggestions-desc": "Opozori uporabnike na potencialno uporabne slike za članke",
+	"imagesuggestions-extensionname": "Predlogi za slike",
+	"imagesuggestions-notification-message": "Našli smo predstavnost, ki bi lahko bila primerna za članek »''''$1'''« na {{GENDER:$2| vašem}} spisku nadzorov.",
+	"imagesuggestions-notification-link-text-article": "Ogled članka",
+	"imagesuggestions-notification-link-text-media": "Pregled predstavnosti",
+	"imagesuggestions-notification-link-text-help": "Pomoč",
 	"echo-category-title-image-suggestions": "Predlogi za slike",
 	"echo-pref-tooltip-image-suggestions": "Obvesti me, ko kdo predlaga sliko za članek na mojem spisku nadzorov."
 }
