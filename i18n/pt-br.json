@@ -1,8 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Duke of Wikipädia"
+			"Duke of Wikipädia",
+			"Eduardoaddad"
 		]
 	},
-	"imagesuggestions-notification-message": "Encontramos material multimídia que poderá melhorar o artigo \"'''$1'''\", que está presente na {{GENDER:$2|sua}} lista de páginas vigiadas."
+	"imagesuggestions-notification-message": "Encontramos material multimídia que poderá melhorar o artigo \"'''$1'''\", que está presente na {{GENDER:$2|sua}} lista de páginas vigiadas.",
+	"imagesuggestions-notification-link-text-article": "Ver artigo",
+	"imagesuggestions-notification-link-text-help": "Ajuda",
+	"echo-category-title-image-suggestions": "Sugestões de imagem",
+	"echo-pref-tooltip-image-suggestions": "Avisar-me quando houver uma sugestão de imagem para um artigo na minha lista de páginas vigiadas."
 }
