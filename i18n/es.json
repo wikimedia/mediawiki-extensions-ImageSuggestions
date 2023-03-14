@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"MarcoAurelio"
+		]
+	},
+	"imagesuggestions-notification-link-text-article": "Ver artículo",
+	"imagesuggestions-notification-link-text-help": "Ayuda",
+	"echo-category-title-image-suggestions": "Sugerencias de imágenes",
+	"echo-pref-tooltip-image-suggestions": "Notificarme cuando haya una sugerencia de imagen para un artículo de mi lista de seguimiento."
+}
