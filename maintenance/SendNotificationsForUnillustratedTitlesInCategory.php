@@ -14,7 +14,9 @@ use Elastica\Scroll;
 use Elastica\Search;
 use Generator;
 use InvalidArgumentException;
+use Maintenance;
 use MediaWiki\Extension\ImageSuggestions\Hooks;
+use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Sparql\SparqlClient;
 use MediaWiki\Sparql\SparqlException;
@@ -28,9 +30,7 @@ use MWException;
 use NamespaceInfo;
 use Title;
 
-require_once __DIR__ . '/AbstractNotifications.php';
-
-class SendNotificationsForUnillustratedTitlesInCategory extends AbstractNotifications {
+class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {
 	/** @var MultiHttpClient */
 	private $multiHttpClient;
 
@@ -85,6 +85,8 @@ class SendNotificationsForUnillustratedTitlesInCategory extends AbstractNotifica
 	public function __construct() {
 		parent::__construct();
 
+		$this->requireExtension( 'ImageSuggestions' );
+		$this->requireExtension( 'Echo' );
 		$this->requireExtension( 'CirrusSearch' );
 
 		$this->addDescription( 'Generate notifications for unillustrated watchlisted pages' );
@@ -500,6 +502,11 @@ SPARQL;
 
 	protected function createNotification( UserIdentity $user, Title $title, string $mediaUrl ) {
 		if ( $this->verbose && !$this->isQuiet() ) {
+			// note that this is duplication of what is already implemented in
+			// NotificationHelper::createNotification, but that one sends to
+			// a `LoggerInterface`, while this uses convoluted `print` mechanics
+			// defined in `Maintenance`, and I couldn't bother checking whether
+			// mixing both wouldn't lead to odd results
 			$this->outputChanneled(
 				"Notification: " .
 				"user: {$user->getName()} (id: {$user->getId()}), " .
@@ -509,11 +516,14 @@ SPARQL;
 			);
 		}
 
-		if ( $this->dryRun ) {
-			return false;
-		}
-
-		return parent::createNotification( $user, $title, $mediaUrl );
+		$notificationHelper = new NotificationHelper();
+		$notificationHelper->createNotification(
+			$user,
+			$title,
+			$mediaUrl,
+			null,
+			$this->dryRun
+		);
 	}
 }
 

@@ -1,4 +1,12 @@
 {
+	"name": "mediawiki/imagesuggestions",
+	"type": "mediawiki-extension",
+	"autoload": {
+		"psr-4": {
+			"MediaWiki\\Extensions\\ImageSuggestions\\": "includes/",
+			"MediaWiki\\Extensions\\ImageSuggestions\\Maintenance\\": "maintenance/"
+		}
+	},
 	"require-dev": {
 		"mediawiki/mediawiki-codesniffer": "41.0.0",
 		"mediawiki/mediawiki-phan-config": "0.12.1",
