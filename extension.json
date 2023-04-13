@@ -16,15 +16,16 @@
 	"requires": {
 		"MediaWiki": ">= 1.40.0",
 		"extensions": {
-			"Echo": "*"
+			"Echo": "*",
+			"CirrusSearch": "*"
 		}
 	},
 	"AutoloadNamespaces": {
-		"MediaWiki\\Extension\\ImageSuggestions\\": "includes/"
+		"MediaWiki\\Extension\\ImageSuggestions\\": "includes/",
+		"MediaWiki\\Extension\\ImageSuggestions\\Maintenance\\": "maintenance/"
 	},
 	"TestAutoloadNamespaces": {
-		"MediaWiki\\Extension\\ImageSuggestions\\Tests\\MediaWiki\\": "tests/phpunit/",
-		"MediaWiki\\Extension\\ImageSuggestions\\Maintenance\\": "maintenance/"
+		"MediaWiki\\Extension\\ImageSuggestions\\Tests\\MediaWiki\\": "tests/phpunit/"
 	},
 	"config": {
 		"ImageSuggestionsSuggestionsApi": {
@@ -65,5 +66,8 @@
 				"oojs-ui-core.icons"
 			]
 		}
+	},
+	"JobClasses": {
+		"ImageSuggestionsNotifications": "MediaWiki\\Extension\\ImageSuggestions\\NotificationsJob"
 	}
 }
