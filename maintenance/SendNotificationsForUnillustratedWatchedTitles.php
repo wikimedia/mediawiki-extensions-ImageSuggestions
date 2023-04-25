@@ -16,12 +16,12 @@ use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
+use MediaWiki\WikiMap\WikiMap;
 use MultiHttpClient;
 use MWEchoDbFactory;
 use MWException;
 use NamespaceInfo;
 use Title;
-use WikiMap;
 
 require_once __DIR__ . '/AbstractNotifications.php';
 

@@ -14,7 +14,7 @@
 	"descriptionmsg": "imagesuggestions-desc",
 	"license-name": "GPL-2.0-or-later",
 	"requires": {
-		"MediaWiki": ">= 1.31.0",
+		"MediaWiki": ">= 1.40.0",
 		"extensions": {
 			"Echo": "*"
 		}
@@ -56,7 +56,10 @@
 	"ResourceModules": {
 		"ext.imagesuggestions.notifications.styles": {
 			"deprecated": "For cached HTML only",
-			"targets": [ "desktop", "mobile" ],
+			"targets": [
+				"desktop",
+				"mobile"
+			],
 			"dependencies": [
 				"oojs-ui.styles.icons-media",
 				"oojs-ui-core.icons"
