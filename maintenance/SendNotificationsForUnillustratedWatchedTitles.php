@@ -12,6 +12,8 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 	private array $defaultParams = [
 		'minEditCount' => 1,
 		'minConfidence' => 0,
+		// @todo change below to 0
+		'minConfidenceSection' => 101,
 		'maxNotificationsPerUser' => 2,
 		'excludeInstanceOf' => [],
 		'maxJobs' => -1,
@@ -43,7 +45,15 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 		$this->addOption(
 			'min-confidence',
 			// @codingStandardsIgnoreStart
-			"Minimum confidence score (0-100) required to send notification for suggestion, default: " .  $this->defaultParams['minConfidence'],
+			"Minimum confidence score (0-100) required to send notification for an article-level suggestion, default: " .  $this->defaultParams['minConfidence'],
+			// @codingStandardsIgnoreEnd
+			false,
+			true
+		);
+		$this->addOption(
+			'min-confidence-section',
+			// @codingStandardsIgnoreStart
+			"Minimum confidence score (0-100) required to send notification for a section-level suggestion, default: " .  $this->defaultParams['minConfidenceSection'],
 			// @codingStandardsIgnoreEnd
 			false,
 			true
@@ -125,6 +135,10 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 			'minConfidence' => (int)$this->getOption(
 				'min-confidence',
 				$this->defaultParams['minConfidence']
+			),
+			'minConfidenceSection' => (int)$this->getOption(
+				'min-confidence-section',
+				$this->defaultParams['minConfidenceSection']
 			),
 			'maxNotificationsPerUser' => (int)$this->getOption(
 				'max-notifications-per-user',

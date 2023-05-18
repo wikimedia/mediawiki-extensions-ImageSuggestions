@@ -43,7 +43,8 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onBeforePageDisplay",
-		"BeforeCreateEchoEvent": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onBeforeCreateEchoEvent"
+		"BeforeCreateEchoEvent": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onBeforeCreateEchoEvent",
+		"EchoGetBundleRules": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onEchoGetBundleRules"
 	},
 	"MessagesDirs": {
 		"ImageSuggestions": [

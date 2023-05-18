@@ -15,6 +15,7 @@ class NotificationHelper {
 		UserIdentity $user,
 		Title $title,
 		string $mediaUrl,
+		?string $sectionHeading = null,
 		LoggerInterface $logger = null,
 		bool $noop = false
 	): ?EchoEvent {
@@ -23,13 +24,15 @@ class NotificationHelper {
 				"Notification: " .
 				"user: {userName} (id: {userId}), " .
 				"title: {titleText} (id: {titleId}), " .
-				"media: {mediaUrl}",
+				"media-url: {mediaUrl}, " .
+				"section-heading: {sectionHeading} ",
 				[
 					'userName' => $user->getName(),
 					'userId' => $user->getId(),
 					'titleText' => $title->getText(),
 					'titleId' => $title->getId(),
 					'mediaUrl' => $mediaUrl,
+					'sectionHeading' => $sectionHeading ?? 'none',
 				]
 			);
 		}
@@ -45,6 +48,7 @@ class NotificationHelper {
 			'agent' => $user,
 			'extra' => [
 				'media-url' => $mediaUrl,
+				'section-heading' => $sectionHeading,
 			],
 		] );
 		// @codeCoverageIgnoreEnd

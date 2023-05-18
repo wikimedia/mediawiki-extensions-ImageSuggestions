@@ -34,6 +34,7 @@ class NotifierTest extends MediaWikiUnitTestCase {
 	private string $instanceOfUri = 'https://instance-of-uri/%1$s/%2$d';
 	private array $defaultJobParams = [
 		'minConfidence' => 70,
+		'minConfidenceSection' => 60,
 		'minEditCount' => 1,
 		'maxNotificationsPerUser' => 2,
 		'excludeInstanceOf' => [],
@@ -62,7 +63,9 @@ class NotifierTest extends MediaWikiUnitTestCase {
 	 * ]
 	 * 	'suggestionsByPageId' => [
 	 * 		$id => [
-	 * 			[ 'origin_wiki' => string, 'image' => string, 'confidence' => float ],
+	 * 			[ 'origin_wiki' => string, 'image' => string,
+	 * 				'confidence' => float, 'section_heading' => ?string,
+	 * 				'section_index' => ?int ],
 	 * 			...
 	 * 		]
 	 * 		...
@@ -75,6 +78,17 @@ class NotifierTest extends MediaWikiUnitTestCase {
 	 * 		...
 	 * 	],
 	 * 	'jobParams' => [],
+	 *  NOTE that notifications are created in reverse order for each individual page - the ones
+	 *  we want to be first in a bundle need to be created last, because the newest ones are
+	 *  displayed first
+	 *  'expectedNotifications' => [
+	 *		[
+	 * 			'userId' => $userId,
+	 * 			'pageId' => $pageId,
+	 * 			'mediaUrl' => string,
+	 *			'sectionHeading' => ?string
+	 *		], ...
+	 * 	]
 	 * @return Notifier
 	 */
 	public function mockNotifier( array $data = [] ): Notifier {
@@ -118,7 +132,6 @@ class NotifierTest extends MediaWikiUnitTestCase {
 				'echo-subscriptions-web-image-suggestions' => false,
 			]
 		);
-		$namespaceInfo = $this->createMock( NamespaceInfo::class );
 		$mainDbConnection = $this->createMock( IReadableDatabase::class );
 		$mainDbConnection->method( 'selectFieldValues' )->willReturnCallback(
 			static function ( $ignore1,
@@ -168,15 +181,31 @@ class NotifierTest extends MediaWikiUnitTestCase {
 		$searchConnection = $this->createMock( Connection::class );
 		$searchConnection->method( 'getIndex' )->willReturn( $searchIndex );
 		$searchConnection->method( 'getClient' )->willReturn( $searchClient );
-		$titleHelper = $this->mockTitleFactory( $data['idToTitleMap'] ?? [] );
+		$titleFactory = $this->mockTitleFactory( $data['idToTitleMap'] ?? [] );
 		$jobParams = array_merge( $this->defaultJobParams, $data['jobParams'] ?? [] );
 		$notificationHelper = $this->createMock( NotificationHelper::class );
-		if ( isset( $data['expectedNotificationsCount'] ) ) {
-			$notificationHelper->expects( $this->exactly( $data['expectedNotificationsCount'] ) )
-				->method( 'createNotification' );
+		if ( isset( $data['expectedNotifications'] ) ) {
+			$expectedArgs = [];
+			foreach ( $data['expectedNotifications'] as $notifData ) {
+				$expectedArgs[] = [
+					$userFactory->newFromID( $notifData['userId'] ),
+					$titleFactory->newFromID( $notifData['pageId'] ),
+					$this->equalTo( $notifData['mediaUrl'] ),
+					$this->equalTo( $notifData['sectionHeading'] ),
+				];
+			}
+			$notificationHelper->expects( $this->exactly( count( $data['expectedNotifications'] ) ) )
+				->method( 'createNotification' )
+				->withConsecutive( ...$expectedArgs );
 		}
+		$namespaceInfo = $this->createMock( NamespaceInfo::class );
+		$namespaceInfo->method( 'getCanonicalName' )->willReturn( 'File' );
 		$wikiMapHelper = $this->createMock( WikiMapHelper::class );
-		$wikiMapHelper->method( 'getForeignURL' )->willReturn( 'foreignUrl' );
+		$wikiMapHelper->method( 'getForeignURL' )->willReturnCallback(
+			static function ( $wikiId, $page, $fragment = null ) {
+				return 'https://' . $wikiId . '/' . $page;
+			}
+		);
 		$notifier = new Notifier(
 			$this->suggestionsUri,
 			$this->instanceOfUri,
@@ -189,7 +218,7 @@ class NotifierTest extends MediaWikiUnitTestCase {
 			$this->mockLogger,
 			$searchConfig,
 			$searchConnection,
-			$titleHelper,
+			$titleFactory,
 			$notificationHelper,
 			$wikiMapHelper,
 			$jobParams
@@ -464,28 +493,47 @@ class NotifierTest extends MediaWikiUnitTestCase {
 				'suggestionsByPageId' => [
 					// Two images, send one notification to one user (user 1)
 					999 => [
-						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_1', 'confidence' => 70 ],
-						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_2', 'confidence' => 80 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_1',
+						  'confidence' => 70, 'section_heading' => null,
+						  'section_index' => null ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_2',
+						  'confidence' => 80, 'section_heading' => null,
+						  'section_index' => null ],
 					],
 					// One image, send one notification to one user (user 1)
 					888 => [
-						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_888_1', 'confidence' => 80 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_888_1',
+						  'confidence' => 80, 'section_heading' => null,
+						  'section_index' => null ],
 					],
 					// One image, send one notification to one user
 					// Will be user 5, as user 4 is not opted in and user 1 is > max notifications
 					777 => [
-						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_777_1', 'confidence' => 80 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_777_1',
+						  'confidence' => 80, 'section_heading' => null,
+						  'section_index' => null ],
 					],
 					// no notification as confidence is too low
 					666 => [
-						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_666_1', 'confidence' => 10 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_666_1',
+						  'confidence' => 10, 'section_heading' => null,
+						  'section_index' => null ],
 					],
 					// no opted-in user for this title, so no notification
 					555 => [
-						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_555_1', 'confidence' => 90 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_555_1',
+						  'confidence' => 90, 'section_heading' => null,
+						  'section_index' => null ],
 					],
 				],
-				'expectedNotificationsCount' => 3,
+				'expectedNotifications' => [
+					[ 'userId' => 1, 'pageId' => 999, 'sectionHeading' => null,
+					  'mediaUrl' => 'https://enwiki/File:Image_999_2', ],
+					[ 'userId' => 1, 'pageId' => 888, 'sectionHeading' => null,
+					  'mediaUrl' => 'https://enwiki/File:Image_888_1', ],
+					[ 'userId' => 5, 'pageId' => 777, 'sectionHeading' => null,
+					  'mediaUrl' => 'https://enwiki/File:Image_777_1', ],
+				]
 			]
 		);
 		$updatedJobParams = $notifier->run();
@@ -508,6 +556,75 @@ class NotifierTest extends MediaWikiUnitTestCase {
 		);
 	}
 
+	public function testSectionNotifications() {
+		$idToTitleMap = [
+			999 => 'Title_1',
+		];
+		$notifier = $this->mockNotifier(
+			[
+				'searchResults' => array_keys( $idToTitleMap ),
+				'idToTitleMap' => $idToTitleMap,
+				'usersByTitle' => [
+					'Title_1' => [ 1 ],
+				],
+				'userOptions' => [
+					1 => [ 'echo-subscriptions-push-image-suggestions' => true ],
+				],
+				'suggestionsByPageId' => [
+					// Two article suggestions, 7 section suggestions - expect a single notification
+					// with the most confident article suggestion and the
+					// MAX_SECTION_SUGGESTIONS_PER_NOTIFICATION most confident section suggestions
+					// (ordered by section_index)
+					999 => [
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_section_5',
+						  'confidence' => 50, 'section_heading' => 'Section_five',
+						  'section_index' => 5 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_section_6',
+						  'confidence' => 60, 'section_heading' => 'Section_six',
+						  'section_index' => 6 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_section_7',
+						  'confidence' => 50, 'section_heading' => 'Section_seven',
+						  'section_index' => 7 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_section_1',
+						  'confidence' => 90, 'section_heading' => 'Section_one',
+						  'section_index' => 1 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_1',
+						  'confidence' => 70, 'section_heading' => null,
+						  'section_index' => null ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_2',
+						  'confidence' => 80, 'section_heading' => null,
+						  'section_index' => null ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_section_2',
+						  'confidence' => 80, 'section_heading' => 'Section_two',
+						  'section_index' => 2 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_section_3',
+						  'confidence' => 70, 'section_heading' => 'Section_three',
+						  'section_index' => 3 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_section_4',
+						  'confidence' => 85, 'section_heading' => 'Section_four',
+						  'section_index' => 4 ],
+					],
+				],
+				// in reverse order
+				'expectedNotifications' => [
+					[ 'userId' => 1, 'pageId' => 999, 'sectionHeading' => 'Section_six',
+					  'mediaUrl' => 'https://enwiki/File:Image_999_section_6', ],
+					[ 'userId' => 1, 'pageId' => 999, 'sectionHeading' => 'Section_four',
+					  'mediaUrl' => 'https://enwiki/File:Image_999_section_4', ],
+					[ 'userId' => 1, 'pageId' => 999, 'sectionHeading' => 'Section_three',
+					  'mediaUrl' => 'https://enwiki/File:Image_999_section_3', ],
+					[ 'userId' => 1, 'pageId' => 999, 'sectionHeading' => 'Section_two',
+					  'mediaUrl' => 'https://enwiki/File:Image_999_section_2', ],
+					[ 'userId' => 1, 'pageId' => 999, 'sectionHeading' => 'Section_one',
+					  'mediaUrl' => 'https://enwiki/File:Image_999_section_1', ],
+					[ 'userId' => 1, 'pageId' => 999, 'sectionHeading' => null,
+					  'mediaUrl' => 'https://enwiki/File:Image_999_2', ],
+				]
+			]
+		);
+		$notifier->run();
+	}
+
 	public function testExcludeInstanceOf() {
 		$idToTitleMap = [
 			999 => 'Title_1',
@@ -526,11 +643,15 @@ class NotifierTest extends MediaWikiUnitTestCase {
 				],
 				'suggestionsByPageId' => [
 					999 => [
-						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_1', 'confidence' => 70 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_1',
+						  'confidence' => 70, 'section_heading' => null,
+						  'section_index' => null ],
 					],
-					// no notification, exluded by instanceOf
+					// no notification, excluded by instanceOf
 					888 => [
-						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_888_1', 'confidence' => 80 ],
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_888_1',
+						  'confidence' => 80, 'section_heading' => null,
+						  'section_index' => null ],
 					],
 				],
 				'instanceOfByPageId' => [
@@ -539,7 +660,12 @@ class NotifierTest extends MediaWikiUnitTestCase {
 					],
 				],
 				'jobParams' => [ 'excludeInstanceOf' => [ 'Q1' ] ],
-				'expectedNotificationsCount' => 1,
+				'expectedNotifications' => [
+					[
+						'userId' => 1, 'pageId' => 999,
+						'mediaUrl' => 'https://enwiki/File:Image_999_1', 'sectionHeading' => null,
+					],
+				]
 			]
 		);
 		$updatedJobParams = $notifier->run();
@@ -554,6 +680,54 @@ class NotifierTest extends MediaWikiUnitTestCase {
 				"Notifications not sent for 1 pages as they had no available users " .
 				"or the suggestions were excluded or didn't meet the confidence threshold."
 			)
+		);
+	}
+
+	public function testExcludeInstanceOfSections() {
+		$idToTitleMap = [
+			999 => 'Title_1',
+		];
+		$notifier = $this->mockNotifier(
+			[
+				'searchResults' => array_keys( $idToTitleMap ),
+				'idToTitleMap' => $idToTitleMap,
+				'usersByTitle' => [
+					'Title_1' => [ 1 ],
+				],
+				'userOptions' => [
+					1 => [ 'echo-subscriptions-push-image-suggestions' => true ],
+				],
+				'suggestionsByPageId' => [
+					999 => [
+						[ 'origin_wiki' => 'enwiki', 'image' => 'Image_999_1',
+						  'confidence' => 70, 'section_heading' => null, 'section_index' => null ],
+						// only the section-level notification should be sent, the article one
+						// is excluded on account of the instance-of match
+						[ 'origin_wiki' => 'frwiki', 'image' => 'Image_999_section_1',
+						  'confidence' => 70, 'section_heading' => 'Section_one',
+						  'section_index' => 1 ],
+						// confidence too low, should not be returned
+						[ 'origin_wiki' => 'frwiki', 'image' => 'Image_999_section_2',
+						  'confidence' => 50, 'section_heading' => 'Section_two',
+						  'section_index' => 2 ],
+					],
+				],
+				'instanceOfByPageId' => [
+					999 => [
+						[ 'instance_of' => [ 'Q1' ] ],
+					],
+				],
+				'jobParams' => [ 'excludeInstanceOf' => [ 'Q1' ] ],
+				'expectedNotifications' => [
+					[ 'userId' => 1, 'pageId' => 999, 'sectionHeading' => 'Section_one',
+					  'mediaUrl' => 'https://frwiki/File:Image_999_section_1', ],
+				]
+			]
+		);
+		$updatedJobParams = $notifier->run();
+		$this->assertEquals(
+			[ 1 => 1 ],
+			$updatedJobParams['notifiedUserIds']
 		);
 	}
 }

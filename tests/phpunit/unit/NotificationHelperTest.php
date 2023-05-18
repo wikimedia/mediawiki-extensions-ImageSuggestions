@@ -19,7 +19,8 @@ class NotificationHelperTest extends MediaWikiUnitTestCase {
 		$userName = 'test user';
 		$titleId = 888;
 		$titleText = 'test title';
-		$mediaUrl = 'http://commons/File:image.jpg';
+		$mediaUrl = 'http://commons/File:Image_1.jpg';
+		$sectionHeading = 'Section_X';
 
 		$mockLogger = new TestLogger();
 		$helper = new NotificationHelper();
@@ -27,6 +28,7 @@ class NotificationHelperTest extends MediaWikiUnitTestCase {
 			new UserIdentityValue( $userId, $userName ),
 			$this->makeMockTitle( $titleText, [ 'id' => $titleId ] ),
 			$mediaUrl,
+			$sectionHeading,
 			$mockLogger,
 			true
 		);
@@ -35,7 +37,8 @@ class NotificationHelperTest extends MediaWikiUnitTestCase {
 			"Notification: " .
 			"user: {userName} (id: {userId}), " .
 			"title: {titleText} (id: {titleId}), " .
-			"media: {mediaUrl}"
+			"media-url: {mediaUrl}, " .
+			"section-heading: {sectionHeading}"
 		) );
 	}
 }

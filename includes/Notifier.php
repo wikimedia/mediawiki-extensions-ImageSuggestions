@@ -8,6 +8,7 @@ use CirrusSearch\SearchConfig;
 use CirrusSearch\Wikimedia\WeightedTagsHooks;
 use Config;
 use Elastica\Query;
+use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchQuery;
 use Elastica\ResultSet;
 use Elastica\Search;
@@ -40,6 +41,8 @@ class Notifier {
 	private array $jobParams;
 
 	private SearchAfter $searchAfter;
+
+	public const MAX_SECTION_SUGGESTIONS_PER_NOTIFICATION = 5;
 
 	/**
 	 * @codeCoverageIgnore
@@ -93,14 +96,23 @@ class Notifier {
 			)
 		);
 
-		$match = new MatchQuery();
-		$match->setFieldQuery(
+		$articleImageQuery = new MatchQuery();
+		$articleImageQuery->setFieldQuery(
 			WeightedTagsHooks::FIELD_NAME,
 			'recommendation.image/exists'
 		);
+		$sectionImageQuery = new MatchQuery();
+		$sectionImageQuery->setFieldQuery(
+			WeightedTagsHooks::FIELD_NAME,
+			'recommendation.image_section/exists'
+		);
+		$bool = new BoolQuery();
+		$bool->addShould( $articleImageQuery );
+		$bool->addShould( $sectionImageQuery );
+		$bool->setMinimumShouldMatch( 1 );
 
 		$query = new Query();
-		$query->setQuery( $match );
+		$query->setQuery( $bool );
 		$query->setSize( $this->jobParams['batchSize'] );
 		$query->setSource( false );
 		$query->setSort( [ 'page_id' ] );
@@ -146,25 +158,27 @@ class Notifier {
 			}
 
 			$suggestions = $this->getSuggestions( $pageId );
-			$suggestion = array_shift( $suggestions );
-			if ( !$suggestion ) {
+			if ( count( $suggestions ) === 0 ) {
 				$this->logger->debug( 'No suggestions found for ' . $pageId );
 				continue;
 			}
 
 			$this->jobParams['notifiedUserIds'][$user->getId()] =
 				( $this->jobParams['notifiedUserIds'][$user->getId()] ?? 0 ) + 1;
-			$this->notificationHelper->createNotification(
-				$user,
-				$title,
-				$this->wikiMapHelper->getForeignURL(
-					$suggestion['origin_wiki'],
-					$this->namespaceInfo->getCanonicalName( NS_FILE ) . ':' .
-					$suggestion['image']
-				),
-				$this->jobParams['verbose'] ? $this->logger : null,
-				$this->jobParams['dryRun'],
-			);
+
+			// If we have a bundle of notifications the newest ones are displayed first.
+			// Reverse the order of the array so that the elements earlier in the array are
+			// created later (and therefore are newer and get displayed earlier)
+			foreach ( array_reverse( $suggestions ) as $suggestion ) {
+				$this->notificationHelper->createNotification(
+					$user,
+					$title,
+					$this->getMediaUrl( $suggestion ),
+					$this->getSectionHeading( $suggestion ),
+					$this->jobParams['verbose'] ? $this->logger : null,
+					$this->jobParams['dryRun'],
+				);
+			}
 		}
 
 		$numUsers = count( $this->jobParams['notifiedUserIds'] );
@@ -180,11 +194,36 @@ class Notifier {
 		return $this->jobParams;
 	}
 
+	private function getSectionHeading( array $suggestion ): ?string {
+		return $suggestion['section_heading'];
+	}
+
+	private function isArticleLevelSuggestion( array $suggestion ): bool {
+		return $this->getSectionHeading( $suggestion ) === null;
+	}
+
+	private function isSectionLevelSuggestion( array $suggestion ): bool {
+		return !$this->isArticleLevelSuggestion( $suggestion );
+	}
+
+	private function getMediaUrl( array $suggestion ): string {
+		return $this->wikiMapHelper->getForeignURL(
+			$suggestion['origin_wiki'],
+			$this->namespaceInfo->getCanonicalName( NS_FILE ) . ':' .
+			$suggestion['image']
+		);
+	}
+
 	/**
 	 * @see https://www.mediawiki.org/wiki/Platform_Engineering_Team/Data_Value_Stream/Data_Gateway#Suggestions
 	 * @see https://www.mediawiki.org/wiki/Platform_Engineering_Team/Data_Value_Stream/Data_Gateway#Instanceof_(cache)
 	 * @param int $pageId
-	 * @return array of filtered & sorted (by confidence) suggestions, each value being a row structured as per 1st @see
+	 * @return array of filtered suggestions
+	 * 	- the first element is the first article-level suggestion (sorted by confidence), if one exists
+	 * 	- followed by up to MAX_SECTION_SUGGESTIONS_PER_NOTIFICATION section-level suggestions
+	 * 		- initially ordered by confidence, so we return the suggestions with the highest confidence
+	 * 		- then re-ordered so section-suggestions are in the same order as the sections on the page
+	 * 	- each value being a row structured as per 1st @see
 	 */
 	private function getSuggestions( int $pageId ): array {
 		$currentWikiId = WikiMap::getCurrentWikiId();
@@ -201,15 +240,23 @@ class Notifier {
 			$responses
 		);
 
+		// if the page is an instance of an entity we wish to exclude, then filter out *article*
+		// level suggestions only
+		$filterArticleSuggestions = false;
 		if ( array_intersect( $this->jobParams['excludeInstanceOf'], $results[1]['rows'][0]['instance_of'] ?? [] ) ) {
 			// page is an instance of an entity that we wish to exclude; return empty resultset
-			return [];
+			$filterArticleSuggestions = true;
 		}
 
 		$results = array_filter(
 			$results[0]['rows'] ?? [],
-			function ( array $row ) {
-				return $row['confidence'] >= $this->jobParams['minConfidence'];
+			function ( array $row ) use ( $filterArticleSuggestions ) {
+				if ( $filterArticleSuggestions && $this->isArticleLevelSuggestion( $row ) ) {
+					return false;
+				}
+				return $this->isArticleLevelSuggestion( $row ) ?
+					$row['confidence'] >= $this->jobParams['minConfidence'] :
+					$row['confidence'] >= $this->jobParams['minConfidenceSection'];
 			}
 		);
 
@@ -220,7 +267,21 @@ class Notifier {
 			}
 		);
 
-		return $results;
+		$articleSuggestion = array_slice(
+			array_filter( $results, [ $this, 'isArticleLevelSuggestion' ] ), 0, 1
+		);
+		$sectionSuggestions = array_slice(
+			array_filter( $results, [ $this, 'isSectionLevelSuggestion' ] ),
+			0,
+			self::MAX_SECTION_SUGGESTIONS_PER_NOTIFICATION
+		);
+		usort(
+			$sectionSuggestions,
+			static function ( array $a, array $b ) {
+				return (int)$a['section_index'] <=> (int)$b['section_index'];
+			}
+		);
+		return array_merge( $articleSuggestion, $sectionSuggestions );
 	}
 
 	/**
@@ -232,7 +293,10 @@ class Notifier {
 		$previouslyNotifiedUserIds = $this->dbrEcho->selectFieldValues(
 			[ 'echo_notification', 'echo_event' ],
 			'notification_user',
-			[ 'event_type' => Hooks::EVENT_NAME, 'event_page_id' => $title->getId() ],
+			[
+				'event_type' => Hooks::EVENT_NAME ,
+				'event_page_id' => $title->getId()
+			],
 			__METHOD__,
 			[ 'DISTINCT' ],
 			[ 'echo_event' => [ 'INNER JOIN', 'notification_event = event_id' ] ]

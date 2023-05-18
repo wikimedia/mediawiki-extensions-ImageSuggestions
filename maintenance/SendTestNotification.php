@@ -35,6 +35,12 @@ class SendTestNotification extends Maintenance {
 			true,
 			true
 		);
+		$this->addOption(
+			'section-heading',
+			"Section of the article the suggestion is for",
+			false,
+			true
+		);
 	}
 
 	public function execute() {
@@ -45,7 +51,8 @@ class SendTestNotification extends Maintenance {
 			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			$services->getUserFactory()->newFromName( $this->getOption( 'agent' ) ),
 			Title::newFromText( $this->getOption( 'title' ) ),
-			$this->getOption( 'media-url' )
+			$this->getOption( 'media-url' ),
+			$this->getOption( 'section-heading' )
 		);
 
 		if ( $success ) {

@@ -520,6 +520,7 @@ SPARQL;
 			$title,
 			$mediaUrl,
 			null,
+			null,
 			$this->dryRun
 		);
 	}

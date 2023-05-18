@@ -19,12 +19,14 @@
 
 namespace MediaWiki\Extension\ImageSuggestions;
 
+use ParserOutput;
+
 class Hooks {
 	public const EVENT_CATEGORY = 'image-suggestions';
 	public const EVENT_NAME = 'image-suggestions';
 
 	/**
-	 * @param \ParserOutput $parserOutput
+	 * @param ParserOutput $parserOutput
 	 */
 	public static function onBeforePageDisplay( $parserOutput ) {
 		$parserOutput->addModules( [
@@ -40,7 +42,11 @@ class Hooks {
 	 * @param array &$notificationCategories array of Echo notification categories
 	 * @param array &$icons array of icon details
 	 */
-	public static function onBeforeCreateEchoEvent( &$notifications, &$notificationCategories, &$icons ) {
+	public static function onBeforeCreateEchoEvent(
+		array &$notifications,
+		array &$notificationCategories,
+		array &$icons
+	) {
 		// Define the category this event belongs to
 		// (this will appear in Special:Preferences)
 		$notificationCategories[static::EVENT_CATEGORY] = [
@@ -48,7 +54,6 @@ class Hooks {
 			'tooltip' => 'echo-pref-tooltip-image-suggestions',
 		];
 
-		// Define the event
 		$notifications[static::EVENT_NAME] = [
 			'category' => static::EVENT_CATEGORY,
 			'group' => 'positive',
@@ -57,9 +62,9 @@ class Hooks {
 			'canNotifyAgent' => true,
 			'presentation-model' => ImageSuggestionsPresentationModel::class,
 			'bundle' => [
-				'web' => false,
-				'email' => false,
-				'expandable' => false,
+				'web' => true,
+				'email' => true,
+				'expandable' => true,
 			]
 		];
 
@@ -67,5 +72,13 @@ class Hooks {
 		$icons[ 'image-suggestions-blue' ] = [
 			'path' => 'ImageSuggestions/modules/ImageSuggestions-placeholder-icon-blue.svg'
 		];
+	}
+
+	public static function onEchoGetBundleRules( $event, &$bundleString ) {
+		if ( $event->getType() == static::EVENT_NAME ) {
+				$bundleString = static::EVENT_NAME . '-' .
+					$event->getTitle()->getNamespace() . '-' . $event->getTitle()->getDBkey();
+		}
+		return true;
 	}
 }
