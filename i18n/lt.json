@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nokeoo"
+		]
+	},
+	"imagesuggestions-desc": "Praneša naudotojams apie potencialiai naudingus paveikslėlius straipsniams",
+	"imagesuggestions-notification-message": "Radome mediją, kuri gali tikti straipsniui „'''$1'''“, {{GENDER:$2|jūsų}} stebėjimo sąraše.",
+	"imagesuggestions-notification-link-text-article": "Žiūrėti straipsnį",
+	"imagesuggestions-notification-link-text-media": "Peržiūrėti mediją",
+	"imagesuggestions-notification-link-text-help": "Pagalba",
+	"echo-category-title-image-suggestions": "Paveikslėlių siūlymai",
+	"echo-pref-tooltip-image-suggestions": "Pranešti man, kai mano stebimųjų sąraše yra straipsnio paveikslėlio pasiūlymas."
+}
