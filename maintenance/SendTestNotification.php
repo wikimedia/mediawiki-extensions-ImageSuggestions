@@ -2,15 +2,18 @@
 
 namespace MediaWiki\Extension\ImageSuggestions\Maintenance;
 
+use Maintenance;
+use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
 use MediaWiki\MediaWikiServices;
 use Title;
 
-require_once __DIR__ . '/AbstractNotifications.php';
-
-class SendTestNotification extends AbstractNotifications {
+class SendTestNotification extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
+
+		$this->requireExtension( 'ImageSuggestions' );
+		$this->requireExtension( 'Echo' );
 
 		$this->addDescription( 'Generate a test notification for unillustrated watchlisted pages' );
 
@@ -37,7 +40,8 @@ class SendTestNotification extends AbstractNotifications {
 	public function execute() {
 		$services = MediaWikiServices::getInstance();
 
-		$success = $this->createNotification(
+		$notificationHelper = new NotificationHelper();
+		$success = $notificationHelper->createNotification(
 			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			$services->getUserFactory()->newFromName( $this->getOption( 'agent' ) ),
 			Title::newFromText( $this->getOption( 'title' ) ),
