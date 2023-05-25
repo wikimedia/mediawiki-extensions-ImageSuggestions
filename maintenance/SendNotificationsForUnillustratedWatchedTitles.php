@@ -100,7 +100,11 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 		// the queue, then capture output in console so we can follow along
 		if ( !$params['queue'] ) {
 			LoggerFactory::registerProvider( new ConsoleSpi( [
-				'forwardTo' => LoggerFactory::getProvider(),
+				// @todo don't forward for now; prod monolog config
+				//   unconditionally expects other providers to have a
+				//   `getHandler` methods, which is not true for ConsoleSpi;
+				//   since this is only for test runs, this is fine for now
+				// 'forwardTo' => LoggerFactory::getProvider(),
 			] ) );
 		}
 
