@@ -13,7 +13,7 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 		'minConfidence' => 0,
 		'maxNotificationsPerUser' => 2,
 		'excludeInstanceOf' => [],
-		'maxJobs' => null,
+		'maxJobs' => -1,
 		'dryRun' => false,
 		'verbose' => false,
 		'queue' => false,

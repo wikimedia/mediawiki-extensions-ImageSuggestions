@@ -86,11 +86,13 @@ class NotificationsJob extends Job implements GenericParameterJob {
 	}
 
 	private function invokeNext( LoggerInterface $logger, array $params ): void {
-		if ( $params['maxJobs'] === null || $params['jobNumber'] < $params['maxJobs'] ) {
-			$logger->info( 'Queuing next batch' );
-			$params['jobNumber'] += 1;
-			$job = new NotificationsJob( $params );
-			$job->invoke( $params['queue'] );
+		if ( $params['maxJobs'] > 0 && $params['jobNumber'] >= $params['maxJobs'] ) {
+			return;
 		}
+
+		$logger->info( 'Queuing next batch' );
+		$params['jobNumber'] += 1;
+		$job = new NotificationsJob( $params );
+		$job->invoke( $params['queue'] );
 	}
 }
