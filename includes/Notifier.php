@@ -79,7 +79,7 @@ class Notifier {
 		$this->notificationHelper = $notificationHelper;
 		$this->wikiMapHelper = $wikiMapHelper;
 
-		$this->jobParams = $jobParams;
+		$this->jobParams = [ 'numPages' => 0 ] + $jobParams;
 
 		$this->searchAfter = $this->createSearchAfter();
 	}
@@ -129,7 +129,6 @@ class Notifier {
 			return null;
 		}
 
-		$numPages = 0;
 		foreach ( $searchResults as $searchResult ) {
 			$pageId = (int)$searchResult->getId();
 			$this->jobParams['lastPageId'] = $pageId;
@@ -139,7 +138,7 @@ class Notifier {
 				continue;
 			}
 
-			$numPages++;
+			$this->jobParams['numPages']++;
 			$user = $this->getUserForTitle( $title );
 			if ( !$user ) {
 				$this->logger->debug( 'No user found for ' . $title->getDBkey() );
@@ -170,7 +169,7 @@ class Notifier {
 
 		$numUsers = count( $this->jobParams['notifiedUserIds'] );
 		$numNotifications = array_sum( $this->jobParams['notifiedUserIds'] );
-		$numMissing = $numPages - $numNotifications;
+		$numMissing = $this->jobParams['numPages'] - $numNotifications;
 		$this->logger->info(
 			"Finished job. " .
 			"In total have notified {$numUsers} users about {$numNotifications} pages. " .
