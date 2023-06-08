@@ -26,7 +26,6 @@ use MediaWiki\User\UserOptionsLookup;
 use MediaWiki\WikiMap\WikiMap;
 use MultiHttpClient;
 use MWEchoDbFactory;
-use MWException;
 use NamespaceInfo;
 use Title;
 
@@ -301,7 +300,6 @@ SPARQL;
 
 	/**
 	 * @return Generator where every yield is a page id
-	 * @throws MWException
 	 */
 	private function getPageIdsWithSuggestions(): Generator {
 		/** @var SearchConfig $searchConfig */
