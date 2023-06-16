@@ -12,8 +12,7 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 	private array $defaultParams = [
 		'minEditCount' => 1,
 		'minConfidence' => 0,
-		// @todo change below to 0
-		'minConfidenceSection' => 101,
+		'minConfidenceSection' => 0,
 		'maxNotificationsPerUser' => 2,
 		'excludeInstanceOf' => [],
 		'maxJobs' => -1,

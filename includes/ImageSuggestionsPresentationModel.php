@@ -32,8 +32,7 @@ class ImageSuggestionsPresentationModel extends EchoEventPresentationModel {
 					$this->getViewingUserForGender()
 				);
 		}
-		// @todo change below to 'imagesuggestions-notification-message-article'
-		return $this->msg( 'imagesuggestions-notification-message' )
+		return $this->msg( 'imagesuggestions-notification-message-article' )
 			->params(
 				$this->event->getTitle()->getText(),
 				$this->getViewingUserForGender()
@@ -44,8 +43,7 @@ class ImageSuggestionsPresentationModel extends EchoEventPresentationModel {
 		if ( !$this->isBundled() ) {
 			return [
 				'url' => $this->event->getExtra()['media-url'],
-				// @todo change below to 'imagesuggestions-notification-link-text-image'
-				'label' => $this->msg( 'imagesuggestions-notification-link-text-media' ),
+				'label' => $this->msg( 'imagesuggestions-notification-link-text-image' ),
 			];
 		}
 		return [];
@@ -98,8 +96,7 @@ class ImageSuggestionsPresentationModel extends EchoEventPresentationModel {
 
 			$actions['image'] = [
 				'url' => $this->event->getExtra()['media-url'],
-				// @todo change below to 'imagesuggestions-notification-link-text-image'
-				'label' => $this->msg( 'imagesuggestions-notification-link-text-media' ),
+				'label' => $this->msg( 'imagesuggestions-notification-link-text-image' ),
 				// below icon is part of oojs-ui.styles.icons-media module
 				'icon' => 'image',
 				'prioritized' => true,
