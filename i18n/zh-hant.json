@@ -1,12 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kly"
+			"Kly",
+			"Winston Sung"
 		]
 	},
 	"imagesuggestions-desc": "提醒使用者可能對於條目有幫助的圖片",
 	"imagesuggestions-notification-message": "我們找到可能對於條目「'''$1'''」（在{{GENDER:$2|您的}}監視清單裡）有幫助的多媒體資源。",
 	"imagesuggestions-notification-link-text-article": "檢視條目",
+	"imagesuggestions-notification-link-text-section": "檢視章節",
 	"imagesuggestions-notification-link-text-media": "檢視多媒體",
 	"imagesuggestions-notification-link-text-help": "說明",
 	"echo-category-title-image-suggestions": "圖片建議",

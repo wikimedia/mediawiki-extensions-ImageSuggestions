@@ -7,9 +7,9 @@
 		]
 	},
 	"imagesuggestions-desc": "Avvisa gli utenti su immagini potenzialmente utili per le voci",
-	"imagesuggestions-notification-message": "Abbiamo trovato dei media che potrebbero essere adatti per la voce \"'''$1'''\", che si trova nei {{GENDER:$2|tuoi}} osservati speciali.",
+	"imagesuggestions-notification-message": "Abbiamo trovato un'immagine che potrebbe essere adatta per la pagina \"'''$1'''\" che si trova nei {{GENDER:$2|tuoi}} osservati speciali.",
 	"imagesuggestions-notification-link-text-article": "Visualizza voce",
-	"imagesuggestions-notification-link-text-media": "Verifica i media",
+	"imagesuggestions-notification-link-text-media": "Rivedi immagine",
 	"imagesuggestions-notification-link-text-help": "Aiuto",
 	"echo-category-title-image-suggestions": "Suggerimento immagini",
 	"echo-pref-tooltip-image-suggestions": "Avvisami quando c'è un'immagine suggerita per una voce nei miei osservati speciali."

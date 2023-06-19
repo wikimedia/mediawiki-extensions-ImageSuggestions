@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Rail"
+		]
+	},
+	"imagesuggestions-desc": "Powiadamia użytkowników o obrazach potencjalnie przydatnych w artykułach",
+	"imagesuggestions-extensionname": "Sugestie obrazów",
+	"imagesuggestions-notification-message": "Znaleźliśmy obraz, który może być przydatny na stronie '''$1''' z {{GENDER:$2|twojej}} listy obserwowanych.",
+	"imagesuggestions-notification-message-article": "Znaleźliśmy obraz, który może być przydatny na stronie '''$1''' z {{GENDER:$2|twojej}} listy obserwowanych.",
+	"imagesuggestions-notification-message-section": "Znaleźliśmy obraz, który może być przydatny w sekcji '''$1''' na stronie '''$2''' z {{GENDER:$3|twojej}} listy obserwowanych.",
+	"imagesuggestions-notification-message-bundle": "Znaleźliśmy kilka obrazów, które mogą być przydatne na stronie '''$1''' z {{GENDER:$2|twojej}} listy obserwowanych.",
+	"imagesuggestions-notification-bundle-article": "Zobacz sugestię obrazów dla artykułu",
+	"imagesuggestions-notification-bundle-section": "Zobacz sugestię obrazów dla sekcji '''$1'''",
+	"imagesuggestions-notification-link-text-article": "Zobacz artykuł",
+	"imagesuggestions-notification-link-text-section": "Zobacz sekcję",
+	"imagesuggestions-notification-link-text-media": "Zobacz obraz",
+	"imagesuggestions-notification-link-text-image": "Zobacz obraz",
+	"imagesuggestions-notification-link-text-help": "Pomoc",
+	"echo-category-title-image-suggestions": "Sugestie obrazów",
+	"echo-pref-tooltip-image-suggestions": "Powiadamiaj mnie, gdy pojawi się sugestia obrazu dla strony na mojej liście obserwowanych."
+}

@@ -3,9 +3,16 @@
 		"authors": []
 	},
 	"imagesuggestions-desc": "Weist die Benutzer auf potenziell nützliche Bilder für Artikel hin",
-	"imagesuggestions-notification-message": "Wir haben Medien gefunden, die zu dem Artikel „'''$1'''“ auf {{GENDER:$2|deiner}} Beobachtungsliste passen könnten.",
+	"imagesuggestions-notification-message": "Wir haben ein Bild gefunden, das zu der Seite '''$1''' auf {{GENDER:$2|deiner}} Beobachtungsliste passen könnte.",
+	"imagesuggestions-notification-message-article": "Wir haben ein Bild gefunden, das gut zur Seite ''''$1''' auf {{GENDER:$2|deiner}} Beobachtungsliste passen könnte.",
+	"imagesuggestions-notification-message-section": "Wir haben ein Bild gefunden, das gut zum Abschnitt '''$1''' der Seite '''$2''' auf {{GENDER:$3|deiner}} Beobachtungsliste passen könnte.",
+	"imagesuggestions-notification-message-bundle": "Wir haben mehrere Bilder gefunden, die zu der Seite '''$1''' auf {{GENDER:$2|deiner}} Beobachtungsliste passen könnten.",
+	"imagesuggestions-notification-bundle-article": "Bildvorschlag zum Artikel ansehen",
+	"imagesuggestions-notification-bundle-section": "Bildvorschlag für den Abschnitt '''$1''' ansehen",
 	"imagesuggestions-notification-link-text-article": "Artikel anzeigen",
-	"imagesuggestions-notification-link-text-media": "Medien überprüfen",
+	"imagesuggestions-notification-link-text-section": "Abschnitt anzeigen",
+	"imagesuggestions-notification-link-text-media": "Bild überprüfen",
+	"imagesuggestions-notification-link-text-image": "Bild überprüfen",
 	"imagesuggestions-notification-link-text-help": "Hilfe",
 	"echo-category-title-image-suggestions": "Bildvorschläge",
 	"echo-pref-tooltip-image-suggestions": "Benachrichtige mich, wenn es einen Bildvorschlag für einen Artikel auf meiner Beobachtungsliste gibt."
