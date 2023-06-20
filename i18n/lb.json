@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robby"
+			"Robby",
+			"Volvox"
 		]
 	},
-	"imagesuggestions-desc": "Mécht Benotzer op potenziell nëtzlech Biller fir Artikelen opmierksam"
+	"imagesuggestions-desc": "Mécht Benotzer op potenziell nëtzlech Biller fir Artikelen opmierksam",
+	"imagesuggestions-notification-bundle-section": "Bildvirschléi fir den Abschnitt '''$1''' weisen",
+	"imagesuggestions-notification-link-text-section": "Abschnitt weisen"
 }
