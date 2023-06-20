@@ -8,7 +8,7 @@
 	"imagesuggestions-desc": "{{desc|name=Image suggestions|url=https://www.mediawiki.org/wiki/Extension:ImageSuggestions}}",
 	"imagesuggestions-extensionname": "{{name}}",
 	"imagesuggestions-notification-message": "Text for the image suggestion notification.\n\nParameters:\n* $1 - article title\n* $2 - username, for GENDER support",
-	"imagesuggestions-notification-link-text-article": "Label for the primary link to the suggested article",
+	"imagesuggestions-notification-link-text-article": "Label for the primary link to an article that has an image suggestion.",
 	"imagesuggestions-notification-link-text-media": "Label for the link to suggested media",
 	"imagesuggestions-notification-link-text-help": "Label for the link to on-wiki documentation",
 	"echo-category-title-image-suggestions": "{{doc-echo-category-title|tooltip=Echo-pref-tooltip-image-suggestions}}",
