@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Rail"
+		]
+	},
+	"imagesuggestions-desc": "Powiadamia użytkowników o obrazach potencjalnie przydatnych w artykułach",
+	"imagesuggestions-extensionname": "Sugestie obrazów",
+	"imagesuggestions-notification-link-text-article": "Zobacz artykuł",
+	"imagesuggestions-notification-link-text-help": "Pomoc",
+	"echo-category-title-image-suggestions": "Sugestie obrazów",
+	"echo-pref-tooltip-image-suggestions": "Powiadamiaj mnie, gdy pojawi się sugestia obrazu dla strony na mojej liście obserwowanych."
+}
