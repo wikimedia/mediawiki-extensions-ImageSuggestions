@@ -5,7 +5,6 @@
 		]
 	},
 	"imagesuggestions-desc": "Avisa usatores sur imagines que pote esser utile pro illustrar articulos",
-	"imagesuggestions-notification-message": "Nos ha trovate sur {{GENDER:$2|tu}} observatorio un imagine que forsan conveni ben al pagina '''$1'''.",
 	"imagesuggestions-notification-message-article": "Nos ha trovate sur {{GENDER:$2|tu}} observatorio un imagine que forsan conveni ben al pagina '''$1'''.",
 	"imagesuggestions-notification-message-section": "Nos ha trovate sur {{GENDER:$3|tu}} observatorio un imagine que forsan conveni ben al section '''$1''' del pagina '''$2'''.",
 	"imagesuggestions-notification-message-bundle": "Nos ha trovate sur {{GENDER:$2|tu}} observatorio plure imagines que forsan conveni ben al pagina '''$1'''.",
@@ -13,7 +12,6 @@
 	"imagesuggestions-notification-bundle-section": "Vider le suggestion de imagine pro le section '''$1'''",
 	"imagesuggestions-notification-link-text-article": "Vider articulo",
 	"imagesuggestions-notification-link-text-section": "Vider section",
-	"imagesuggestions-notification-link-text-media": "Revider imagine",
 	"imagesuggestions-notification-link-text-image": "Revider imagine",
 	"imagesuggestions-notification-link-text-help": "Adjuta",
 	"echo-category-title-image-suggestions": "Suggestiones de imagine",

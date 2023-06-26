@@ -8,9 +8,14 @@
 		]
 	},
 	"imagesuggestions-desc": "Alerta os utilizadores sobre imagens possivelmente úteis para ilustrar artigos",
-	"imagesuggestions-notification-message": "Encontramos conteúdo multimédia que pode ser adequado para o artigo \"''' $1 '''\", das suas páginas vigiadas.{{GENDER:$2|}}",
+	"imagesuggestions-notification-message-article": "Encontramos uma imagem que pode ser adequada para o artigo \"'''$1'''\", das {{GENDER:$2|suas}} páginas vigiadas.",
+	"imagesuggestions-notification-message-section": "Encontramos uma imagem que pode ser adequada para a seção '''$1''' no artigo '''$2''', das {{GENDER:$3|suas}} páginas vigiadas.",
+	"imagesuggestions-notification-message-bundle": "Encontramos várias imagens que podem ser adequadas para o artigo \"'''$1'''\", das {{GENDER:$2|suas}} páginas vigiadas.",
+	"imagesuggestions-notification-bundle-article": "Ver sugestão de imagem para o artigo",
+	"imagesuggestions-notification-bundle-section": "Ver sugestão de imagem para a seção '''$1'''",
 	"imagesuggestions-notification-link-text-article": "Ver artigo",
-	"imagesuggestions-notification-link-text-media": "Rever multimédia",
+	"imagesuggestions-notification-link-text-section": "Ver seção",
+	"imagesuggestions-notification-link-text-image": "Rever imagem",
 	"imagesuggestions-notification-link-text-help": "Ajuda",
 	"echo-category-title-image-suggestions": "Sugestões de imagens",
 	"echo-pref-tooltip-image-suggestions": "Avisar-me quando houver uma sugestão de imagem para um artigo na minha lista de páginas vigiadas."

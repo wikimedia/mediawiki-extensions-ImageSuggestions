@@ -1,13 +1,19 @@
 {
 	"@metadata": {
 		"authors": [
-			"BAPerdana-WMF"
+			"BAPerdana-WMF",
+			"Sannita"
 		]
 	},
 	"imagesuggestions-desc": "Beri tahu pengguna akan gambar yang tersedia untuk artikel Wikipedia",
-	"imagesuggestions-notification-message": "Kami menemukan gambar yang mungkin sesuai untuk artikel \"'''$1'''\" dalam daftar pantauan {{GENDER:$2|Anda}}.",
+	"imagesuggestions-notification-message-article": "Kami menemukan gambar yang mungkin sesuai untuk artikel '''$1''' dalam {{GENDER:$2|daftar pantauan}} Anda.",
+	"imagesuggestions-notification-message-section": "Kami menemukan gambar yang mungkin sesuai untuk subjudul '''$1''' di artikel '''$2''' dalam {{GENDER:$3|daftar pantauan}} Anda.",
+	"imagesuggestions-notification-message-bundle": "Kami menemukan beberapa gambar yang mungkin sesuai untuk artikel '''$1''' dalam {{GENDER:$2|daftar pantauan}} Anda.",
+	"imagesuggestions-notification-bundle-article": "Lihat saran gambar untuk artikel tersebut",
+	"imagesuggestions-notification-bundle-section": "Lihat saran gambar untuk subjudul ''' $1 '''",
 	"imagesuggestions-notification-link-text-article": "Lihat artikel",
-	"imagesuggestions-notification-link-text-media": "Tinjau media",
+	"imagesuggestions-notification-link-text-section": "Lihat subjudul",
+	"imagesuggestions-notification-link-text-image": "Tinjau gambar",
 	"imagesuggestions-notification-link-text-help": "Halaman bantuan",
 	"echo-category-title-image-suggestions": "Saran untuk gambar",
 	"echo-pref-tooltip-image-suggestions": "Beri tahu saya apabila ada saran gambar untuk artikel yang masuk dalam daftar pantauan saya."

@@ -5,7 +5,6 @@
 		]
 	},
 	"imagesuggestions-desc": "הודעה למשתמשים על תמונות שיכולות להיות שימושיות בערכים",
-	"imagesuggestions-notification-message": "מצאנו תמונה שיכולה להתאים טוב לדף \"'''$1'''\", שנמצא ברשימת המעקב {{GENDER:$2|שלך}}.",
 	"imagesuggestions-notification-message-article": "מצאנו תמונה שיכולה להתאים טוב לדף \"'''$1'''\", שנמצא ברשימת המעקב {{GENDER:$2|שלך}}.",
 	"imagesuggestions-notification-message-section": "מצאנו תמונה שיכולה להתאים טוב לפרק '''$1''' של הדף \"'''$2'''\", שנמצא ברשימת המעקב {{GENDER:$3|שלך}}.",
 	"imagesuggestions-notification-message-bundle": "מצאנו כמה תמונות שיכולות להתאים טוב לדף \"'''$1'''\", שנמצא ברשימת המעקב {{GENDER:$2|שלך}}.",
@@ -13,7 +12,6 @@
 	"imagesuggestions-notification-bundle-section": "צפייה בהצעת תמונה לפרק '''$1'''",
 	"imagesuggestions-notification-link-text-article": "הצגת הערך",
 	"imagesuggestions-notification-link-text-section": "צפייה בקטע",
-	"imagesuggestions-notification-link-text-media": "סקירת התמונה",
 	"imagesuggestions-notification-link-text-image": "סקירת התמונה",
 	"imagesuggestions-notification-link-text-help": "עזרה",
 	"echo-category-title-image-suggestions": "הצעות תמונה",

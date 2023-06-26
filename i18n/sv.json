@@ -4,5 +4,16 @@
 			"Sabelöga"
 		]
 	},
-	"imagesuggestions-desc": "Meddelar användare om bilder som kanske kan användas i artiklar"
+	"imagesuggestions-desc": "Meddelar användare om bilder som kanske kan användas i artiklar",
+	"imagesuggestions-notification-message-article": "Vi hittade en bild som kan passa bra för sidan '''$1''' i {{GENDER:$2|din}} bevakningslista.",
+	"imagesuggestions-notification-message-section": "Vi hittade en bild som kan passa bra för avsnittet '''$1''' på sidan '''$2''' i {{GENDER:$3|din}} bevakningslista.",
+	"imagesuggestions-notification-message-bundle": "Vi hittade flera bilder som kan passa bra för sidan '''$1''' i {{GENDER:$2|din}} bevakningslista.",
+	"imagesuggestions-notification-bundle-article": "Visa bildförslag för artikeln",
+	"imagesuggestions-notification-bundle-section": "Visa bildförslag för avsnittet '''$1'''",
+	"imagesuggestions-notification-link-text-article": "Visa artikeln",
+	"imagesuggestions-notification-link-text-section": "Visa avsnittet",
+	"imagesuggestions-notification-link-text-image": "Granska bilden",
+	"imagesuggestions-notification-link-text-help": "Hjälp",
+	"echo-category-title-image-suggestions": "Bildförslag",
+	"echo-pref-tooltip-image-suggestions": "Notifiera mig när det finns ett bildförslag för en artikel i min bevakningslista."
 }

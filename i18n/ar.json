@@ -2,13 +2,16 @@
 	"@metadata": {
 		"authors": [
 			"Asma",
-			"Meno25"
+			"Meno25",
+			"أيوب"
 		]
 	},
 	"imagesuggestions-desc": "ينبه المستخدمين بالصور التي يحتمل أن تكون مفيدة للمقالات",
-	"imagesuggestions-notification-message": "وجدنا وسائط قد تكون مناسبة بشكل جيد للمقال ، \"'' ' $1 ' ''\" ، على {{GENDER:$2| your}} قائمة المراقبة.",
+	"imagesuggestions-notification-message-article": "وجدنا صورة قد تكون مناسبة بشكل جيد لصفحة '''$1'''، على قائمة المراقبة الخاصة {{GENDER:$2|بكَ|بكِ}}.",
+	"imagesuggestions-notification-message-bundle": "وجدنا عدة صورة قد تكون مناسبة بشكل جيد لصفحة '''$1'''، على قائمة المراقبة الخاصة {{GENDER:$2|بكَ|بكِ}}.",
+	"imagesuggestions-notification-bundle-section": "عرض الصورة المقترحة للقسم '''$1'''",
 	"imagesuggestions-notification-link-text-article": "عرض المقال",
-	"imagesuggestions-notification-link-text-media": "مراجعة وسائل الإعلام",
+	"imagesuggestions-notification-link-text-image": "استعراض صورة",
 	"imagesuggestions-notification-link-text-help": "مساعدة",
 	"echo-category-title-image-suggestions": "اقتراحات الصورة",
 	"echo-pref-tooltip-image-suggestions": "إعلامي عندما يكون هناك اقتراح صورة لمقال في قائمة مراقبي."

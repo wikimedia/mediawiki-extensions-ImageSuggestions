@@ -1,13 +1,19 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robertgarrigos"
+			"Robertgarrigos",
+			"Sannita"
 		]
 	},
 	"imagesuggestions-desc": "Alerta els usuaris d'imatges potencialment útils per als articles",
-	"imagesuggestions-notification-message": "Hem trobat mèdia que pot ser adequat per a l'article, \"''' $1 '''\", a {{GENDER:$2| la vostra}} llista de seguiment.",
+	"imagesuggestions-notification-message-article": "Hem trobat una imatge que podria anar bé per la pàgina '''$1''' a {{GENDER:$2|la vostra}} llista de seguiment.",
+	"imagesuggestions-notification-message-section": "Hem trobat una imatge que podria anar bé per la secció '''$1''' de la pàgina '''$2''' a {{GENDER:$3|la vostra}} llista de seguiment.",
+	"imagesuggestions-notification-message-bundle": "Hem trobat varies imatges que podrien anar bé per la pàgina '''$1''' a {{GENDER:$2|la vostra}} llista de seguiment.",
+	"imagesuggestions-notification-bundle-article": "Mira l'imatge suggerida per la pàgina",
+	"imagesuggestions-notification-bundle-section": "Mira l'imatge suggerida per la secció '''$1'''",
 	"imagesuggestions-notification-link-text-article": "Mostra l'article",
-	"imagesuggestions-notification-link-text-media": "Revisió dels mèdia.",
+	"imagesuggestions-notification-link-text-section": "Mira la secció",
+	"imagesuggestions-notification-link-text-image": "Revisió dels imatge.",
 	"imagesuggestions-notification-link-text-help": "Ajuda",
 	"echo-category-title-image-suggestions": "Suggeriments d'imatge",
 	"echo-pref-tooltip-image-suggestions": "Aviseu-me quan hi hagi un suggeriment d'imatge per a un article a la meva llista de seguiment."

@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Yahya",
+			"আফতাবুজ্জামান"
+		]
+	},
+	"imagesuggestions-notification-message-article": "আমরা এমন একটি চিত্র পেয়েছি যা {{GENDER:$2|আপনার}} নজরতালিকায় থাকা '''$1''' পাতার জন্য উপযুক্ত হতে পারে।",
+	"imagesuggestions-notification-bundle-article": "নিবন্ধটির জন্য চিত্র প্রস্তাবনা দেখুন",
+	"imagesuggestions-notification-link-text-section": "অনুচ্ছেদ দেখুন",
+	"imagesuggestions-notification-link-text-image": "ছবি পর্যালোচনা করুন"
+}

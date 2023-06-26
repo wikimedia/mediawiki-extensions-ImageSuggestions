@@ -7,9 +7,14 @@
 		]
 	},
 	"imagesuggestions-desc": "Ilmoittaa käyttäjille artikkeliin mahdollisesti lisättävistä hyödyllisistä kuvista",
-	"imagesuggestions-notification-message": "Löysimme mediatiedoston, joka saattaa sopia {{GENDER:$2|tarkkailulistallasi}} olevaan artikkeliin \"'''$1'''\".",
+	"imagesuggestions-notification-message-article": "Löysimme kuvan, joka saattaa sopia {{GENDER:$2|tarkkailulistallasi}} olevaan sivuun \"'''$1'''\".",
+	"imagesuggestions-notification-message-section": "Löysimme kuvan, joka saattaa sopia {{GENDER:$3|tarkkailulistallasi}} olevan sivun \"'''$2'''\" osioon '''$1'''.",
+	"imagesuggestions-notification-message-bundle": "Löysimme kuvan, joka saattaa sopia {{GENDER:$2|tarkkailulistallasi}} olevaan sivuun \"'''$1'''\".",
+	"imagesuggestions-notification-bundle-article": "Näytä artikkelin kuvaehdotus",
+	"imagesuggestions-notification-bundle-section": "Näytä kuvaehdotukset osioon '''$1'''",
 	"imagesuggestions-notification-link-text-article": "Näytä artikkeli",
-	"imagesuggestions-notification-link-text-media": "Tutki tiedostoa",
+	"imagesuggestions-notification-link-text-section": "Näytä osio",
+	"imagesuggestions-notification-link-text-image": "Tarkista kuva",
 	"imagesuggestions-notification-link-text-help": "Apua",
 	"echo-category-title-image-suggestions": "Kuvaehdotukset",
 	"echo-pref-tooltip-image-suggestions": "Ilmoita minulle, kun tarkkailulistallani olevaan artikkeliin on kuvaehdotuksia."
