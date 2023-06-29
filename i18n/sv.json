@@ -4,5 +4,9 @@
 			"Sabelöga"
 		]
 	},
-	"imagesuggestions-desc": "Meddelar användare om bilder som kanske kan användas i artiklar"
+	"imagesuggestions-desc": "Meddelar användare om bilder som kanske kan användas i artiklar",
+	"imagesuggestions-notification-link-text-article": "Visa artikeln",
+	"imagesuggestions-notification-link-text-help": "Hjälp",
+	"echo-category-title-image-suggestions": "Bildförslag",
+	"echo-pref-tooltip-image-suggestions": "Notifiera mig när det finns ett bildförslag för en artikel i min bevakningslista."
 }
