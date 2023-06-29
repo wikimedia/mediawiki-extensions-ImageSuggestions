@@ -267,6 +267,18 @@ class Notifier {
 			}
 		);
 
+		// only 1 suggestion per section
+		$results = array_values( array_reduce(
+			$results,
+			static function ( array $carry, array $row ) {
+				if ( !isset( $carry[$row['section_heading']] ) ) {
+					$carry[(string)$row['section_heading']] = $row;
+				}
+				return $carry;
+			},
+			[]
+		) );
+
 		$articleSuggestion = array_slice(
 			array_filter( $results, [ $this, 'isArticleLevelSuggestion' ] ), 0, 1
 		);
