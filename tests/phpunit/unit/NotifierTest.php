@@ -730,4 +730,47 @@ class NotifierTest extends MediaWikiUnitTestCase {
 			$updatedJobParams['notifiedUserIds']
 		);
 	}
+
+	public function testOnlyOneNotifPerSection() {
+		$idToTitleMap = [
+			999 => 'Title_1',
+		];
+		$notifier = $this->mockNotifier(
+			[
+				'searchResults' => array_keys( $idToTitleMap ),
+				'idToTitleMap' => $idToTitleMap,
+				'usersByTitle' => [
+					'Title_1' => [ 1 ],
+				],
+				'userOptions' => [
+					1 => [ 'echo-subscriptions-push-image-suggestions' => true ],
+				],
+				'suggestionsByPageId' => [
+					999 => [
+						[ 'origin_wiki' => 'frwiki', 'image' => 'Image_999_section_1_a',
+						  'confidence' => 70, 'section_heading' => 'Section_one',
+						  'section_index' => 1 ],
+						[ 'origin_wiki' => 'frwiki', 'image' => 'Image_999_section_1_b',
+						  'confidence' => 70, 'section_heading' => 'Section_one',
+						  'section_index' => 1 ],
+						[ 'origin_wiki' => 'frwiki', 'image' => 'Image_999_section_2',
+						  'confidence' => 70, 'section_heading' => 'Section_two',
+						  'section_index' => 2 ],
+					],
+				],
+				// in reverse order
+				'expectedNotifications' => [
+					[ 'userId' => 1, 'pageId' => 999, 'sectionHeading' => 'Section_two',
+					  'mediaUrl' => 'https://frwiki/File:Image_999_section_2', ],
+					[ 'userId' => 1, 'pageId' => 999, 'sectionHeading' => 'Section_one',
+					  'mediaUrl' => 'https://frwiki/File:Image_999_section_1_a', ],
+				]
+			]
+		);
+		$updatedJobParams = $notifier->run();
+		$this->assertEquals(
+			[ 1 => 1 ],
+			$updatedJobParams['notifiedUserIds']
+		);
+	}
 }
