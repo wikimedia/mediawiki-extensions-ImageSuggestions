@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Robertgarrigos",
-			"Sannita"
+			"Sannita",
+			"Vriullop"
 		]
 	},
 	"imagesuggestions-desc": "Alerta els usuaris d'imatges potencialment útils per als articles",
@@ -12,8 +13,8 @@
 	"imagesuggestions-notification-bundle-article": "Mira l'imatge suggerida per la pàgina",
 	"imagesuggestions-notification-bundle-section": "Mira l'imatge suggerida per la secció '''$1'''",
 	"imagesuggestions-notification-link-text-article": "Mostra l'article",
-	"imagesuggestions-notification-link-text-section": "Mira la secció",
-	"imagesuggestions-notification-link-text-image": "Revisió dels imatge.",
+	"imagesuggestions-notification-link-text-section": "Mostra la secció",
+	"imagesuggestions-notification-link-text-image": "Revisió de la imatge",
 	"imagesuggestions-notification-link-text-help": "Ajuda",
 	"echo-category-title-image-suggestions": "Suggeriments d'imatge",
 	"echo-pref-tooltip-image-suggestions": "Aviseu-me quan hi hagi un suggeriment d'imatge per a un article a la meva llista de seguiment."
