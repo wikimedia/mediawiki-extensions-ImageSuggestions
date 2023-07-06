@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Colt browning",
 			"Joseph Seddon",
 			"Matthias Mullie"
 		]
@@ -8,7 +9,7 @@
 	"imagesuggestions-desc": "{{desc|name=Image suggestions|url=https://www.mediawiki.org/wiki/Extension:ImageSuggestions}}",
 	"imagesuggestions-extensionname": "{{name}}",
 	"imagesuggestions-notification-message-article": "Text for an image suggestion notification for an article.\n\nParameters:\n* $1 - article title\n* $2 - username, for GENDER support",
-	"imagesuggestions-notification-message-section": "Text for an image suggestion notification for a section within an article.\n\nParameters:\n* $1 - section title\n* $2 - article title\n* $2 - username, for GENDER support",
+	"imagesuggestions-notification-message-section": "Text for an image suggestion notification for a section within an article.\n\nParameters:\n* $1 - section title\n* $2 - article title\n* $3 - username, for GENDER support",
 	"imagesuggestions-notification-message-bundle": "Text for a bundle of image suggestion notifications for an article.\n\nParameters:\n* $1 - article title\n* $2 - username, for GENDER support",
 	"imagesuggestions-notification-bundle-article": "Text for an image suggestion for the article itself within a bundle of image suggestions for an article.",
 	"imagesuggestions-notification-bundle-section": "Text for an image suggestion for a section within a bundle of image suggestions for an article.\n\nParameters:\n* $1 - section title",
