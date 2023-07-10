@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"MagicAho",
 			"MathXplore"
 		]
 	},
 	"imagesuggestions-notification-link-text-article": "記事を閲覧",
+	"imagesuggestions-notification-link-text-section": "言及を閲覧",
 	"imagesuggestions-notification-link-text-help": "ヘルプ"
 }
