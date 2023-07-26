@@ -1,13 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
+			"Tacsipacsi",
 			"Tgr",
 			"Zalán Hári"
 		]
 	},
 	"imagesuggestions-desc": "Értesíti a felhasználókat a szócikkekben potenciálisan felhasználható képekről",
 	"imagesuggestions-notification-message-article": "Találtunk egy, a {{GENDER:$2|figyelőlistádon}} lévő „'''$1'''” szócikkbe potenciálisan beleillő képet.",
-	"imagesuggestions-notification-message-section": "Találtunk egy, a {{GENDER:$3|figyelőlistádon}} lévő '''$2'' szócikk '''$1''' szakaszába potenciálisan beleillő képet.",
+	"imagesuggestions-notification-message-section": "Találtunk egy, a {{GENDER:$3|figyelőlistádon}} lévő '''$2''' szócikk '''$1''' szakaszába potenciálisan beleillő képet.",
 	"imagesuggestions-notification-message-bundle": "Találtunk néhány, a {{GENDER:$2|figyelőlistádon}} lévő „'''$1'''” szócikkbe potenciálisan beleillő képet.",
 	"imagesuggestions-notification-bundle-article": "A cikkhez tartozó képjavaslat megtekintése",
 	"imagesuggestions-notification-bundle-section": "A(z) '''$1''' szakaszhoz tartozó képjavaslat megtekintése",
