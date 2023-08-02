@@ -3,6 +3,7 @@
 		"authors": [
 			"Colt browning",
 			"Kaganer",
+			"Kareyac",
 			"Mehman (WMF)",
 			"Pacha Tchernof"
 		]
@@ -15,7 +16,7 @@
 	"imagesuggestions-notification-bundle-section": "Просмотреть предложенное изображение для раздела '''$1'''",
 	"imagesuggestions-notification-link-text-article": "Посмотреть статью",
 	"imagesuggestions-notification-link-text-section": "Просмотреть секцию",
-	"imagesuggestions-notification-link-text-image": "Обзор изображения",
+	"imagesuggestions-notification-link-text-image": "Просмотреть изображение",
 	"imagesuggestions-notification-link-text-help": "Помощь",
 	"echo-category-title-image-suggestions": "Предложения изображений",
 	"echo-pref-tooltip-image-suggestions": "Присылать уведомления с подобранными изображениями для статей из моего списка наблюдения."
