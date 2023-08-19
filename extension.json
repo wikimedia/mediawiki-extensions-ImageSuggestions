@@ -14,7 +14,7 @@
 	"descriptionmsg": "imagesuggestions-desc",
 	"license-name": "GPL-2.0-or-later",
 	"requires": {
-		"MediaWiki": ">= 1.40.0",
+		"MediaWiki": ">= 1.41",
 		"extensions": {
 			"Echo": "*",
 			"CirrusSearch": "*"
