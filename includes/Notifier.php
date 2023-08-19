@@ -12,6 +12,7 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchQuery;
 use Elastica\ResultSet;
 use Elastica\Search;
+use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFactory;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
@@ -19,7 +20,6 @@ use MediaWiki\User\UserOptionsLookup;
 use MultiHttpClient;
 use NamespaceInfo;
 use Psr\Log\LoggerInterface;
-use Title;
 use WikiMap;
 use Wikimedia\Rdbms\IReadableDatabase;
 

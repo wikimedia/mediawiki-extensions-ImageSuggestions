@@ -11,8 +11,8 @@ namespace MediaWiki\Extension\ImageSuggestions;
  */
 
 use EchoEvent;
+use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
-use Title;
 
 class ImageSuggestionsEchoTestHelper {
 	/**
