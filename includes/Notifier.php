@@ -17,10 +17,10 @@ use MediaWiki\Title\TitleFactory;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
+use MediaWiki\WikiMap\WikiMap;
 use MultiHttpClient;
 use NamespaceInfo;
 use Psr\Log\LoggerInterface;
-use WikiMap;
 use Wikimedia\Rdbms\IReadableDatabase;
 
 class Notifier {
