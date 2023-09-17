@@ -19,17 +19,20 @@
 
 namespace MediaWiki\Extension\ImageSuggestions;
 
-use ParserOutput;
+use MediaWiki\Hook\BeforePageDisplayHook;
+use MediaWiki\Output\OutputPage;
+use Skin;
 
-class Hooks {
+class Hooks implements BeforePageDisplayHook {
 	public const EVENT_CATEGORY = 'image-suggestions';
 	public const EVENT_NAME = 'image-suggestions';
 
 	/**
-	 * @param ParserOutput $parserOutput
+	 * @param OutputPage $output
+	 * @param Skin $skin
 	 */
-	public static function onBeforePageDisplay( $parserOutput ) {
-		$parserOutput->addModules( [
+	public function onBeforePageDisplay( $output, $skin ): void {
+		$output->addModules( [
 			'oojs-ui.styles.icons-media',
 			'oojs-ui-core.icons'
 		] );

@@ -4,9 +4,10 @@ namespace MediaWiki\Extension\ImageSuggestions\Tests;
 
 use MediaWiki\Extension\ImageSuggestions\Hooks;
 use MediaWiki\Extension\Notifications\Model\Event;
+use MediaWiki\Output\OutputPage;
 use MediaWikiUnitTestCase;
 use MockTitleTrait;
-use ParserOutput;
+use SkinTemplate;
 
 /**
  * @covers \MediaWiki\Extension\ImageSuggestions\Hooks
@@ -15,9 +16,10 @@ class HooksTest extends MediaWikiUnitTestCase {
 	use MockTitleTrait;
 
 	public function testOnBeforePageDisplay() {
-		$parserOutput = $this->createMock( ParserOutput::class );
-		$parserOutput->expects( $this->once() )->method( 'addModules' );
-		Hooks::onBeforePageDisplay( $parserOutput );
+		$skin = new SkinTemplate();
+		$output = $this->createMock( OutputPage::class );
+		$output->expects( $this->once() )->method( 'addModules' );
+		( new Hooks )->onBeforePageDisplay( $output, $skin );
 	}
 
 	public function testOnBeforeCreateEchoEvent() {
