@@ -42,9 +42,14 @@
 		}
 	},
 	"Hooks": {
-		"BeforePageDisplay": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onBeforePageDisplay",
+		"BeforePageDisplay": "main",
 		"BeforeCreateEchoEvent": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onBeforeCreateEchoEvent",
 		"EchoGetBundleRules": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onEchoGetBundleRules"
+	},
+	"HookHandlers": {
+		"main": {
+			"class": "MediaWiki\\Extension\\ImageSuggestions\\Hooks"
+		}
 	},
 	"MessagesDirs": {
 		"ImageSuggestions": [
