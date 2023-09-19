@@ -5,12 +5,13 @@
 			"Kaganer",
 			"Kareyac",
 			"Mehman (WMF)",
+			"Okras",
 			"Pacha Tchernof"
 		]
 	},
 	"imagesuggestions-desc": "Оповещает пользователей о потенциально полезных изображениях для статей",
-	"imagesuggestions-notification-message-article": "Мы нашли изображение, которое могло бы стать хорошей иллюстрацией для страницы «'''$1'''» из вашего списка наблюдения.",
-	"imagesuggestions-notification-message-section": "Мы нашли изображение, которое могло бы стать хорошей иллюстрацией для раздела «'''$1'''» на странице '''$2''' из вашего списка наблюдения.",
+	"imagesuggestions-notification-message-article": "Мы нашли изображение, которое могло бы стать хорошей иллюстрацией для страницы «'''$1'''» из {{GENDER:$2|вашего}} списка наблюдения.",
+	"imagesuggestions-notification-message-section": "Мы нашли изображение, которое могло бы стать хорошей иллюстрацией для раздела «'''$1'''» на странице '''$2''' из {{GENDER:$3|вашего}} списка наблюдения.",
 	"imagesuggestions-notification-message-bundle": "Мы нашли несколько изображений, которые могут стать хорошей иллюстрацией для страницы «'''$1'''» из {{GENDER:$2|вашего}} списка наблюдения.",
 	"imagesuggestions-notification-bundle-article": "Просмотреть рекомендуемые изображение для статьи",
 	"imagesuggestions-notification-bundle-section": "Просмотреть предложенное изображение для раздела '''$1'''",
