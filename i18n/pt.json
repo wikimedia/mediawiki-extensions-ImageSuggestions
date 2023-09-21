@@ -4,12 +4,13 @@
 			"Albertoleoncio",
 			"FDoria-WMF",
 			"Hamilton Abreu",
-			"Sannita"
+			"Sannita",
+			"TheEduGobi"
 		]
 	},
 	"imagesuggestions-desc": "Alerta os utilizadores sobre imagens possivelmente úteis para ilustrar artigos",
 	"imagesuggestions-notification-message-article": "Encontrámos uma imagem que pode ser adequada para a página '''$1''', das suas páginas vigiadas.{{GENDER:$2|}}",
-	"imagesuggestions-notification-message-section": "Encontrámos uma imagem que pode ser adequada para a secção '''$1''' na página '''$2''', das suas páginas vigiadas.{{GENDER:$3|}}",
+	"imagesuggestions-notification-message-section": "Encontramos uma imagem que pode ser adequada para a secção '''$1''' na página '''$2''', das {{GENDER:$3|suas}} páginas vigiadas.",
 	"imagesuggestions-notification-message-bundle": "Encontrámos várias imagens que podem ser adequadas para a página '''$1''', das suas páginas vigiadas.{{GENDER:$2|}}",
 	"imagesuggestions-notification-bundle-article": "Ver sugestão de imagem para o artigo",
 	"imagesuggestions-notification-bundle-section": "Ver sugestão de imagem para a secção '''$1'''",
