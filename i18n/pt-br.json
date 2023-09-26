@@ -2,9 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Duke of Wikipädia",
-			"Eduardoaddad"
+			"Eduardoaddad",
+			"TheEduGobi"
 		]
 	},
+	"imagesuggestions-desc": "Alerta usuários sobre imagens potencialmente úteis para serem acrescentadas a artigos",
+	"imagesuggestions-extensionname": "Sugestões de imagem",
 	"imagesuggestions-notification-message": "Encontramos material multimídia que poderá melhorar o artigo \"'''$1'''\", que está presente na {{GENDER:$2|sua}} lista de páginas vigiadas.",
 	"imagesuggestions-notification-link-text-article": "Ver artigo",
 	"imagesuggestions-notification-link-text-help": "Ajuda",
