@@ -258,7 +258,7 @@ class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {
 	 */
 	private function fetchCategories( array $rootCategories ): array {
 		$endpoint = $this->getConfig()->get( 'CirrusSearchCategoryEndpoint' );
-		if ( empty( $endpoint ) ) {
+		if ( !$endpoint ) {
 			return $rootCategories;
 		}
 
