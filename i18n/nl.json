@@ -1,10 +1,20 @@
 {
 	"@metadata": {
 		"authors": [
+			"McDutchie",
 			"Vistaus"
 		]
 	},
+	"imagesuggestions-desc": "Maakt gebruikers attent op mogelijk nuttige afbeeldingen voor artikelen",
+	"imagesuggestions-notification-message-article": "We hebben een afbeelding gevonden die mogelijk goed past bij de pagina '''$1''' in {{GENDER:$2|uw}} volglijst.",
+	"imagesuggestions-notification-message-section": "We hebben een afbeelding gevonden die mogelijk goed past bij de sectie '''$1''' op de pagina '''$2''' in {{GENDER:$3|uw}} volglijst.",
+	"imagesuggestions-notification-message-bundle": "We hebben meerdere afbeeldingen gevonden die mogelijk goed passen bij de pagina '''$1''' in {{GENDER:$2|uw}} volglijst.",
+	"imagesuggestions-notification-bundle-article": "Afbeeldingssuggestie voor het artikel bekijken",
+	"imagesuggestions-notification-bundle-section": "Afbeeldingssuggestie voor de sectie '''$1''' bekijken",
 	"imagesuggestions-notification-link-text-article": "Artikel bekijken",
+	"imagesuggestions-notification-link-text-section": "Sectie bekijken",
+	"imagesuggestions-notification-link-text-image": "Afbeelding beoordelen",
 	"imagesuggestions-notification-link-text-help": "Hulp",
-	"echo-category-title-image-suggestions": "Afbeeldingssuggesties"
+	"echo-category-title-image-suggestions": "Afbeeldingssuggesties",
+	"echo-pref-tooltip-image-suggestions": "Breng mij op de hoogte wanneer er een afbeeldingssuggestie is voor een artikel op mijn volglijst."
 }
