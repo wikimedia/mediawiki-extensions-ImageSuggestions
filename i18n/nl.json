@@ -1,11 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Vistaus"
+			"Vistaus",
+			"McDutchie"
 		]
 	},
+	"imagesuggestions-desc": "Maakt gebruikers attent op mogelijk nuttige afbeeldingen voor artikelen",
 	"imagesuggestions-notification-link-text-article": "Artikel bekijken",
 	"imagesuggestions-notification-link-text-media": "Media beoordelen",
 	"imagesuggestions-notification-link-text-help": "Hulp",
-	"echo-category-title-image-suggestions": "Afbeeldingssuggesties"
+	"echo-category-title-image-suggestions": "Afbeeldingssuggesties",
+	"echo-pref-tooltip-image-suggestions": "Breng mij op de hoogte wanneer er een afbeeldingssuggestie is voor een artikel op mijn volglijst."
 }
