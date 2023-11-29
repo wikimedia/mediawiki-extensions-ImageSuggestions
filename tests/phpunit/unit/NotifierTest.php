@@ -13,7 +13,7 @@ use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
 use MediaWiki\Extension\ImageSuggestions\Notifier;
 use MediaWiki\Extension\ImageSuggestions\WikiMapHelper;
 use MediaWiki\Title\TitleFactory;
-use MediaWiki\User\StaticUserOptionsLookup;
+use MediaWiki\User\Options\StaticUserOptionsLookup;
 use MediaWiki\User\UserFactory;
 use MediaWikiUnitTestCase;
 use MockTitleTrait;
