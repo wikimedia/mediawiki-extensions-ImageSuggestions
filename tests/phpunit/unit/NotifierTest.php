@@ -190,13 +190,17 @@ class NotifierTest extends MediaWikiUnitTestCase {
 				$expectedArgs[] = [
 					$userFactory->newFromID( $notifData['userId'] ),
 					$titleFactory->newFromID( $notifData['pageId'] ),
-					$this->equalTo( $notifData['mediaUrl'] ),
-					$this->equalTo( $notifData['sectionHeading'] ),
+					$notifData['mediaUrl'],
+					$notifData['sectionHeading'],
+					null,
+					false,
 				];
 			}
 			$notificationHelper->expects( $this->exactly( count( $data['expectedNotifications'] ) ) )
 				->method( 'createNotification' )
-				->withConsecutive( ...$expectedArgs );
+				->willReturnCallback( function ( ...$args ) use ( &$expectedArgs ) {
+					$this->assertEquals( array_shift( $expectedArgs ), $args );
+				} );
 		}
 		$namespaceInfo = $this->createMock( NamespaceInfo::class );
 		$namespaceInfo->method( 'getCanonicalName' )->willReturn( 'File' );
