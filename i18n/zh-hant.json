@@ -2,10 +2,16 @@
 	"@metadata": {
 		"authors": [
 			"Kly",
-			"Winston Sung"
+			"Winston Sung",
+			"SunAfterRain"
 		]
 	},
 	"imagesuggestions-desc": "提醒使用者可能對於條目有幫助的圖片",
+	"imagesuggestions-notification-message-article": "我們找到了可能對{{GENDER:$2|您}}監視清單中的頁面「'''$1'''」有幫助的圖像。",
+	"imagesuggestions-notification-message-section": "我們找到了可能對{{GENDER:$3|您}}監視清單中頁面「'''$2'''」的章節「'''$1'''」有幫助的圖像。",
+	"imagesuggestions-notification-message-bundle": "我們找到了可能對{{GENDER:$2|您}}監視清單中的頁面「'''$1'''」有幫助的多個圖像。",
+	"imagesuggestions-notification-bundle-article": "檢視該條目的圖像建議",
+	"imagesuggestions-notification-bundle-section": "檢視章節「'''$1'''」的圖像建議",
 	"imagesuggestions-notification-link-text-article": "檢視條目",
 	"imagesuggestions-notification-link-text-section": "檢視章節",
 	"imagesuggestions-notification-link-text-help": "說明",
