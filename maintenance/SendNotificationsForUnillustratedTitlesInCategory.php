@@ -6,7 +6,6 @@ use CirrusSearch\Connection;
 use CirrusSearch\Query\QueryHelper;
 use CirrusSearch\SearchConfig;
 use CirrusSearch\Wikimedia\WeightedTagsHooks;
-use ConfigFactory;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchQuery;
@@ -15,11 +14,13 @@ use Elastica\Search;
 use Generator;
 use InvalidArgumentException;
 use Maintenance;
+use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Extension\ImageSuggestions\Hooks;
 use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Sparql\SparqlClient;
 use MediaWiki\Sparql\SparqlException;
+use MediaWiki\Title\NamespaceInfo;
 use MediaWiki\Title\Title;
 use MediaWiki\User\Options\UserOptionsLookup;
 use MediaWiki\User\UserFactory;
@@ -27,7 +28,6 @@ use MediaWiki\User\UserIdentity;
 use MediaWiki\WikiMap\WikiMap;
 use MultiHttpClient;
 use MWEchoDbFactory;
-use NamespaceInfo;
 
 class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {
 	/** @var MultiHttpClient */

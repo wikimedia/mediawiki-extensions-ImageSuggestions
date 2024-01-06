@@ -12,15 +12,15 @@ use Elastica\ResultSet;
 use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
 use MediaWiki\Extension\ImageSuggestions\Notifier;
 use MediaWiki\Extension\ImageSuggestions\WikiMapHelper;
+use MediaWiki\Title\NamespaceInfo;
 use MediaWiki\Title\TitleFactory;
 use MediaWiki\User\Options\StaticUserOptionsLookup;
+use MediaWiki\User\User;
 use MediaWiki\User\UserFactory;
 use MediaWikiUnitTestCase;
 use MockTitleTrait;
 use MultiHttpClient;
-use NamespaceInfo;
 use Psr\Log\Test\TestLogger;
-use User;
 use Wikimedia\Rdbms\IReadableDatabase;
 use Wikimedia\TestingAccessWrapper;
 
