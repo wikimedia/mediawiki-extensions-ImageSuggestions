@@ -265,7 +265,7 @@ class NotifierTest extends MediaWikiUnitTestCase {
 			} );
 		$resultSet->method( 'next' )
 			->willReturnCallback( static function () use ( $fakeResultSet ) {
-				$fakeResultSet->position ++;
+				$fakeResultSet->position++;
 			} );
 		$resultSet->method( 'valid' )
 			->willReturnCallback( static function () use ( $fakeResultSet ) {
@@ -311,7 +311,7 @@ class NotifierTest extends MediaWikiUnitTestCase {
 
 	public function testSearchAfterWithLastPageId() {
 		$notifier = $this->mockNotifier( [
-			'jobParams' => [ 'lastPageId' => 999 ] ,
+			'jobParams' => [ 'lastPageId' => 999 ],
 		] );
 		$initialSearchAfter = TestingAccessWrapper::newFromObject(
 			TestingAccessWrapper::newFromObject( $notifier )->searchAfter

@@ -306,7 +306,7 @@ class Notifier {
 			[ 'echo_notification', 'echo_event' ],
 			'notification_user',
 			[
-				'event_type' => Hooks::EVENT_NAME ,
+				'event_type' => Hooks::EVENT_NAME,
 				'event_page_id' => $title->getId()
 			],
 			__METHOD__,
