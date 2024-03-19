@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Anterdc99",
 			"GuoPC",
 			"Lakejason0",
 			"StarrySky"
@@ -14,6 +15,7 @@
 	"imagesuggestions-notification-bundle-section": "查看章节“'''$1'''”的图像建议",
 	"imagesuggestions-notification-link-text-article": "查看条目",
 	"imagesuggestions-notification-link-text-section": "查看章节",
+	"imagesuggestions-notification-link-text-image": "查看图片",
 	"imagesuggestions-notification-link-text-help": "帮助",
 	"echo-category-title-image-suggestions": "图片建议",
 	"echo-pref-tooltip-image-suggestions": "当我的监视列表中的文章有图片建议时通知我。"
