@@ -26,7 +26,7 @@ class HooksTest extends MediaWikiUnitTestCase {
 		$notifications = [];
 		$notificationCategories = [];
 		$icons = [];
-		Hooks::onBeforeCreateEchoEvent( $notifications, $notificationCategories, $icons );
+		( new Hooks )->onBeforeCreateEchoEvent( $notifications, $notificationCategories, $icons );
 		$this->assertArrayHasKey( Hooks::EVENT_CATEGORY, $notificationCategories );
 		$this->assertArrayHasKey( Hooks::EVENT_NAME, $notifications );
 		$this->assertArrayHasKey( 'image-suggestions-blue', $icons );
@@ -38,7 +38,7 @@ class HooksTest extends MediaWikiUnitTestCase {
 		$event->expects( $this->once() )->method( 'getType' )->willReturn( Hooks::EVENT_NAME );
 		$event->method( 'getTitle' )->willReturn( $title );
 		$bundleString = '';
-		Hooks::onEchoGetBundleRules( $event, $bundleString );
+		( new Hooks )->onEchoGetBundleRules( $event, $bundleString );
 		$this->assertEquals( Hooks::EVENT_NAME . '-' . NS_MAIN . '-Test_title', $bundleString );
 	}
 }

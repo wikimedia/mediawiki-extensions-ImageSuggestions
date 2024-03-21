@@ -19,11 +19,18 @@
 
 namespace MediaWiki\Extension\ImageSuggestions;
 
+use MediaWiki\Extension\Notifications\Hooks\BeforeCreateEchoEventHook;
+use MediaWiki\Extension\Notifications\Hooks\EchoGetBundleRulesHook;
+use MediaWiki\Extension\Notifications\Model\Event;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Output\OutputPage;
 use Skin;
 
-class Hooks implements BeforePageDisplayHook {
+class Hooks implements
+	BeforeCreateEchoEventHook,
+	BeforePageDisplayHook,
+	EchoGetBundleRulesHook
+{
 	public const EVENT_CATEGORY = 'image-suggestions';
 	public const EVENT_NAME = 'image-suggestions';
 
@@ -45,7 +52,7 @@ class Hooks implements BeforePageDisplayHook {
 	 * @param array &$notificationCategories array of Echo notification categories
 	 * @param array &$icons array of icon details
 	 */
-	public static function onBeforeCreateEchoEvent(
+	public function onBeforeCreateEchoEvent(
 		array &$notifications,
 		array &$notificationCategories,
 		array &$icons
@@ -77,10 +84,10 @@ class Hooks implements BeforePageDisplayHook {
 		];
 	}
 
-	public static function onEchoGetBundleRules( $event, &$bundleString ) {
+	public function onEchoGetBundleRules( Event $event, string &$bundleString ) {
 		if ( $event->getType() == static::EVENT_NAME ) {
-				$bundleString = static::EVENT_NAME . '-' .
-					$event->getTitle()->getNamespace() . '-' . $event->getTitle()->getDBkey();
+			$bundleString = static::EVENT_NAME . '-' .
+				$event->getTitle()->getNamespace() . '-' . $event->getTitle()->getDBkey();
 		}
 		return true;
 	}

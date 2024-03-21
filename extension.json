@@ -43,8 +43,8 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "main",
-		"BeforeCreateEchoEvent": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onBeforeCreateEchoEvent",
-		"EchoGetBundleRules": "MediaWiki\\Extension\\ImageSuggestions\\Hooks::onEchoGetBundleRules"
+		"BeforeCreateEchoEvent": "main",
+		"EchoGetBundleRules": "main"
 	},
 	"HookHandlers": {
 		"main": {
