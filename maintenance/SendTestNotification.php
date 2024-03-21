@@ -4,7 +4,6 @@ namespace MediaWiki\Extension\ImageSuggestions\Maintenance;
 
 use Maintenance;
 use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 
 class SendTestNotification extends Maintenance {
@@ -44,7 +43,7 @@ class SendTestNotification extends Maintenance {
 	}
 
 	public function execute() {
-		$services = MediaWikiServices::getInstance();
+		$services = $this->getServiceContainer();
 
 		$notificationHelper = new NotificationHelper();
 		$success = $notificationHelper->createNotification(
