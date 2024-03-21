@@ -70,6 +70,20 @@
 		}
 	},
 	"JobClasses": {
-		"ImageSuggestionsNotifications": "MediaWiki\\Extension\\ImageSuggestions\\NotificationsJob"
+		"ImageSuggestionsNotifications": {
+			"class": "MediaWiki\\Extension\\ImageSuggestions\\NotificationsJob",
+			"services": [
+				"ConfigFactory",
+				"DBLoadBalancerFactory",
+				"HttpRequestFactory",
+				"JobQueueGroup",
+				"MainConfig",
+				"NamespaceInfo",
+				"TitleFactory",
+				"UserFactory",
+				"UserOptionsLookup"
+			],
+			"needsPage": false
+		}
 	}
 }

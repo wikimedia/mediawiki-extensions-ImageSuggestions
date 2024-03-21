@@ -4,19 +4,54 @@ namespace MediaWiki\Extension\ImageSuggestions;
 
 use CirrusSearch\Connection;
 use CirrusSearch\SearchConfig;
+use MediaWiki\Config\Config;
+use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Extension\Notifications\DbFactory;
-use MediaWiki\JobQueue\GenericParameterJob;
+use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\JobQueue\Job;
+use MediaWiki\JobQueue\JobQueueGroup;
 use MediaWiki\Logger\LoggerFactory;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\NamespaceInfo;
+use MediaWiki\Title\TitleFactory;
+use MediaWiki\User\Options\UserOptionsLookup;
+use MediaWiki\User\UserFactory;
 use Psr\Log\LoggerInterface;
+use Wikimedia\Rdbms\LBFactory;
 
-class NotificationsJob extends Job implements GenericParameterJob {
+class NotificationsJob extends Job {
+
+	private ConfigFactory $configFactory;
+	private LBFactory $lbFactory;
+	private HttpRequestFactory $httpRequestFactory;
+	private JobQueueGroup $jobQueueGroup;
+	private Config $config;
+	private NamespaceInfo $namespaceInfo;
+	private TitleFactory $titleFactory;
+	private UserFactory $userFactory;
+	private UserOptionsLookup $userOptionsLookup;
 
 	public function __construct(
-		array $params
+		array $params,
+		ConfigFactory $configFactory,
+		LBFactory $lbFactory,
+		HttpRequestFactory $httpRequestFactory,
+		JobQueueGroup $jobQueueGroup,
+		Config $config,
+		NamespaceInfo $namespaceInfo,
+		TitleFactory $titleFactory,
+		UserFactory $userFactory,
+		UserOptionsLookup $userOptionsLookup
 	) {
 		parent::__construct( 'ImageSuggestionsNotifications', $params );
+		$this->configFactory = $configFactory;
+		$this->lbFactory = $lbFactory;
+		$this->httpRequestFactory = $httpRequestFactory;
+		$this->jobQueueGroup = $jobQueueGroup;
+		$this->config = $config;
+		$this->namespaceInfo = $namespaceInfo;
+		$this->titleFactory = $titleFactory;
+		$this->userFactory = $userFactory;
+		$this->userOptionsLookup = $userOptionsLookup;
 	}
 
 	/**
@@ -30,8 +65,7 @@ class NotificationsJob extends Job implements GenericParameterJob {
 	 */
 	public function invoke( bool $queue = true ): void {
 		if ( $queue ) {
-			$jobQueueGroup = $this->getServices()->getJobQueueGroup();
-			$jobQueueGroup->push( $this );
+			$this->jobQueueGroup->push( $this );
 		} else {
 			$this->run();
 		}
@@ -51,34 +85,28 @@ class NotificationsJob extends Job implements GenericParameterJob {
 		return true;
 	}
 
-	protected function getServices(): MediaWikiServices {
-		return MediaWikiServices::getInstance();
-	}
-
 	private function createNotifier( LoggerInterface $logger, array $params ): ?Notifier {
-		$services = $this->getServices();
-		$config = $services->getMainConfig();
-		$searchConfig = $services->getConfigFactory()->makeConfig( 'CirrusSearch' );
+		$searchConfig = $this->configFactory->makeConfig( 'CirrusSearch' );
 		if ( !( $searchConfig instanceof SearchConfig ) ) {
 			$logger->error( 'Wrong config type returned from makeConfig()' );
 			return null;
 		}
-		$dbr = $services->getDBLoadBalancerFactory()->getReplicaDatabase();
+		$dbr = $this->lbFactory->getReplicaDatabase();
 		$dbrEcho = DbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
 
 		return new Notifier(
-			$config->get( 'ImageSuggestionsSuggestionsApi' ),
-			$config->get( 'ImageSuggestionsInstanceOfApi' ),
-			$services->getHttpRequestFactory()->createMultiClient(),
-			$services->getUserFactory(),
-			$services->getUserOptionsLookup(),
-			$services->getNamespaceInfo(),
+			$this->config->get( 'ImageSuggestionsSuggestionsApi' ),
+			$this->config->get( 'ImageSuggestionsInstanceOfApi' ),
+			$this->httpRequestFactory->createMultiClient(),
+			$this->userFactory,
+			$this->userOptionsLookup,
+			$this->namespaceInfo,
 			$dbr,
 			$dbrEcho,
 			$logger,
 			$searchConfig,
 			Connection::getPool( $searchConfig ),
-			$services->getTitleFactory(),
+			$this->titleFactory,
 			new NotificationHelper(),
 			new WikiMapHelper(),
 			$params
@@ -92,7 +120,18 @@ class NotificationsJob extends Job implements GenericParameterJob {
 
 		$logger->info( 'Queuing next batch' );
 		$params['jobNumber'] += 1;
-		$job = new NotificationsJob( $params );
+		$job = new NotificationsJob(
+			$params,
+			$this->configFactory,
+			$this->lbFactory,
+			$this->httpRequestFactory,
+			$this->jobQueueGroup,
+			$this->config,
+			$this->namespaceInfo,
+			$this->titleFactory,
+			$this->userFactory,
+			$this->userOptionsLookup
+		);
 		$job->invoke( $params['queue'] );
 	}
 }

@@ -121,7 +121,19 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 			] ) );
 		}
 
-		$job = new NotificationsJob( $params );
+		$services = $this->getServiceContainer();
+		$job = new NotificationsJob(
+			$params,
+			$services->getConfigFactory(),
+			$services->getDBLoadBalancerFactory(),
+			$services->getHttpRequestFactory(),
+			$services->getJobQueueGroup(),
+			$services->getMainConfig(),
+			$services->getNamespaceInfo(),
+			$services->getTitleFactory(),
+			$services->getUserFactory(),
+			$services->getUserOptionsLookup()
+		);
 		$job->invoke( $params['queue'] );
 	}
 
