@@ -17,7 +17,6 @@ use Maintenance;
 use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Extension\ImageSuggestions\Hooks;
 use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Sparql\SparqlClient;
 use MediaWiki\Sparql\SparqlException;
 use MediaWiki\Title\NamespaceInfo;
@@ -150,7 +149,7 @@ class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {
 	}
 
 	public function init() {
-		$services = MediaWikiServices::getInstance();
+		$services = $this->getServiceContainer();
 		$this->multiHttpClient = $services->getHttpRequestFactory()->createMultiClient();
 		$this->userFactory = $services->getUserFactory();
 		$this->userOptionsLookup = $services->getUserOptionsLookup();
