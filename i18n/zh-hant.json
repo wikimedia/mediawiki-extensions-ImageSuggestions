@@ -3,7 +3,8 @@
 		"authors": [
 			"Kly",
 			"Winston Sung",
-			"SunAfterRain"
+			"SunAfterRain",
+			"Anterdc99"
 		]
 	},
 	"imagesuggestions-desc": "提醒使用者可能對於條目有幫助的圖片",
@@ -14,7 +15,7 @@
 	"imagesuggestions-notification-bundle-section": "檢視章節「'''$1'''」的圖像建議",
 	"imagesuggestions-notification-link-text-article": "檢視條目",
 	"imagesuggestions-notification-link-text-section": "檢視章節",
-	"imagesuggestions-notification-link-text-image": "檢視圖片",
+	"imagesuggestions-notification-link-text-image": "覆核圖片",
 	"imagesuggestions-notification-link-text-help": "說明",
 	"echo-category-title-image-suggestions": "圖片建議",
 	"echo-pref-tooltip-image-suggestions": "當在我監視清單裡的條目有圖片建議時通知我"
