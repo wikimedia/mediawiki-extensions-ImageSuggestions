@@ -116,19 +116,9 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 			] ) );
 		}
 
-		$services = $this->getServiceContainer();
-		$job = new NotificationsJob(
-			$params,
-			$services->getConfigFactory(),
-			$services->getConnectionProvider(),
-			$services->getHttpRequestFactory(),
-			$services->getJobQueueGroup(),
-			$services->getMainConfig(),
-			$services->getNamespaceInfo(),
-			$services->getTitleFactory(),
-			$services->getUserFactory(),
-			$services->getUserOptionsLookup()
-		);
+		$job = $this->getServiceContainer()->getJobFactory()
+			->newJob( 'ImageSuggestionsNotifications', $params );
+		'@phan-var NotificationsJob $job';
 		$job->invoke( $params['queue'] );
 	}
 

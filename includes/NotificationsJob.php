@@ -9,6 +9,7 @@ use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Extension\Notifications\DbDomains;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\JobQueue\Job;
+use MediaWiki\JobQueue\JobFactory;
 use MediaWiki\JobQueue\JobQueueGroup;
 use MediaWiki\Logger\LoggerFactory;
 use MediaWiki\Title\NamespaceInfo;
@@ -25,6 +26,7 @@ class NotificationsJob extends Job {
 		private readonly ConfigFactory $configFactory,
 		private readonly IConnectionProvider $dbProvider,
 		private readonly HttpRequestFactory $httpRequestFactory,
+		private readonly JobFactory $jobFactory,
 		private readonly JobQueueGroup $jobQueueGroup,
 		private readonly Config $config,
 		private readonly NamespaceInfo $namespaceInfo,
@@ -113,18 +115,8 @@ class NotificationsJob extends Job {
 
 		$logger->info( 'Queuing next batch' );
 		$params['jobNumber'] += 1;
-		$job = new NotificationsJob(
-			$params,
-			$this->configFactory,
-			$this->dbProvider,
-			$this->httpRequestFactory,
-			$this->jobQueueGroup,
-			$this->config,
-			$this->namespaceInfo,
-			$this->titleFactory,
-			$this->userFactory,
-			$this->userOptionsLookup
-		);
+		$job = $this->jobFactory->newJob( $this->getType(), $params );
+		'@phan-var self $job';
 		$job->invoke( $params['queue'] );
 	}
 }
