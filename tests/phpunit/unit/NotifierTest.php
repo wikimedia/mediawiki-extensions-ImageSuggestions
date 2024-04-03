@@ -166,7 +166,7 @@ class NotifierTest extends MediaWikiUnitTestCase {
 				$ignore2, array $args ) use ( $data ) {
 				if ( isset( $data['notifiedUserIdsByArticleId'] ) ) {
 					foreach ( $data['notifiedUserIdsByArticleId'] as $articleId => $userIds ) {
-						if ( $args['event_page_id'] == $articleId ) {
+						if ( $args['event_page_id'] === $articleId ) {
 							return $userIds;
 						}
 					}
@@ -283,7 +283,7 @@ class NotifierTest extends MediaWikiUnitTestCase {
 
 	private function mockTitleFactory( array $idToTitleMap = [] ): TitleFactory {
 		$titleFactory = $this->createMock( TitleFactory::class );
-		if ( count( $idToTitleMap ) == 0 ) {
+		if ( !$idToTitleMap ) {
 			return $titleFactory;
 		}
 

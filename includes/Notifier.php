@@ -158,7 +158,7 @@ class Notifier {
 			}
 
 			$suggestions = $this->getSuggestions( $pageId );
-			if ( count( $suggestions ) === 0 ) {
+			if ( !$suggestions ) {
 				$this->logger->debug( 'No suggestions found for ' . $pageId );
 				continue;
 			}
