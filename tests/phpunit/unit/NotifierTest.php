@@ -21,7 +21,10 @@ use MediaWikiUnitTestCase;
 use MockTitleTrait;
 use MultiHttpClient;
 use Psr\Log\Test\TestLogger;
+use Wikimedia\Rdbms\Expression;
+use Wikimedia\Rdbms\IExpression;
 use Wikimedia\Rdbms\IReadableDatabase;
+use Wikimedia\Rdbms\SelectQueryBuilder;
 use Wikimedia\TestingAccessWrapper;
 
 /**
@@ -133,14 +136,26 @@ class NotifierTest extends MediaWikiUnitTestCase {
 			]
 		);
 		$mainDbConnection = $this->createMock( IReadableDatabase::class );
+		$mainDbConnection->method( 'addQuotes' )->willReturnArgument( 0 );
+		$mainDbConnection->method( 'expr' )->willReturnCallback( static function ( $arg1, $arg2, $arg3 ) {
+			return new Expression( $arg1, $arg2, $arg3 );
+		} );
+		$mainDbConnection->method( 'newSelectQueryBuilder' )
+			->willReturnCallback( static function () use ( $mainDbConnection ) {
+				return new SelectQueryBuilder( $mainDbConnection );
+			} );
 		$mainDbConnection->method( 'selectFieldValues' )->willReturnCallback(
 			static function ( $ignore1,
-				$ignore2, array $args ) use ( $data ) {
+				$ignore2, array $args ) use ( $data, $mainDbConnection ) {
 				if ( isset( $data['usersByTitle'] ) ) {
 					$excludedUserIds = [];
 					foreach ( $args as $key => $value ) {
-						if ( preg_match( '/^wl_user NOT IN \(([^\)]*)\)/i', $value, $matches ) ) {
+						$sql = $value instanceof IExpression ? $value->toSql( $mainDbConnection ) : $value;
+						if ( preg_match( '/^wl_user NOT IN \(([^\)]*)\)/i', $sql, $matches ) ) {
 							$excludedUserIds = explode( ',', $matches[1] );
+						}
+						if ( preg_match( '/^wl_user != ([^\)]*)/i', $sql, $matches ) ) {
+							$excludedUserIds[] = $matches[1];
 						}
 					}
 					foreach ( $data['usersByTitle'] as $titleString => $users ) {
@@ -155,12 +170,11 @@ class NotifierTest extends MediaWikiUnitTestCase {
 				return [];
 			}
 		);
-		$mainDbConnection->method( 'makeList' )->willReturnCallback(
-			static function ( array $array ) {
-				return implode( ',', $array );
-			}
-		);
 		$echoDbConnection = $this->createMock( IReadableDatabase::class );
+		$echoDbConnection->method( 'newSelectQueryBuilder' )
+			->willReturnCallback( static function () use ( $echoDbConnection ) {
+				return new SelectQueryBuilder( $echoDbConnection );
+			} );
 		$echoDbConnection->method( 'selectFieldValues' )->willReturnCallback(
 			static function ( $ignore1,
 				$ignore2, array $args ) use ( $data ) {

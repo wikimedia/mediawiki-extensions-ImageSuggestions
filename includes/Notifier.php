@@ -22,6 +22,7 @@ use MediaWiki\WikiMap\WikiMap;
 use MultiHttpClient;
 use Psr\Log\LoggerInterface;
 use Wikimedia\Rdbms\IReadableDatabase;
+use Wikimedia\Rdbms\SelectQueryBuilder;
 
 class Notifier {
 	private MultiHttpClient $multiHttpClient;
@@ -302,17 +303,17 @@ class Notifier {
 	 */
 	private function getUserForTitle( Title $title ): ?UserIdentity {
 		// list of users who have already received an image suggestion notification for this page
-		$previouslyNotifiedUserIds = $this->dbrEcho->selectFieldValues(
-			[ 'echo_notification', 'echo_event' ],
-			'notification_user',
-			[
+		$previouslyNotifiedUserIds = $this->dbrEcho->newSelectQueryBuilder()
+			->select( 'notification_user' )
+			->distinct()
+			->from( 'echo_notification' )
+			->join( 'echo_event', null, 'notification_event = event_id' )
+			->where( [
 				'event_type' => Hooks::EVENT_NAME,
 				'event_page_id' => $title->getId()
-			],
-			__METHOD__,
-			[ 'DISTINCT' ],
-			[ 'echo_event' => [ 'INNER JOIN', 'notification_event = event_id' ] ]
-		);
+			] )
+			->caller( __METHOD__ )
+			->fetchFieldValues();
 
 		// list of users who've already been notified a certain amount of times in this run
 		$maxNotifiedUserIds = array_keys(
@@ -336,35 +337,24 @@ class Notifier {
 
 		$excludeUserIds = array_merge( $previouslyNotifiedUserIds, $maxNotifiedUserIds, $optedOutUserIds );
 
-		$userIds = $this->dbr->selectFieldValues(
-			[
-				'watchlist',
-				'user',
-				'actor',
-				'page',
-				'revision',
-			],
-			'DISTINCT wl_user',
-			array_merge(
-				$excludeUserIds ? [ 'wl_user NOT IN (' . $this->dbr->makeList( $excludeUserIds ) . ')' ] : [],
-				[
-					'wl_namespace' => $title->getNamespace(),
-					'wl_title' => $title->getDBkey(),
-					"user_editcount >= " . (int)$this->jobParams['minEditCount'],
-				]
-			),
-			__METHOD__,
-			[
-				'ORDER BY rev_timestamp DESC',
-				'LIMIT' => 1000,
-			],
-			[
-				'user' => [ 'INNER JOIN', 'user_id = wl_user' ],
-				'actor' => [ 'INNER JOIN', 'actor_user = wl_user' ],
-				'page' => [ 'INNER JOIN', [ 'page_namespace = wl_namespace', 'page_title = wl_title' ] ],
-				'revision' => [ 'LEFT JOIN', [ 'rev_page = page_id', 'rev_actor' => 'actor_id' ] ],
-			]
-		);
+		$userIds = $this->dbr->newSelectQueryBuilder()
+			->select( 'wl_user' )
+			->distinct()
+			->from( 'watchlist' )
+			->join( 'user', null, 'user_id = wl_user' )
+			->join( 'actor', null, 'actor_user = wl_user' )
+			->join( 'page', null, [ 'page_namespace = wl_namespace', 'page_title = wl_title' ] )
+			->leftJoin( 'revision', null, [ 'rev_page = page_id', 'rev_actor' => 'actor_id' ] )
+			->where( $excludeUserIds ? [ $this->dbr->expr( 'wl_user', '!=', $excludeUserIds ) ] : [] )
+			->andWhere( [
+				'wl_namespace' => $title->getNamespace(),
+				'wl_title' => $title->getDBkey(),
+				$this->dbr->expr( 'user_editcount', '>=', (int)$this->jobParams['minEditCount'] ),
+			] )
+			->orderBy( 'rev_timestamp', SelectQueryBuilder::SORT_DESC )
+			->limit( 1000 )
+			->caller( __METHOD__ )
+			->fetchFieldValues();
 
 		// iterate users to figure out whether they've opted in to any type of notifications
 		// for this event, and store the known results in $this->jobParams['optedInUserIds'] so we can

@@ -27,6 +27,7 @@ use MediaWiki\User\UserIdentity;
 use MediaWiki\WikiMap\WikiMap;
 use MultiHttpClient;
 use MWEchoDbFactory;
+use Wikimedia\Rdbms\SelectQueryBuilder;
 
 class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {
 	/** @var MultiHttpClient */
@@ -417,18 +418,18 @@ SPARQL;
 		}
 
 		// list of users who have already received an image suggestion notification for this page
-		$previouslyNotifiedUserIds = $dbrEcho->selectFieldValues(
-			[ 'echo_notification', 'echo_event' ],
-			'notification_user',
-			[
+		$previouslyNotifiedUserIds = $dbrEcho->newSelectQueryBuilder()
+			->select( 'notification_user' )
+			->distinct()
+			->from( 'echo_notification' )
+			->join( 'echo_event', null, 'notification_event = event_id' )
+			->where( [
 				'notification_user' => $this->userIds,
 				'event_type' => Hooks::EVENT_NAME,
 				'event_page_id' => $title->getId()
-			],
-			__METHOD__,
-			[ 'DISTINCT' ],
-			[ 'echo_event' => [ 'INNER JOIN', 'notification_event = event_id' ] ]
-		);
+			] )
+			->caller( __METHOD__ )
+			->fetchFieldValues();
 
 		// list of users who've already been notified a certain amount of times in this run
 		$maxNotifiedUserIds = array_keys( array_filter( $this->notifiedUserIds, function ( $amount ) {
@@ -452,24 +453,17 @@ SPARQL;
 
 		// get user that has not opted out of image suggestions notifications or
 		// otherwise already excluded, preferring those with most recent edits to page
-		$userIds = $dbr->selectFieldValues(
-			[
-				'user',
-				'actor',
-				'revision',
-			],
-			'DISTINCT user_id',
-			[ 'user_id' => $availableUserIds ],
-			__METHOD__,
-			[
-				'ORDER BY rev_timestamp DESC',
-				'LIMIT' => 1000,
-			],
-			[
-				'actor' => [ 'INNER JOIN', 'actor_user = user_id' ],
-				'revision' => [ 'LEFT JOIN', [ 'rev_page' => $title->getId(), 'rev_actor' => 'actor_id' ] ],
-			]
-		);
+		$userIds = $dbr->newSelectQueryBuilder()
+			->select( 'user_id' )
+			->distinct()
+			->from( 'user' )
+			->join( 'actor', null, 'actor_user = user_id' )
+			->leftJoin( 'revision', null, [ 'rev_page' => $title->getId(), 'rev_actor' => 'actor_id' ] )
+			->where( [ 'user_id' => $availableUserIds ] )
+			->orderBy( 'rev_timestamp', SelectQueryBuilder::SORT_DESC )
+			->limit( 1000 )
+			->caller( __METHOD__ )
+			->fetchFieldValues();
 
 		// iterate users to figure out whether they've opted in to any type of notifications
 		// for this event, and store the known results in $this->optedInUserIds so we can
