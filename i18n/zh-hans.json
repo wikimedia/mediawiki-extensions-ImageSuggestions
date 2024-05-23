@@ -4,10 +4,11 @@
 			"Anterdc99",
 			"GuoPC",
 			"Lakejason0",
-			"StarrySky"
+			"StarrySky",
+			"LittlePaw365"
 		]
 	},
-	"imagesuggestions-desc": "提醒用户可能对文章有用的图像",
+	"imagesuggestions-desc": "提示用户可能适用于条目的图像",
 	"imagesuggestions-notification-message-article": "我们找到了可能对{{GENDER:$2|您}}监视列表中的页面“'''$1'''”有帮助的图像。",
 	"imagesuggestions-notification-message-section": "我们找到了可能对{{GENDER:$3|您}}监视列表中页面“'''$2'''”的章节“'''$1'''”有帮助的图像。",
 	"imagesuggestions-notification-message-bundle": "我们找到了可能对{{GENDER:$2|您}}监视列表中的页面“'''$1'''”有帮助的多个图像。",
