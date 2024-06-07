@@ -411,9 +411,9 @@ SPARQL;
 			return null;
 		}
 
-		$dbr = $this->getDB( DB_REPLICA );
+		$dbr = $this->getReplicaDB();
 		$dbrEcho = MWEchoDbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
-		if ( !$dbr || !$dbrEcho ) {
+		if ( !$dbrEcho ) {
 			return null;
 		}
 
