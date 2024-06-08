@@ -2,9 +2,9 @@
 
 namespace MediaWiki\Extension\ImageSuggestions;
 
-use EchoEventPresentationModel;
+use MediaWiki\Extension\Notifications\Formatters\EchoEventPresentationModel;
 use MediaWiki\MediaWikiServices;
-use Message;
+use MediaWiki\Message\Message;
 
 class ImageSuggestionsPresentationModel extends EchoEventPresentationModel {
 

@@ -6,9 +6,9 @@ use CirrusSearch\Connection;
 use CirrusSearch\SearchConfig;
 use GenericParameterJob;
 use Job;
+use MediaWiki\Extension\Notifications\DbFactory;
 use MediaWiki\Logger\LoggerFactory;
 use MediaWiki\MediaWikiServices;
-use MWEchoDbFactory;
 use Psr\Log\LoggerInterface;
 
 class NotificationsJob extends Job implements GenericParameterJob {
@@ -64,7 +64,7 @@ class NotificationsJob extends Job implements GenericParameterJob {
 			return null;
 		}
 		$dbr = $services->getDBLoadBalancerFactory()->getReplicaDatabase();
-		$dbrEcho = MWEchoDbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
+		$dbrEcho = DbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
 
 		return new Notifier(
 			$config->get( 'ImageSuggestionsSuggestionsApi' ),

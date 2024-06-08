@@ -17,6 +17,7 @@ use Maintenance;
 use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Extension\ImageSuggestions\Hooks;
 use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
+use MediaWiki\Extension\Notifications\DbFactory;
 use MediaWiki\Sparql\SparqlClient;
 use MediaWiki\Sparql\SparqlException;
 use MediaWiki\Title\NamespaceInfo;
@@ -26,7 +27,6 @@ use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\WikiMap\WikiMap;
 use MultiHttpClient;
-use MWEchoDbFactory;
 use Wikimedia\Rdbms\SelectQueryBuilder;
 
 class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {
@@ -412,7 +412,7 @@ SPARQL;
 		}
 
 		$dbr = $this->getReplicaDB();
-		$dbrEcho = MWEchoDbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
+		$dbrEcho = DbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
 		if ( !$dbrEcho ) {
 			return null;
 		}
