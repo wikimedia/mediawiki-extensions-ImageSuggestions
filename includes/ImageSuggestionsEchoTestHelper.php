@@ -10,7 +10,7 @@ namespace MediaWiki\Extension\ImageSuggestions;
  * @license MIT
  */
 
-use EchoEvent;
+use MediaWiki\Extension\Notifications\Model\Event;
 use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
 
@@ -25,7 +25,7 @@ class ImageSuggestionsEchoTestHelper {
 	public static function send( UserIdentity $user, Title $title, $imageurl ) {
 		$type = 'image-suggestions';
 
-		EchoEvent::create( [
+		Event::create( [
 			'type' => $type,
 			'title' => $title,
 			'extra' => [

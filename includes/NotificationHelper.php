@@ -2,13 +2,13 @@
 
 namespace MediaWiki\Extension\ImageSuggestions;
 
-use EchoEvent;
+use MediaWiki\Extension\Notifications\Model\Event;
 use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
 use Psr\Log\LoggerInterface;
 
 /**
- * Wrapper for EchoEvent::create() with logging, to facilitate testing of Notifier.php
+ * Wrapper for Event::create() with logging, to facilitate testing of Notifier.php
  */
 class NotificationHelper {
 	public function createNotification(
@@ -18,7 +18,7 @@ class NotificationHelper {
 		?string $sectionHeading = null,
 		LoggerInterface $logger = null,
 		bool $noop = false
-	): ?EchoEvent {
+	): ?Event {
 		if ( $logger ) {
 			$logger->info(
 				"Notification: " .
@@ -42,7 +42,7 @@ class NotificationHelper {
 		}
 
 		// @codeCoverageIgnoreStart
-		return EchoEvent::create( [
+		return Event::create( [
 			'type' => Hooks::EVENT_NAME,
 			'title' => $title,
 			'agent' => $user,
