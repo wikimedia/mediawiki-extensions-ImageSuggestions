@@ -19,9 +19,11 @@
 
 namespace MediaWiki\Extension\ImageSuggestions;
 
+use MediaWiki\Extension\Notifications\AttributeManager;
 use MediaWiki\Extension\Notifications\Hooks\BeforeCreateEchoEventHook;
 use MediaWiki\Extension\Notifications\Hooks\EchoGetBundleRulesHook;
 use MediaWiki\Extension\Notifications\Model\Event;
+use MediaWiki\Extension\Notifications\UserLocator;
 use MediaWiki\Output\Hook\BeforePageDisplayHook;
 use MediaWiki\Output\OutputPage;
 use Skin;
@@ -68,7 +70,9 @@ class Hooks implements
 			'category' => static::EVENT_CATEGORY,
 			'group' => 'positive',
 			'section' => 'message',
-			'user-locators' => [ 'EchoUserLocator::locateEventAgent' ],
+			AttributeManager::ATTR_LOCATORS => [
+				[ [ UserLocator::class, 'locateEventAgent' ] ],
+			],
 			'canNotifyAgent' => true,
 			'presentation-model' => ImageSuggestionsPresentationModel::class,
 			'bundle' => [
