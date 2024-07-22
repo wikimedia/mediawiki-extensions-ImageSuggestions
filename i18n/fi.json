@@ -3,6 +3,7 @@
 		"authors": [
 			"MITO",
 			"Pxos",
+			"Samoasambia",
 			"Stryn"
 		]
 	},
@@ -15,7 +16,7 @@
 	"imagesuggestions-notification-link-text-article": "Näytä artikkeli",
 	"imagesuggestions-notification-link-text-section": "Näytä osio",
 	"imagesuggestions-notification-link-text-image": "Tarkista kuva",
-	"imagesuggestions-notification-link-text-help": "Apua",
+	"imagesuggestions-notification-link-text-help": "Ohje",
 	"echo-category-title-image-suggestions": "Kuvaehdotukset",
 	"echo-pref-tooltip-image-suggestions": "Ilmoita minulle, kun tarkkailulistallani olevaan artikkeliin on kuvaehdotuksia."
 }
