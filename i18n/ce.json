@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"imagesuggestions-desc": "Декъашхошна хаам бо йаззамашна пайде хила тарлучу суьртех лаьцна",
+	"imagesuggestions-notification-message-article": "Тхуна карийна {{GENDER:$2|хьан}} тергаме могӀаман тӀера \"'''$1'''\" агӀонна дика иллюстраци хир йолу сурт.",
+	"imagesuggestions-notification-message-section": "Тхуна карийна {{GENDER:$3|хьан}} тергаме могӀамера '''$2''' агӀонан тӀехь '''$1''' декъан дика иллюстраци хир йолу сурт.",
+	"imagesuggestions-notification-message-bundle": "{{GENDER:$2|Хьан}} тергаме могӀаман тӀера «'''$1'''» агӀонна дика иллюстрацеш карийна тхуна.",
+	"imagesuggestions-notification-bundle-article": "Йаззамна рекомендаци йеш долу суьрташ хьажа",
+	"imagesuggestions-notification-bundle-section": "'''$1''' декъана кховдийнчу суьрте хьажа",
+	"imagesuggestions-notification-link-text-article": "Йаззаме хьажа",
+	"imagesuggestions-notification-link-text-section": "Декъе хьажа",
+	"imagesuggestions-notification-link-text-image": "Суьрте хьажа",
+	"imagesuggestions-notification-link-text-help": "ГӀо",
+	"echo-category-title-image-suggestions": "Суьрташ кховдор",
+	"echo-pref-tooltip-image-suggestions": "Сан тергаме могӀаман тӀерачу йаззамашна хаьржина суьртех лаьцна хаамаш бахкийта."
+}
