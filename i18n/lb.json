@@ -6,6 +6,16 @@
 		]
 	},
 	"imagesuggestions-desc": "Mécht Benotzer op potenziell nëtzlech Biller fir Artikelen opmierksam",
+	"imagesuggestions-extensionname": "Bildvirschléi",
+	"imagesuggestions-notification-message-article": "Mir hunn ee Bild fonnt, dat gutt bei d'Säit '''$1''' vun Ärer Iwwerwaachungslëscht passe kéint.",
+	"imagesuggestions-notification-message-section": "Mir hunn ee Bild fonnt, dat gutt bei den Abschnitt '''$1''' vun der Säit '''$2''' vun Ärer Iwwerwaachungslëscht passe kéint.",
+	"imagesuggestions-notification-message-bundle": "Mir hunn eng Rei Biller fonnt, déi gutt bei d'Säit '''$1''' vun Ärer Iwwerwaachungslëscht passe kéinten.",
+	"imagesuggestions-notification-bundle-article": "Bildvirschléi fir den Artikel weisen",
 	"imagesuggestions-notification-bundle-section": "Bildvirschléi fir den Abschnitt '''$1''' weisen",
-	"imagesuggestions-notification-link-text-section": "Abschnitt weisen"
+	"imagesuggestions-notification-link-text-article": "Artikel weisen",
+	"imagesuggestions-notification-link-text-section": "Abschnitt weisen",
+	"imagesuggestions-notification-link-text-image": "Bild nokucken",
+	"imagesuggestions-notification-link-text-help": "Hëllef",
+	"echo-category-title-image-suggestions": "Bildvirschléi",
+	"echo-pref-tooltip-image-suggestions": "Informéiert mech, wann et e Bildvirschlag fir en Artikel op menger Iwwerwaachungslëscht gëtt."
 }
