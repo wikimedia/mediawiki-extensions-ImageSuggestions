@@ -19,8 +19,8 @@ use MediaWiki\User\Options\UserOptionsLookup;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\WikiMap\WikiMap;
-use MultiHttpClient;
 use Psr\Log\LoggerInterface;
+use Wikimedia\Http\MultiHttpClient;
 use Wikimedia\Rdbms\IReadableDatabase;
 use Wikimedia\Rdbms\SelectQueryBuilder;
 

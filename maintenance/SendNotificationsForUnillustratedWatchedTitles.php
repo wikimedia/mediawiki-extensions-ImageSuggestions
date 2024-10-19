@@ -2,10 +2,10 @@
 
 namespace MediaWiki\Extension\ImageSuggestions\Maintenance;
 
-use Maintenance;
 use MediaWiki\Extension\ImageSuggestions\NotificationsJob;
 use MediaWiki\Logger\ConsoleSpi;
 use MediaWiki\Logger\LoggerFactory;
+use MediaWiki\Maintenance\Maintenance;
 use Psr\Log\LogLevel;
 
 class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {

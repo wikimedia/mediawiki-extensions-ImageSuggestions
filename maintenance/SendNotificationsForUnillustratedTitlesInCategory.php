@@ -13,11 +13,11 @@ use Elastica\Scroll;
 use Elastica\Search;
 use Generator;
 use InvalidArgumentException;
-use Maintenance;
 use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Extension\ImageSuggestions\Hooks;
 use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
 use MediaWiki\Extension\Notifications\DbFactory;
+use MediaWiki\Maintenance\Maintenance;
 use MediaWiki\Sparql\SparqlClient;
 use MediaWiki\Sparql\SparqlException;
 use MediaWiki\Title\NamespaceInfo;
@@ -26,7 +26,7 @@ use MediaWiki\User\Options\UserOptionsLookup;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\WikiMap\WikiMap;
-use MultiHttpClient;
+use Wikimedia\Http\MultiHttpClient;
 use Wikimedia\Rdbms\SelectQueryBuilder;
 
 class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {

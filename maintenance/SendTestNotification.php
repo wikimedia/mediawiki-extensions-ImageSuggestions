@@ -2,8 +2,8 @@
 
 namespace MediaWiki\Extension\ImageSuggestions\Maintenance;
 
-use Maintenance;
 use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
+use MediaWiki\Maintenance\Maintenance;
 use MediaWiki\Title\Title;
 
 class SendTestNotification extends Maintenance {
