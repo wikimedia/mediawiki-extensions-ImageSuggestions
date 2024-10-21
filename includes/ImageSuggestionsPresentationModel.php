@@ -27,6 +27,7 @@ class ImageSuggestionsPresentationModel extends EchoEventPresentationModel {
 		if ( $this->isSectionSuggestion() ) {
 			return $this->msg( 'imagesuggestions-notification-message-section' )
 				->params(
+					// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 					$this->getSectionHeadingForDisplay(),
 					$this->event->getTitle()->getText(),
 					$this->getViewingUserForGender()
@@ -76,6 +77,7 @@ class ImageSuggestionsPresentationModel extends EchoEventPresentationModel {
 	public function getCompactHeaderMessage(): Message {
 		if ( $this->isSectionSuggestion() ) {
 			$msg = $this->msg( 'imagesuggestions-notification-bundle-section' );
+			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			$msg->params( $this->getSectionHeadingForDisplay() );
 			return $msg;
 		}
