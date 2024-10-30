@@ -12,7 +12,7 @@ class WikiMapHelper {
 	 * @codeCoverageIgnore
 	 * @return string|false
 	 */
-	public function getForeignURL( string $wikiID, string $page, string $fragmentId = null ) {
+	public function getForeignURL( string $wikiID, string $page, ?string $fragmentId = null ) {
 		return WikiMap::getForeignURL( $wikiID, $page, $fragmentId );
 	}
 }

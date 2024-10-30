@@ -16,7 +16,7 @@ class NotificationHelper {
 		Title $title,
 		string $mediaUrl,
 		?string $sectionHeading = null,
-		LoggerInterface $logger = null,
+		?LoggerInterface $logger = null,
 		bool $noop = false
 	): ?Event {
 		if ( $logger ) {
