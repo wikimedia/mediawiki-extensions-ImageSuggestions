@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"BAPerdana-WMF"
+			"BAPerdana-WMF",
+			"Sannita",
+			"Veracious"
 		]
 	},
 	"imagesuggestions-desc": "Beri tahu pengguna akan gambar yang tersedia untuk artikel Wikipedia",

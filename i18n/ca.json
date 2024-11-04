@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robertgarrigos"
+			"Robertgarrigos",
+			"Sannita",
+			"Vriullop"
 		]
 	},
 	"imagesuggestions-desc": "Alerta els usuaris d'imatges potencialment útils per als articles",
