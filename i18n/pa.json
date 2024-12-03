@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cabal"
+		]
+	},
+	"imagesuggestions-extensionname": "ਚਿੱਤਰ ਸੁਝਾਅ",
+	"imagesuggestions-notification-bundle-article": "ਲੇਖ ਲਈ ਚਿੱਤਰ ਸੁਝਾਅ ਵੇਖੋ",
+	"imagesuggestions-notification-link-text-article": "ਲੇਖ ਵੇਖੋ",
+	"imagesuggestions-notification-link-text-section": "ਭਾਗ ਵੇਖੋ",
+	"imagesuggestions-notification-link-text-image": "ਚਿੱਤਰ ਦੀ ਸਮੀਖਿਆ ਕਰੋ",
+	"imagesuggestions-notification-link-text-help": "ਮਦਦ",
+	"echo-category-title-image-suggestions": "ਚਿੱਤਰ ਸੁਝਾਅ",
+	"echo-pref-tooltip-image-suggestions": "ਜਦੋਂ ਮੇਰੀ ਨਿਗਰਾਨੀ ਸੂਚੀ ਵਿੱਚ ਕਿਸੇ ਲੇਖ ਲਈ ਕੋਈ ਚਿੱਤਰ ਸੁਝਾਅ ਹੋਵੇ ਤਾਂ ਮੈਨੂੰ ਸੂਚਿਤ ਕਰੋ।"
+}
