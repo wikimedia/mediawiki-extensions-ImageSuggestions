@@ -8,14 +8,17 @@ use MediaWiki\Message\Message;
 
 class ImageSuggestionsPresentationModel extends EchoEventPresentationModel {
 
+	/** @inheritDoc */
 	public function canRender() {
 		return (bool)$this->event->getTitle();
 	}
 
+	/** @inheritDoc */
 	public function getIconType() {
 		return 'image-suggestions-blue';
 	}
 
+	/** @inheritDoc */
 	public function getHeaderMessage() {
 		if ( $this->isBundled() ) {
 			return $this->msg( 'imagesuggestions-notification-message-bundle' )
@@ -84,6 +87,7 @@ class ImageSuggestionsPresentationModel extends EchoEventPresentationModel {
 		return $this->msg( 'imagesuggestions-notification-bundle-article' );
 	}
 
+	/** @inheritDoc */
 	public function getSecondaryLinks() {
 		$actions = [];
 		if ( !$this->isBundled() ) {

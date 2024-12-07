@@ -88,6 +88,7 @@ class Hooks implements
 		];
 	}
 
+	/** @inheritDoc */
 	public function onEchoGetBundleRules( Event $event, string &$bundleString ) {
 		if ( $event->getType() === static::EVENT_NAME ) {
 			$bundleString = static::EVENT_NAME . '-' .
