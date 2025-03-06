@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Toliño"
+		]
+	},
+	"imagesuggestions-desc": "Avisa aos usuarios de imaxes posiblemente útiles para os artigos",
+	"imagesuggestions-notification-message-article": "Atopamos unha imaxe que podería ser unha boa opción para a páxina \"'''$1'''\" da {{GENDER:$2|túa}} lista de vixilancia.",
+	"imagesuggestions-notification-message-section": "Atopamos unha imaxe que podería ser unha boa opción para a sección \"'''$1'''\" da páxina \"'''$2'''\" da {{GENDER:$3|túa}} lista de vixilancia.",
+	"imagesuggestions-notification-message-bundle": "Atopamos varias imaxes que poderían ser boas opcións para a páxina \"'''$1'''\" da {{GENDER:$2|túa}} lista de vixilancia.",
+	"imagesuggestions-notification-bundle-article": "Ver a suxestión de imaxe para o artigo",
+	"imagesuggestions-notification-bundle-section": "Ver a suxestión de imaxe para a sección \"'''$1'''\"",
+	"imagesuggestions-notification-link-text-article": "Ver o artigo",
+	"imagesuggestions-notification-link-text-section": "Ver a sección",
+	"imagesuggestions-notification-link-text-image": "Revisar a imaxe",
+	"imagesuggestions-notification-link-text-help": "Axuda",
+	"echo-category-title-image-suggestions": "Suxestións de imaxes",
+	"echo-pref-tooltip-image-suggestions": "Notificádeme cando haxa unha suxestión de imaxe para un artigo da miña lista de vixilancia."
+}
