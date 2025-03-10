@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Toliño"
+		]
+	},
+	"imagesuggestions-desc": "Avisa aos usuarios de imaxes posiblemente útiles para os artigos",
+	"imagesuggestions-notification-link-text-article": "Ver o artigo",
+	"imagesuggestions-notification-link-text-help": "Axuda",
+	"echo-category-title-image-suggestions": "Suxestións de imaxes",
+	"echo-pref-tooltip-image-suggestions": "Notificádeme cando haxa unha suxestión de imaxe para un artigo da miña lista de vixilancia."
+}
