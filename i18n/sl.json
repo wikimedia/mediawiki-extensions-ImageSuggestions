@@ -6,9 +6,9 @@
 	},
 	"imagesuggestions-desc": "Opozori uporabnike na potencialno uporabne slike za članke",
 	"imagesuggestions-extensionname": "Predlogi za slike",
-	"imagesuggestions-notification-message-article": "Našli smo sliko, ki bi bila lahko primerna za stran '''$1''' na {{GENDER:$2|vašem}} spisku nadzorov.",
-	"imagesuggestions-notification-message-section": "Našli smo sliko, ki bi bila lahko primerna za razdelek '''$1''' na strani '''$2''' v {{GENDER:$3|vašem}} spisku nadzorov.",
-	"imagesuggestions-notification-message-bundle": "Našli smo več slik, ki bi bile lahko primerne za članek '''$1''' na {{GENDER:$2|vašem}} spisku nadzorov.",
+	"imagesuggestions-notification-message-article": "Našli smo sliko, ki bi bila lahko primerna za stran '''$1''' na {{GENDER:$2|vašem}} nadzornem seznamu.",
+	"imagesuggestions-notification-message-section": "Našli smo sliko, ki bi bila lahko primerna za razdelek '''$1''' na strani '''$2''' v {{GENDER:$3|vašem}} nadzornem seznamu.",
+	"imagesuggestions-notification-message-bundle": "Našli smo več slik, ki bi bile lahko primerne za članek '''$1''' na {{GENDER:$2|vašem}} nadzornem seznamu.",
 	"imagesuggestions-notification-bundle-article": "Ogled predloga slike za članek",
 	"imagesuggestions-notification-bundle-section": "Oglejte si predlog slike za razdelek '''$1'''",
 	"imagesuggestions-notification-link-text-article": "Ogled članka",
@@ -16,5 +16,5 @@
 	"imagesuggestions-notification-link-text-image": "Ogled slike",
 	"imagesuggestions-notification-link-text-help": "Pomoč",
 	"echo-category-title-image-suggestions": "Predlogi za slike",
-	"echo-pref-tooltip-image-suggestions": "Obvesti me, ko kdo predlaga sliko za članek na mojem spisku nadzorov."
+	"echo-pref-tooltip-image-suggestions": "Obvesti me, ko kdo predlaga sliko za članek na mojem nadzornem seznamu."
 }
