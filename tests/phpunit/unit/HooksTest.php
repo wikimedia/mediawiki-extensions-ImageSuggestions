@@ -5,9 +5,9 @@ namespace MediaWiki\Extension\ImageSuggestions\Tests;
 use MediaWiki\Extension\ImageSuggestions\Hooks;
 use MediaWiki\Extension\Notifications\Model\Event;
 use MediaWiki\Output\OutputPage;
+use MediaWiki\Skin\SkinTemplate;
 use MediaWikiUnitTestCase;
 use MockTitleTrait;
-use SkinTemplate;
 
 /**
  * @covers \MediaWiki\Extension\ImageSuggestions\Hooks

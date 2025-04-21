@@ -4,9 +4,9 @@ namespace MediaWiki\Extension\ImageSuggestions;
 
 use CirrusSearch\Connection;
 use CirrusSearch\SearchConfig;
-use GenericParameterJob;
-use Job;
 use MediaWiki\Extension\Notifications\DbFactory;
+use MediaWiki\JobQueue\GenericParameterJob;
+use MediaWiki\JobQueue\Job;
 use MediaWiki\Logger\LoggerFactory;
 use MediaWiki\MediaWikiServices;
 use Psr\Log\LoggerInterface;
