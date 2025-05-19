@@ -4,8 +4,8 @@ namespace MediaWiki\Extension\ImageSuggestions\Maintenance;
 
 use CirrusSearch\Connection;
 use CirrusSearch\Query\QueryHelper;
+use CirrusSearch\Search\WeightedTagsHooks;
 use CirrusSearch\SearchConfig;
-use CirrusSearch\Wikimedia\WeightedTagsHooks;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchQuery;
