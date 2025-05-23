@@ -43,7 +43,6 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "main",
-		"BeforeCreateEchoEvent": "main",
 		"EchoGetBundleRules": "main"
 	},
 	"HookHandlers": {
@@ -84,6 +83,39 @@
 				"UserOptionsLookup"
 			],
 			"needsPage": false
+		}
+	},
+	"attributes": {
+		"Echo": {
+			"NotificationCategories": {
+				"image-suggestions": {
+					"priority": 3,
+					"title": "echo-category-title-image-suggestions",
+					"tooltip": "echo-pref-tooltip-image-suggestions"
+				}
+			},
+			"Notifications": {
+				"image-suggestions": {
+					"category": "image-suggestions",
+					"group": "positive",
+					"section": "message",
+					"user-locators": [
+						"MediaWiki\\Extension\\Notifications\\UserLocator::locateEventAgent"
+					],
+					"canNotifyAgent": true,
+					"presentation-model": "MediaWiki\\Extension\\ImageSuggestions\\ImageSuggestionsPresentationModel",
+					"bundle": {
+						"web": true,
+						"email": true,
+						"expandable": true
+					}
+				}
+			},
+			"NotificationIcons": {
+				"image-suggestions-blue": {
+					"path": "ImageSuggestions/modules/ImageSuggestions-placeholder-icon-blue.svg"
+				}
+			}
 		}
 	}
 }
