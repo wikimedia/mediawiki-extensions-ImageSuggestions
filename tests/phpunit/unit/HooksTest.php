@@ -22,16 +22,6 @@ class HooksTest extends MediaWikiUnitTestCase {
 		( new Hooks )->onBeforePageDisplay( $output, $skin );
 	}
 
-	public function testOnBeforeCreateEchoEvent() {
-		$notifications = [];
-		$notificationCategories = [];
-		$icons = [];
-		( new Hooks )->onBeforeCreateEchoEvent( $notifications, $notificationCategories, $icons );
-		$this->assertArrayHasKey( Hooks::EVENT_CATEGORY, $notificationCategories );
-		$this->assertArrayHasKey( Hooks::EVENT_NAME, $notifications );
-		$this->assertArrayHasKey( 'image-suggestions-blue', $icons );
-	}
-
 	public function testOnEchoGetBundleRules() {
 		$title = $this->makeMockTitle( 'Test_title', [ 'id' => 1 ] );
 		$event = $this->createMock( Event::class );

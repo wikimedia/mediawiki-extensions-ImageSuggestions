@@ -19,21 +19,16 @@
 
 namespace MediaWiki\Extension\ImageSuggestions;
 
-use MediaWiki\Extension\Notifications\AttributeManager;
-use MediaWiki\Extension\Notifications\Hooks\BeforeCreateEchoEventHook;
 use MediaWiki\Extension\Notifications\Hooks\EchoGetBundleRulesHook;
 use MediaWiki\Extension\Notifications\Model\Event;
-use MediaWiki\Extension\Notifications\UserLocator;
 use MediaWiki\Output\Hook\BeforePageDisplayHook;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Skin\Skin;
 
 class Hooks implements
-	BeforeCreateEchoEventHook,
 	BeforePageDisplayHook,
 	EchoGetBundleRulesHook
 {
-	public const EVENT_CATEGORY = 'image-suggestions';
 	public const EVENT_NAME = 'image-suggestions';
 
 	/**
@@ -45,47 +40,6 @@ class Hooks implements
 			'oojs-ui.styles.icons-media',
 			'oojs-ui-core.icons'
 		] );
-	}
-
-	/**
-	 * Add Image Suggestions events to Echo
-	 *
-	 * @param array &$notifications array of Echo notifications
-	 * @param array &$notificationCategories array of Echo notification categories
-	 * @param array &$icons array of icon details
-	 */
-	public function onBeforeCreateEchoEvent(
-		array &$notifications,
-		array &$notificationCategories,
-		array &$icons
-	) {
-		// Define the category this event belongs to
-		// (this will appear in Special:Preferences)
-		$notificationCategories[static::EVENT_CATEGORY] = [
-			'priority' => 3,
-			'tooltip' => 'echo-pref-tooltip-image-suggestions',
-		];
-
-		$notifications[static::EVENT_NAME] = [
-			'category' => static::EVENT_CATEGORY,
-			'group' => 'positive',
-			'section' => 'message',
-			AttributeManager::ATTR_LOCATORS => [
-				[ [ UserLocator::class, 'locateEventAgent' ] ],
-			],
-			'canNotifyAgent' => true,
-			'presentation-model' => ImageSuggestionsPresentationModel::class,
-			'bundle' => [
-				'web' => true,
-				'email' => true,
-				'expandable' => true,
-			]
-		];
-
-		// Define the icon to use for this notification
-		$icons[ 'image-suggestions-blue' ] = [
-			'path' => 'ImageSuggestions/modules/ImageSuggestions-placeholder-icon-blue.svg'
-		];
 	}
 
 	/** @inheritDoc */
