@@ -320,7 +320,7 @@ SPARQL;
 
 		try {
 			$categories = $this->fetchCategories( $this->categories );
-		} catch ( SparqlException $e ) {
+		} catch ( SparqlException ) {
 			$this->outputChanneled(
 				"Failed to expand with subcategories, moving forward with only the categories provided.\n",
 				'progress'
