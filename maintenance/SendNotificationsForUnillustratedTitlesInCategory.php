@@ -92,9 +92,8 @@ class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {
 
 		$this->addOption(
 			'user',
-			// @codingStandardsIgnoreStart
+			// phpcs:ignore
 			"Name of user to notify",
-			// @codingStandardsIgnoreEnd
 			true,
 			true,
 			false,
@@ -102,9 +101,8 @@ class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {
 		);
 		$this->addOption(
 			'category',
-			// @codingStandardsIgnoreStart
+			// phpcs:ignore
 			"Name of category to find unillustrated articles in",
-			// @codingStandardsIgnoreEnd
 			true,
 			true,
 			false,
@@ -112,26 +110,23 @@ class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {
 		);
 		$this->addOption(
 			'min-confidence',
-			// @codingStandardsIgnoreStart
+			// phpcs:ignore
 			"Minimum confidence score (0-100) required to send notification for suggestion, default: $this->minConfidence",
-			// @codingStandardsIgnoreEnd
 			false,
 			true
 		);
 		$this->addOption(
 			'max-notifications-per-user',
-			// @codingStandardsIgnoreStart
+			// phpcs:ignore
 			"Maximum amount of notifications to create per user, per run of this script, default: $this->maxNotificationsPerUser",
-			// @codingStandardsIgnoreEnd
 			false,
 			true
 		);
 		$defaultExcludeInstanceOf = $this->excludeInstanceOf ? implode( ', ', $this->excludeInstanceOf ) : '<none>';
 		$this->addOption(
 			'exclude-instance-of',
-			// @codingStandardsIgnoreStart
+			// phpcs:ignore
 			"Item Q-id of which the page's associated entity must not be an instance of, default: $defaultExcludeInstanceOf",
-			// @codingStandardsIgnoreEnd
 			false,
 			true,
 			false,

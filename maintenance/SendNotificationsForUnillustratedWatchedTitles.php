@@ -43,25 +43,22 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 		);
 		$this->addOption(
 			'min-confidence',
-			// @codingStandardsIgnoreStart
+			// phpcs:ignore
 			"Minimum confidence score (0-100) required to send notification for an article-level suggestion, default: " .  $this->defaultParams['minConfidence'],
-			// @codingStandardsIgnoreEnd
 			false,
 			true
 		);
 		$this->addOption(
 			'min-confidence-section',
-			// @codingStandardsIgnoreStart
+			// phpcs:ignore
 			"Minimum confidence score (0-100) required to send notification for a section-level suggestion, default: " .  $this->defaultParams['minConfidenceSection'],
-			// @codingStandardsIgnoreEnd
 			false,
 			true
 		);
 		$this->addOption(
 			'max-notifications-per-user',
-			// @codingStandardsIgnoreStart
+			// phpcs:ignore
 			"Maximum amount of notifications to create per user, per run of this script, default: " . $this->defaultParams['maxNotificationsPerUser'],
-			// @codingStandardsIgnoreEnd
 			false,
 			true
 		);
@@ -71,9 +68,8 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 				'<none>';
 		$this->addOption(
 			'exclude-instance-of',
-			// @codingStandardsIgnoreStart
+			// phpcs:ignore
 			"Item Q-id of which the page's associated entity must not be an instance of, default: $defaultExcludeInstanceOf",
-			// @codingStandardsIgnoreEnd
 			false,
 			true,
 			false,
@@ -81,9 +77,8 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 		);
 		$this->addOption(
 			'max-jobs',
-			// @codingStandardsIgnoreStart
+			// phpcs:ignore
 			"Maximum amount of jobs that will be run (used for debugging), default: null",
-			// @codingStandardsIgnoreEnd
 			false,
 			true
 		);
