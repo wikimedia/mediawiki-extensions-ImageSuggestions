@@ -20,38 +20,19 @@ use Wikimedia\Rdbms\LBFactory;
 
 class NotificationsJob extends Job {
 
-	private ConfigFactory $configFactory;
-	private LBFactory $lbFactory;
-	private HttpRequestFactory $httpRequestFactory;
-	private JobQueueGroup $jobQueueGroup;
-	private Config $config;
-	private NamespaceInfo $namespaceInfo;
-	private TitleFactory $titleFactory;
-	private UserFactory $userFactory;
-	private UserOptionsLookup $userOptionsLookup;
-
 	public function __construct(
 		array $params,
-		ConfigFactory $configFactory,
-		LBFactory $lbFactory,
-		HttpRequestFactory $httpRequestFactory,
-		JobQueueGroup $jobQueueGroup,
-		Config $config,
-		NamespaceInfo $namespaceInfo,
-		TitleFactory $titleFactory,
-		UserFactory $userFactory,
-		UserOptionsLookup $userOptionsLookup
+		private readonly ConfigFactory $configFactory,
+		private readonly LBFactory $lbFactory,
+		private readonly HttpRequestFactory $httpRequestFactory,
+		private readonly JobQueueGroup $jobQueueGroup,
+		private readonly Config $config,
+		private readonly NamespaceInfo $namespaceInfo,
+		private readonly TitleFactory $titleFactory,
+		private readonly UserFactory $userFactory,
+		private readonly UserOptionsLookup $userOptionsLookup,
 	) {
 		parent::__construct( 'ImageSuggestionsNotifications', $params );
-		$this->configFactory = $configFactory;
-		$this->lbFactory = $lbFactory;
-		$this->httpRequestFactory = $httpRequestFactory;
-		$this->jobQueueGroup = $jobQueueGroup;
-		$this->config = $config;
-		$this->namespaceInfo = $namespaceInfo;
-		$this->titleFactory = $titleFactory;
-		$this->userFactory = $userFactory;
-		$this->userOptionsLookup = $userOptionsLookup;
 	}
 
 	/**

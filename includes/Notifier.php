@@ -25,20 +25,6 @@ use Wikimedia\Rdbms\IReadableDatabase;
 use Wikimedia\Rdbms\SelectQueryBuilder;
 
 class Notifier {
-	private MultiHttpClient $multiHttpClient;
-	private UserFactory $userFactory;
-	private UserOptionsLookup $userOptionsLookup;
-	private NamespaceInfo $namespaceInfo;
-	private string $suggestionsUri;
-	private string $instanceOfUri;
-	private LoggerInterface $logger;
-	private IReadableDatabase $dbr;
-	private IReadableDatabase $dbrEcho;
-	private Config $searchConfig;
-	private Connection $searchConnection;
-	private TitleFactory $titleFactory;
-	private NotificationHelper $notificationHelper;
-	private WikiMapHelper $wikiMapHelper;
 	private array $jobParams;
 
 	private SearchAfter $searchAfter;
@@ -49,40 +35,22 @@ class Notifier {
 	 * @codeCoverageIgnore
 	 */
 	public function __construct(
-		string $suggestionsUri,
-		string $instanceOfUri,
-		MultiHttpClient $multiHttpClient,
-		UserFactory $userFactory,
-		UserOptionsLookup $userOptionsLookup,
-		NamespaceInfo $namespaceInfo,
-		IReadableDatabase $mainDbConnection,
-		IReadableDatabase $echoDbConnection,
-		LoggerInterface $logger,
-		Config $searchConfig,
-		Connection $searchConnection,
-		TitleFactory $titleFactory,
-		NotificationHelper $notificationHelper,
-		WikiMapHelper $wikiMapHelper,
-		array $jobParams
+		private readonly string $suggestionsUri,
+		private readonly string $instanceOfUri,
+		private readonly MultiHttpClient $multiHttpClient,
+		private readonly UserFactory $userFactory,
+		private readonly UserOptionsLookup $userOptionsLookup,
+		private readonly NamespaceInfo $namespaceInfo,
+		private readonly IReadableDatabase $dbr,
+		private readonly IReadableDatabase $dbrEcho,
+		private readonly LoggerInterface $logger,
+		private readonly Config $searchConfig,
+		private readonly Connection $searchConnection,
+		private readonly TitleFactory $titleFactory,
+		private readonly NotificationHelper $notificationHelper,
+		private readonly WikiMapHelper $wikiMapHelper,
+		array $jobParams,
 	) {
-		$this->suggestionsUri = $suggestionsUri;
-		$this->instanceOfUri = $instanceOfUri;
-
-		$this->multiHttpClient = $multiHttpClient;
-		$this->userFactory = $userFactory;
-		$this->userOptionsLookup = $userOptionsLookup;
-		$this->namespaceInfo = $namespaceInfo;
-
-		$this->dbr = $mainDbConnection;
-		$this->dbrEcho = $echoDbConnection;
-		$this->logger = $logger;
-
-		$this->searchConfig = $searchConfig;
-		$this->searchConnection = $searchConnection;
-		$this->titleFactory = $titleFactory;
-		$this->notificationHelper = $notificationHelper;
-		$this->wikiMapHelper = $wikiMapHelper;
-
 		$this->jobParams = [ 'numPages' => 0 ] + $jobParams;
 
 		$this->searchAfter = $this->createSearchAfter();
