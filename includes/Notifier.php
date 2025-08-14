@@ -51,7 +51,7 @@ class Notifier {
 		private readonly WikiMapHelper $wikiMapHelper,
 		array $jobParams,
 	) {
-		$this->jobParams = [ 'numPages' => 0 ] + $jobParams;
+		$this->jobParams = $jobParams + [ 'numPages' => 0 ];
 
 		$this->searchAfter = $this->createSearchAfter();
 	}
