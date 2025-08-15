@@ -153,7 +153,13 @@ class SendNotificationsForUnillustratedTitlesInCategory extends Maintenance {
 		$this->namespaceInfo = $services->getNamespaceInfo();
 		$this->cirrusCategoriesClient = $services->getService( 'CirrusCategoriesClient' );
 		$this->suggestionsUri = $this->getConfig()->get( 'ImageSuggestionsSuggestionsApi' );
+		if ( $this->suggestionsUri === "" ) {
+			$this->fatalError( 'The ImageSuggestionsSuggestionsApi configuration variable is required' );
+		}
 		$this->instanceOfUri = $this->getConfig()->get( 'ImageSuggestionsInstanceOfApi' );
+		if ( $this->instanceOfUri === "" ) {
+			$this->fatalError( 'The ImageSuggestionsInstanceOfApi configuration variable is required' );
+		}
 
 		$this->userIds = array_map( function ( string $userName ) {
 			$user = $this->userFactory->newFromName( $userName );

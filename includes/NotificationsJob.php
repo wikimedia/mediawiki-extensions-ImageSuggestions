@@ -75,9 +75,21 @@ class NotificationsJob extends Job {
 		$dbr = $this->lbFactory->getReplicaDatabase();
 		$dbrEcho = DbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
 
+		$suggestionsUri = $this->config->get( 'ImageSuggestionsSuggestionsApi' );
+		if ( $suggestionsUri === "" ) {
+			$logger->error( 'The ImageSuggestionsSuggestionsApi configuration variable is required' );
+			return null;
+		}
+
+		$instanceOfUri = $this->config->get( 'ImageSuggestionsInstanceOfApi' );
+		if ( $instanceOfUri === "" ) {
+			$logger->error( 'The ImageSuggestionsInstanceOfApi configuration variable is required' );
+			return null;
+		}
+
 		return new Notifier(
-			$this->config->get( 'ImageSuggestionsSuggestionsApi' ),
-			$this->config->get( 'ImageSuggestionsInstanceOfApi' ),
+			$suggestionsUri,
+			$instanceOfUri,
 			$this->httpRequestFactory->createMultiClient(),
 			$this->userFactory,
 			$this->userOptionsLookup,

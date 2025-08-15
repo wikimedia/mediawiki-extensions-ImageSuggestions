@@ -29,12 +29,12 @@
 	},
 	"config": {
 		"ImageSuggestionsSuggestionsApi": {
-			"description": "API endpoint for image suggestions; 2 params will be sprintf'ed into the url: 1/ the wiki id & 2/ the page id. See https://www.mediawiki.org/wiki/Platform_Engineering_Team/Data_Value_Stream/Data_Gateway#Suggestions",
-			"value": "https://image-suggestion.discovery.wmnet:30443/public/image_suggestions/suggestions/%1$s/%2$d"
+			"description": "API endpoint for image suggestions (required); 2 params will be sprintf'ed into the url: 1/ the wiki id & 2/ the page id. Example: 'http://<host>:<port>/public/image_suggestions/suggestions/%1$s/%2$d'. See https://www.mediawiki.org/wiki/Platform_Engineering_Team/Data_Value_Stream/Data_Gateway#Suggestions",
+			"value": ""
 		},
 		"ImageSuggestionsInstanceOfApi": {
-			"description": "API endpoint for instance of cache; 2 params will be sprintf'ed into the url: 1/ the wiki id & 2/ the page id. See https://www.mediawiki.org/wiki/Platform_Engineering_Team/Data_Value_Stream/Data_Gateway#Instanceof_(cache)",
-			"value": "https://image-suggestion.discovery.wmnet:30443/private/image_suggestions/instanceof_cache/%1$s/%2$d"
+			"description": "API endpoint for instance of cache (required); 2 params will be sprintf'ed into the url: 1/ the wiki id & 2/ the page id. Example: 'http://<host>:<port>/private/image_suggestions/instanceof_cache/%1$s/%2$d'. See https://www.mediawiki.org/wiki/Platform_Engineering_Team/Data_Value_Stream/Data_Gateway#Instanceof_(cache)",
+			"value": ""
 		},
 		"ImageSuggestionsHelpLink": {
 			"description": "URL to per-wiki description pages",
