@@ -6,6 +6,7 @@ use MediaWiki\Extension\ImageSuggestions\Hooks;
 use MediaWiki\Extension\Notifications\Model\Event;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Skin\SkinTemplate;
+use MediaWiki\User\User;
 use MediaWikiUnitTestCase;
 use MockTitleTrait;
 
@@ -16,9 +17,15 @@ class HooksTest extends MediaWikiUnitTestCase {
 	use MockTitleTrait;
 
 	public function testOnBeforePageDisplay() {
-		$skin = new SkinTemplate();
+		$user = $this->createMock( User::class );
+		$user->method( 'isNamed' )->willReturn( true );
+
 		$output = $this->createMock( OutputPage::class );
+		$output->method( 'getUser' )->willReturn( $user );
 		$output->expects( $this->once() )->method( 'addModules' );
+
+		$skin = new SkinTemplate();
+
 		( new Hooks )->onBeforePageDisplay( $output, $skin );
 	}
 

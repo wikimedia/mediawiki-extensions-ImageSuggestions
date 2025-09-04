@@ -36,10 +36,14 @@ class Hooks implements
 	 * @param Skin $skin
 	 */
 	public function onBeforePageDisplay( $output, $skin ): void {
-		$output->addModules( [
-			'oojs-ui.styles.icons-media',
-			'oojs-ui-core.icons'
-		] );
+		// This should not be loaded on all articles
+		// per T403771. Limit to when it is needed.
+		if ( $output->getUser()->isNamed() ) {
+			$output->addModules( [
+				'oojs-ui.styles.icons-media',
+				'oojs-ui-core.icons'
+			] );
+		}
 	}
 
 	/** @inheritDoc */
