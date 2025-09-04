@@ -59,15 +59,6 @@
 		"localBasePath": "resources",
 		"remoteExtPath": "ImageSuggestions/resources"
 	},
-	"ResourceModules": {
-		"ext.imagesuggestions.notifications.styles": {
-			"deprecated": "For cached HTML only",
-			"dependencies": [
-				"oojs-ui.styles.icons-media",
-				"oojs-ui-core.icons"
-			]
-		}
-	},
 	"JobClasses": {
 		"ImageSuggestionsNotifications": {
 			"class": "MediaWiki\\Extension\\ImageSuggestions\\NotificationsJob",
