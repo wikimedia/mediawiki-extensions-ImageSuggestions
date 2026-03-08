@@ -272,7 +272,7 @@ class Notifier {
 		$results = array_values( array_reduce(
 			$results,
 			static function ( array $carry, array $row ) {
-				if ( !isset( $carry[$row['section_heading']] ) ) {
+				if ( !isset( $carry[(string)$row['section_heading']] ) ) {
 					$carry[(string)$row['section_heading']] = $row;
 				}
 				return $carry;
