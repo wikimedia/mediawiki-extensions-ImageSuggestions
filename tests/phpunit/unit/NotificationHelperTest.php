@@ -6,7 +6,7 @@ use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
 use MediaWiki\User\UserIdentityValue;
 use MediaWikiUnitTestCase;
 use MockTitleTrait;
-use Psr\Log\Test\TestLogger;
+use TestLogger;
 
 class NotificationHelperTest extends MediaWikiUnitTestCase {
 	use MockTitleTrait;
@@ -22,7 +22,7 @@ class NotificationHelperTest extends MediaWikiUnitTestCase {
 		$mediaUrl = 'http://commons/File:Image_1.jpg';
 		$sectionHeading = 'Section_X';
 
-		$mockLogger = new TestLogger();
+		$mockLogger = new TestLogger( true );
 		$helper = new NotificationHelper();
 		$notification = $helper->createNotification(
 			new UserIdentityValue( $userId, $userName ),
@@ -33,12 +33,12 @@ class NotificationHelperTest extends MediaWikiUnitTestCase {
 			true
 		);
 		$this->assertNull( $notification );
-		$this->assertTrue( $mockLogger->hasInfoThatContains(
+		$this->assertTrue( array_any( $mockLogger->getBuffer(), static fn ( $buffer ) => str_contains( $buffer[1],
 			"Notification: " .
 			"user: {userName} (id: {userId}), " .
 			"title: {titleText} (id: {titleId}), " .
 			"media-url: {mediaUrl}, " .
 			"section-heading: {sectionHeading}"
-		) );
+		) ) );
 	}
 }

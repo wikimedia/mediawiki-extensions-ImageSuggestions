@@ -19,7 +19,7 @@ use MediaWiki\User\User;
 use MediaWiki\User\UserFactory;
 use MediaWikiUnitTestCase;
 use MockTitleTrait;
-use Psr\Log\Test\TestLogger;
+use TestLogger;
 use Wikimedia\Http\MultiHttpClient;
 use Wikimedia\Rdbms\Expression;
 use Wikimedia\Rdbms\IExpression;
@@ -188,7 +188,7 @@ class NotifierTest extends MediaWikiUnitTestCase {
 				return [];
 			}
 		);
-		$this->mockLogger = new TestLogger();
+		$this->mockLogger = new TestLogger( true );
 		$searchConfig = $this->createMock( SearchConfig::class );
 		$searchClient = $this->createMock( Client::class );
 		$searchIndex = $this->createMock( Index::class );
@@ -346,7 +346,9 @@ class NotifierTest extends MediaWikiUnitTestCase {
 		$this->assertEquals( 999, $updatedJobParams['lastPageId'] );
 		$this->assertEquals( [], $updatedJobParams['notifiedUserIds'] );
 		$this->assertEquals( [], $updatedJobParams['optedInUserIds'] );
-		$this->assertTrue( $this->mockLogger->hasDebugThatContains( 'No title found for 999' ) );
+		$this->assertTrue( array_any( $this->mockLogger->getBuffer(),
+			static fn ( $buffer ) => str_contains( $buffer[1], 'No title found for 999' )
+		) );
 	}
 
 	/**
@@ -382,7 +384,9 @@ class NotifierTest extends MediaWikiUnitTestCase {
 		$updatedJobParams = $notifier->run();
 		$this->assertEquals( [ 1 => false ], $updatedJobParams['optedInUserIds'] );
 		$this->assertEquals( [], $updatedJobParams['notifiedUserIds'] );
-		$this->assertTrue( $this->mockLogger->hasDebugThatContains( 'No user found for Title_1' ) );
+		$this->assertTrue( array_any( $this->mockLogger->getBuffer(),
+			static fn ( $buffer ) => str_contains( $buffer[1], 'No user found for Title_1' )
+		) );
 	}
 
 	/**
@@ -404,9 +408,9 @@ class NotifierTest extends MediaWikiUnitTestCase {
 		);
 		$updatedJobParams = $notifier->run();
 		$this->assertEquals( [ 1 => true ], $updatedJobParams['optedInUserIds'] );
-		$this->assertTrue(
-			$this->mockLogger->hasDebugThatContains( 'No suggestions found for 999' )
-		);
+		$this->assertTrue( array_any( $this->mockLogger->getBuffer(),
+			static fn ( $buffer ) => str_contains( $buffer[1], 'No suggestions found for 999' )
+		) );
 	}
 
 	/**
@@ -429,7 +433,9 @@ class NotifierTest extends MediaWikiUnitTestCase {
 		);
 		$updatedJobParams = $notifier->run();
 		$this->assertEquals( [], $updatedJobParams['notifiedUserIds'] );
-		$this->assertTrue( $this->mockLogger->hasDebugThatContains( 'No user found for Title_1' ) );
+		$this->assertTrue( array_any( $this->mockLogger->getBuffer(),
+			static fn ( $buffer ) => str_contains( $buffer[1], 'No user found for Title_1' )
+		) );
 	}
 
 	/**
@@ -456,7 +462,9 @@ class NotifierTest extends MediaWikiUnitTestCase {
 			[ 1 => $this->defaultJobParams['maxNotificationsPerUser'] ],
 			$updatedJobParams['notifiedUserIds']
 		);
-		$this->assertTrue( $this->mockLogger->hasDebugThatContains( 'No user found for Title_1' ) );
+		$this->assertTrue( array_any( $this->mockLogger->getBuffer(),
+			static fn ( $buffer ) => str_contains( $buffer[1], 'No user found for Title_1' )
+		) );
 	}
 
 	/**
@@ -477,9 +485,9 @@ class NotifierTest extends MediaWikiUnitTestCase {
 		);
 		$updatedJobParams = $notifier->run();
 		$this->assertEquals( [ 1 => true ], $updatedJobParams['optedInUserIds'] );
-		$this->assertTrue(
-			$this->mockLogger->hasDebugThatContains( 'No suggestions found for 999' )
-		);
+		$this->assertTrue( array_any( $this->mockLogger->getBuffer(),
+			static fn ( $buffer ) => str_contains( $buffer[1], 'No suggestions found for 999' )
+		) );
 	}
 
 	public function testNotifications() {
@@ -565,12 +573,12 @@ class NotifierTest extends MediaWikiUnitTestCase {
 			$updatedJobParams['notifiedUserIds']
 		);
 		$this->assertTrue(
-			$this->mockLogger->hasInfoThatContains(
+			array_any( $this->mockLogger->getBuffer(), static fn ( $buffer ) => str_contains( $buffer[1],
 				"Finished job. " .
 				"In total have notified 2 users about 3 pages. " .
 				"Notifications not sent for 2 pages as they had no available users " .
 				"or the suggestions were excluded or didn't meet the confidence threshold."
-			)
+			) )
 		);
 	}
 
@@ -692,12 +700,12 @@ class NotifierTest extends MediaWikiUnitTestCase {
 			$updatedJobParams['notifiedUserIds']
 		);
 		$this->assertTrue(
-			$this->mockLogger->hasInfoThatContains(
+			array_any( $this->mockLogger->getBuffer(), static fn ( $buffer ) => str_contains( $buffer[1],
 				"Finished job. " .
 				"In total have notified 1 users about 1 pages. " .
 				"Notifications not sent for 1 pages as they had no available users " .
 				"or the suggestions were excluded or didn't meet the confidence threshold."
-			)
+			) )
 		);
 	}
 
