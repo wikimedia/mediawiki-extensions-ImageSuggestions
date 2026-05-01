@@ -1,8 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
+			"Tensama0415",
 			"Ykhwong"
 		]
 	},
-	"imagesuggestions-notification-link-text-help": "도움말"
+	"imagesuggestions-notification-bundle-article": "기사에 대한 이미지 제안 보기",
+	"imagesuggestions-notification-bundle-section": "문단 '''$1'''에 대한 이미지 제안 보기",
+	"imagesuggestions-notification-link-text-article": "문서 보기",
+	"imagesuggestions-notification-link-text-section": "문단 보기",
+	"imagesuggestions-notification-link-text-image": "이미지 검토",
+	"imagesuggestions-notification-link-text-help": "도움말",
+	"echo-category-title-image-suggestions": "이미지 제안"
 }
