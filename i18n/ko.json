@@ -5,11 +5,16 @@
 			"Tensama0415"
 		]
 	},
+	"imagesuggestions-desc": "문서에 유용할 수 있는 이미지를 사용자에게 알립니다",
+	"imagesuggestions-notification-message-article": "{{GENDER:$2|당신의}} 주시문서 목록에서 문서 '''$1'''에 적합할 만한 이미지를 찾았습니다.",
+	"imagesuggestions-notification-message-section": "{{GENDER:$3|당신의}} 주시문서 목록에서 문서 '''$1'''의 문단 '''$2'''에 적합할 만한 이미지를 찾았습니다.",
+	"imagesuggestions-notification-message-bundle": "{{GENDER:$2|당신의}} 주시문서 목록에서 문서 '''$1'''에 적합할 만한 이미지를 여러개 찾았습니다.",
 	"imagesuggestions-notification-bundle-article": "기사에 대한 이미지 제안 보기",
 	"imagesuggestions-notification-bundle-section": "문단 '''$1'''에 대한 이미지 제안 보기",
 	"imagesuggestions-notification-link-text-article": "문서 보기",
 	"imagesuggestions-notification-link-text-section": "문단 보기",
 	"imagesuggestions-notification-link-text-image": "이미지 검토",
 	"imagesuggestions-notification-link-text-help": "도움말",
-	"echo-category-title-image-suggestions": "이미지 제안"
+	"echo-category-title-image-suggestions": "이미지 제안",
+	"echo-pref-tooltip-image-suggestions": "주시문서 목록에 있는 문서에 이미지 추천이 있으면 알림"
 }
