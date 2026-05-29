@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"AhmedG612"
+		]
+	},
+	"imagesuggestions-desc": "Waxay u digtaa isticmaalayaasha sawirro laga yaabo inay faa’iido u leeyihiin maqaalada",
+	"imagesuggestions-notification-message-article": "Waxaan helnay sawir laga yaabo inuu ku habboon yahay bogga '''$1''' ee ku jira liiska kormeerka {{GENDER:$2|aad}}.",
+	"imagesuggestions-notification-message-section": "Waxaan helnay sawir laga yaabo inuu ku habboon yahay qaybta '''$1''' ee bogga '''$2''' ee ku jira liiska kormeerka {{GENDER:$3|aad}}.",
+	"imagesuggestions-notification-message-bundle": "Waxaan helnay dhowr sawir oo laga yaabo inay ku habboon yihiin bogga '''$1''' ee ku jira liiska kormeerka {{GENDER:$2|aad}}.",
+	"imagesuggestions-notification-bundle-article": "Eeg talo sawir ee maqaalka",
+	"imagesuggestions-notification-bundle-section": "Eeg talo sawir ee qaybta '''$1'''",
+	"imagesuggestions-notification-link-text-article": "Eeg maqaalka",
+	"imagesuggestions-notification-link-text-section": "Eeg qaybta",
+	"imagesuggestions-notification-link-text-image": "Dib u eeg sawirka",
+	"imagesuggestions-notification-link-text-help": "Caawin",
+	"echo-category-title-image-suggestions": "Talooyin sawir",
+	"echo-pref-tooltip-image-suggestions": "I soo ogeysii marka ay jirto talo sawir oo ku saabsan maqaal ku jira liiska kormeerka."
+}
