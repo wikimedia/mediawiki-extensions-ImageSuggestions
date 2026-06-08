@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
+			"HakanIST",
 			"Hedda"
 		]
 	},
-	"imagesuggestions-desc": "Maddeler için potansiyel olarak yararlı resimler bulma konusunda kullanıcıları uyarır"
+	"imagesuggestions-desc": "Maddeler için potansiyel olarak yararlı resimler bulma konusunda kullanıcıları uyarır",
+	"imagesuggestions-notification-link-text-help": "Yardım"
 }
