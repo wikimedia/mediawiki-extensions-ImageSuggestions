@@ -120,7 +120,7 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 		$job = new NotificationsJob(
 			$params,
 			$services->getConfigFactory(),
-			$services->getDBLoadBalancerFactory(),
+			$services->getConnectionProvider(),
 			$services->getHttpRequestFactory(),
 			$services->getJobQueueGroup(),
 			$services->getMainConfig(),

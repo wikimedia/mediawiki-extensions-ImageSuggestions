@@ -16,7 +16,7 @@ use InvalidArgumentException;
 use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Extension\ImageSuggestions\Hooks;
 use MediaWiki\Extension\ImageSuggestions\NotificationHelper;
-use MediaWiki\Extension\Notifications\DbFactory;
+use MediaWiki\Extension\Notifications\DbDomains;
 use MediaWiki\Maintenance\Maintenance;
 use MediaWiki\Sparql\SparqlClient;
 use MediaWiki\Sparql\SparqlException;
@@ -413,10 +413,8 @@ SPARQL;
 		}
 
 		$dbr = $this->getReplicaDB();
-		$dbrEcho = DbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
-		if ( !$dbrEcho ) {
-			return null;
-		}
+		$dbrEcho = $this->getServiceContainer()->getConnectionProvider()
+			->getReplicaDatabase( DbDomains::VIRTUAL_DOMAIN );
 
 		// list of users who have already received an image suggestion notification for this page
 		$previouslyNotifiedUserIds = $dbrEcho->newSelectQueryBuilder()

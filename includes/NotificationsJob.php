@@ -6,7 +6,7 @@ use CirrusSearch\Connection;
 use CirrusSearch\SearchConfig;
 use MediaWiki\Config\Config;
 use MediaWiki\Config\ConfigFactory;
-use MediaWiki\Extension\Notifications\DbFactory;
+use MediaWiki\Extension\Notifications\DbDomains;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\JobQueue\Job;
 use MediaWiki\JobQueue\JobQueueGroup;
@@ -16,14 +16,14 @@ use MediaWiki\Title\TitleFactory;
 use MediaWiki\User\Options\UserOptionsLookup;
 use MediaWiki\User\UserFactory;
 use Psr\Log\LoggerInterface;
-use Wikimedia\Rdbms\LBFactory;
+use Wikimedia\Rdbms\IConnectionProvider;
 
 class NotificationsJob extends Job {
 
 	public function __construct(
 		array $params,
 		private readonly ConfigFactory $configFactory,
-		private readonly LBFactory $lbFactory,
+		private readonly IConnectionProvider $dbProvider,
 		private readonly HttpRequestFactory $httpRequestFactory,
 		private readonly JobQueueGroup $jobQueueGroup,
 		private readonly Config $config,
@@ -72,8 +72,8 @@ class NotificationsJob extends Job {
 			$logger->error( 'Wrong config type returned from makeConfig()' );
 			return null;
 		}
-		$dbr = $this->lbFactory->getReplicaDatabase();
-		$dbrEcho = DbFactory::newFromDefault()->getEchoDb( DB_REPLICA );
+		$dbr = $this->dbProvider->getReplicaDatabase();
+		$dbrEcho = $this->dbProvider->getReplicaDatabase( DbDomains::VIRTUAL_DOMAIN );
 
 		$suggestionsUri = $this->config->get( 'ImageSuggestionsSuggestionsApi' );
 		if ( $suggestionsUri === "" ) {
@@ -116,7 +116,7 @@ class NotificationsJob extends Job {
 		$job = new NotificationsJob(
 			$params,
 			$this->configFactory,
-			$this->lbFactory,
+			$this->dbProvider,
 			$this->httpRequestFactory,
 			$this->jobQueueGroup,
 			$this->config,

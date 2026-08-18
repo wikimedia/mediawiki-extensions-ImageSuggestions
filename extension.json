@@ -64,7 +64,7 @@
 			"class": "MediaWiki\\Extension\\ImageSuggestions\\NotificationsJob",
 			"services": [
 				"ConfigFactory",
-				"DBLoadBalancerFactory",
+				"ConnectionProvider",
 				"HttpRequestFactory",
 				"JobQueueGroup",
 				"MainConfig",
