@@ -249,10 +249,10 @@ class Notifier {
 		) );
 
 		$articleSuggestion = array_slice(
-			array_filter( $results, [ $this, 'isArticleLevelSuggestion' ] ), 0, 1
+			array_filter( $results, $this->isArticleLevelSuggestion( ... ) ), 0, 1
 		);
 		$sectionSuggestions = array_slice(
-			array_filter( $results, [ $this, 'isSectionLevelSuggestion' ] ),
+			array_filter( $results, $this->isSectionLevelSuggestion( ... ) ),
 			0,
 			self::MAX_SECTION_SUGGESTIONS_PER_NOTIFICATION
 		);
