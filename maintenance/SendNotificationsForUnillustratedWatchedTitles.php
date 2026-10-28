@@ -9,7 +9,7 @@ use MediaWiki\Maintenance\Maintenance;
 use Psr\Log\LogLevel;
 
 class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
-	private array $defaultParams = [
+	private const array DEFAULT_PARAMS = [
 		'minEditCount' => 1,
 		'minConfidence' => 0,
 		'minConfidenceSection' => 0,
@@ -37,34 +37,34 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 
 		$this->addOption(
 			'min-edit-count',
-			"Minimum edit count for users to receive notification, default: " . $this->defaultParams['minEditCount'],
+			"Minimum edit count for users to receive notification, default: " . self::DEFAULT_PARAMS['minEditCount'],
 			false,
 			true
 		);
 		$this->addOption(
 			'min-confidence',
 			// phpcs:ignore
-			"Minimum confidence score (0-100) required to send notification for an article-level suggestion, default: " .  $this->defaultParams['minConfidence'],
+			"Minimum confidence score (0-100) required to send notification for an article-level suggestion, default: " .  self::DEFAULT_PARAMS['minConfidence'],
 			false,
 			true
 		);
 		$this->addOption(
 			'min-confidence-section',
 			// phpcs:ignore
-			"Minimum confidence score (0-100) required to send notification for a section-level suggestion, default: " .  $this->defaultParams['minConfidenceSection'],
+			"Minimum confidence score (0-100) required to send notification for a section-level suggestion, default: " .  self::DEFAULT_PARAMS['minConfidenceSection'],
 			false,
 			true
 		);
 		$this->addOption(
 			'max-notifications-per-user',
 			// phpcs:ignore
-			"Maximum amount of notifications to create per user, per run of this script, default: " . $this->defaultParams['maxNotificationsPerUser'],
+			"Maximum amount of notifications to create per user, per run of this script, default: " . self::DEFAULT_PARAMS['maxNotificationsPerUser'],
 			false,
 			true
 		);
 		$defaultExcludeInstanceOf =
-			$this->defaultParams['excludeInstanceOf'] ?
-				implode( ', ', $this->defaultParams['excludeInstanceOf'] ) :
+			self::DEFAULT_PARAMS['excludeInstanceOf'] ?
+				implode( ', ', self::DEFAULT_PARAMS['excludeInstanceOf'] ) :
 				'<none>';
 		$this->addOption(
 			'exclude-instance-of',
@@ -126,42 +126,42 @@ class SendNotificationsForUnillustratedWatchedTitles extends Maintenance {
 		return [
 			'minEditCount' => (int)$this->getOption(
 				'min-edit-count',
-				$this->defaultParams['minEditCount']
+				self::DEFAULT_PARAMS['minEditCount']
 			),
 			'minConfidence' => (int)$this->getOption(
 				'min-confidence',
-				$this->defaultParams['minConfidence']
+				self::DEFAULT_PARAMS['minConfidence']
 			),
 			'minConfidenceSection' => (int)$this->getOption(
 				'min-confidence-section',
-				$this->defaultParams['minConfidenceSection']
+				self::DEFAULT_PARAMS['minConfidenceSection']
 			),
 			'maxNotificationsPerUser' => (int)$this->getOption(
 				'max-notifications-per-user',
-				$this->defaultParams['maxNotificationsPerUser']
+				self::DEFAULT_PARAMS['maxNotificationsPerUser']
 			),
 			'excludeInstanceOf' => (array)$this->getOption(
 				'exclude-instance-of',
-				$this->defaultParams['excludeInstanceOf']
+				self::DEFAULT_PARAMS['excludeInstanceOf']
 			),
 			'maxJobs' => (int)$this->getOption(
 				'max-jobs',
-				$this->defaultParams['maxJobs']
+				self::DEFAULT_PARAMS['maxJobs']
 			),
 			'dryRun' => (bool)$this->getOption(
 				'dry-run',
-				$this->defaultParams['dryRun']
+				self::DEFAULT_PARAMS['dryRun']
 			),
 			'verbose' => (bool)$this->getOption(
 				'verbose',
-				$this->defaultParams['verbose']
+				self::DEFAULT_PARAMS['verbose']
 			),
 			'queue' => (bool)$this->getOption(
 				'queue',
-				$this->defaultParams['queue']
+				self::DEFAULT_PARAMS['queue']
 			),
 			'batchSize' => $this->mBatchSize,
-		] + $this->defaultParams;
+		] + self::DEFAULT_PARAMS;
 	}
 
 }
