@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wizzard"
+		]
+	},
+	"imagesuggestions-desc": "Upozorňuje používateľov na potenciálne užitočné obrázky pre články",
+	"imagesuggestions-extensionname": "Návrhy obrázkov",
+	"imagesuggestions-notification-message-article": "Našli sme obrázok, ktorý by sa mohol hodiť na stránku '''$1''' v {{GENDER:$2|vašom}} zozname sledovaných.",
+	"imagesuggestions-notification-message-section": "Našli sme obrázok, ktorý by sa mohol hodiť do sekcie '''$1''' na stránke '''$2''' v {{GENDER:$3|vašom}} zozname sledovaných.",
+	"imagesuggestions-notification-message-bundle": "Našli sme niekoľko obrázkov, ktoré by sa mohli hodiť na stránku '''$1''' v {{GENDER:$2|vašom}} zozname sledovaných.",
+	"imagesuggestions-notification-bundle-article": "Zobraziť návrh obrázka pre článok",
+	"imagesuggestions-notification-bundle-section": "Zobraziť návrh obrázka pre sekciu '''$1'''",
+	"imagesuggestions-notification-link-text-article": "Zobraziť článok",
+	"imagesuggestions-notification-link-text-section": "Zobraziť sekciu",
+	"imagesuggestions-notification-link-text-image": "Posúdiť obrázok",
+	"imagesuggestions-notification-link-text-help": "Pomoc",
+	"echo-category-title-image-suggestions": "Návrhy obrázkov",
+	"echo-pref-tooltip-image-suggestions": "Upozorniť ma, keď existuje návrh obrázka pre článok v mojom zozname sledovaných."
+}
