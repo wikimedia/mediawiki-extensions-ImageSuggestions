@@ -108,10 +108,8 @@ class ImageSuggestionsPresentationModel extends EchoEventPresentationModel {
 				'prioritized' => true,
 			];
 
-			$mainConfig = MediaWikiServices::getInstance()
-				->getConfigFactory()
-				->makeConfig( 'main' );
-			$helpLink = $mainConfig->get( 'ImageSuggestionsHelpLink' );
+			$config = MediaWikiServices::getInstance()->getMainConfig();
+			$helpLink = $config->get( 'ImageSuggestionsHelpLink' );
 			if ( $helpLink ) {
 				$actions['help'] = [
 					'url' => $helpLink,
