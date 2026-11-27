@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"شاه زمان پټان"
+		]
+	},
+	"imagesuggestions-desc": "کارنانو ته د ليکنو لپاره د شونو گټورو انځورونو خبر ورکوي",
+	"imagesuggestions-extensionname": "انځور وړانديزونه",
+	"imagesuggestions-notification-message-article": "موږ يو انځور وموند چې ښايي {{GENDER:$2|ستاسو}} کتنلړ کې د '''$1''' ليکنې لپاره مناسب وي.",
+	"imagesuggestions-notification-message-section": "موږ يو انځور وموند چې ښايي {{GENDER:$3|ستاسو}} کتنلړ کې د '''$2''' مخ '''$1''' برخې لپاره مناسب وي.",
+	"imagesuggestions-notification-message-bundle": "موږ څو انځورونه وموندل چې ښايي {{GENDER:$2|ستاسو}} کتنلړ کې د '''$1''' ليکنې لپاره مناسب وي.",
+	"imagesuggestions-notification-bundle-article": "ليکنې لپاره انځور وړانديز کتل",
+	"imagesuggestions-notification-bundle-section": "'''$1''' برخې لپاره انځور وړانديز کتل",
+	"imagesuggestions-notification-link-text-article": "ليکنه کتل",
+	"imagesuggestions-notification-link-text-section": "برخه کتل",
+	"imagesuggestions-notification-link-text-image": "د انځور بياکتنه",
+	"imagesuggestions-notification-link-text-help": "لارښود",
+	"echo-category-title-image-suggestions": "انځور وړانديزونه",
+	"echo-pref-tooltip-image-suggestions": "کله چې زما په کتنلړ کې د يوې ليکنې لپاره د انځور وړانديز وي؛ نو ما ته خبر راکړئ."
+}
